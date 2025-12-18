@@ -1,0 +1,137 @@
+{
+  "common": {
+    "add": "Agregar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "search": "Buscar",
+    "close": "Cerrar",
+    "submit": "Enviar",
+    "actions": "Acciones",
+    "noData": "No se encontraron datos",
+    "language": "Idioma"
+  },
+  "citizens": {
+    "title": "Registro de Ciudadanos",
+    "addCitizen": "Agregar Ciudadano",
+    "editCitizen": "Editar Ciudadano",
+    "searchPlaceholder": "Buscar por DNI o Nombre",
+    "columns": {
+      "id": "ID",
+      "fullName": "Nombre Completo",
+      "nationalId": "DNI",
+      "dateOfBirth": "Fecha de Nacimiento",
+      "address": "Dirección",
+      "annualIncome": "Ingreso Anual"
+    },
+    "form": {
+      "fullName": "Nombre Completo",
+      "fullNameRequired": "El nombre es obligatorio",
+      "fullNameMinLength": "El nombre debe tener al menos 2 caracteres",
+      "nationalId": "DNI",
+      "nationalIdRequired": "El DNI es obligatorio",
+      "nationalIdNumeric": "El DNI debe ser numérico",
+      "dateOfBirth": "Fecha de Nacimiento",
+      "dateOfBirthRequired": "La fecha de nacimiento es obligatoria",
+      "address": "Dirección",
+      "addressRequired": "La dirección es obligatoria",
+      "annualIncome": "Ingreso Anual",
+      "annualIncomeRequired": "El ingreso anual es obligatorio",
+      "annualIncomePositive": "El ingreso debe ser positivo"
+    },
+    "messages": {
+      "loadFailed": "Error al cargar ciudadanos",
+      "createSuccess": "Ciudadano creado exitosamente",
+      "updateSuccess": "Ciudadano actualizado exitosamente",
+      "deleteSuccess": "Ciudadano eliminado exitosamente",
+      "deleteConfirm": "¿Está seguro de que desea eliminar a {{name}}?",
+      "noPermission": "No tiene permiso para gestionar ciudadanos"
+    }
+  },
+  "programs": {
+    "title": "Catálogo de Programas de Asistencia",
+    "addProgram": "Agregar Programa",
+    "editProgram": "Editar Programa",
+    "columns": {
+      "id": "ID",
+      "programName": "Nombre del Programa",
+      "status": "Estado",
+      "minAge": "Edad Mínima",
+      "maxAge": "Edad Máxima",
+      "maxIncomeThreshold": "Umbral de Ingreso Máximo"
+    },
+    "form": {
+      "programName": "Nombre del Programa",
+      "programNameRequired": "El nombre del programa es obligatorio",
+      "programNameMinLength": "El nombre debe tener al menos 2 caracteres",
+      "isActive": "Programa Activo",
+      "minAge": "Edad Mínima",
+      "minAgeHint": "Opcional: Requisito de edad mínima para elegibilidad",
+      "minAgePositive": "La edad debe ser positiva",
+      "maxAge": "Edad Máxima",
+      "maxAgeHint": "Opcional: Requisito de edad máxima para elegibilidad",
+      "maxAgePositive": "La edad debe ser positiva",
+      "maxIncomeThreshold": "Umbral de Ingreso Máximo",
+      "maxIncomeThresholdHint": "Opcional: Ingreso anual máximo para elegibilidad",
+      "maxIncomeThresholdPositive": "El ingreso debe ser positivo"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "messages": {
+      "loadFailed": "Error al cargar programas",
+      "createSuccess": "Programa creado exitosamente",
+      "updateSuccess": "Programa actualizado exitosamente",
+      "deleteSuccess": "Programa eliminado exitosamente",
+      "deleteConfirm": "¿Está seguro de que desea eliminar {{name}}?",
+      "activateSuccess": "Programa activado exitosamente",
+      "deactivateSuccess": "Programa desactivado exitosamente"
+    }
+  },
+  "applications": {
+    "title": "Gestión de Solicitudes",
+    "submitApplication": "Enviar Solicitud",
+    "columns": {
+      "id": "ID",
+      "citizen": "Ciudadano",
+      "program": "Programa",
+      "status": "Estado",
+      "submissionDate": "Fecha de Envío"
+    },
+    "form": {
+      "citizen": "Ciudadano",
+      "citizenRequired": "El ciudadano es obligatorio",
+      "program": "Programa",
+      "programRequired": "El programa es obligatorio"
+    },
+    "status": {
+      "submitted": "ENVIADO",
+      "review": "REVISIÓN",
+      "approved": "APROBADO",
+      "rejected": "RECHAZADO"
+    },
+    "actions": {
+      "markAsReview": "Marcar como Revisión",
+      "approve": "Aprobar",
+      "reject": "Rechazar"
+    },
+    "messages": {
+      "loadFailed": "Error al cargar solicitudes",
+      "submitSuccess": "Solicitud enviada exitosamente",
+      "updateStatusSuccess": "Estado de la solicitud actualizado a {{status}}",
+      "deleteSuccess": "Solicitud eliminada exitosamente",
+      "deleteConfirm": "¿Está seguro de que desea eliminar esta solicitud?",
+      "noPermissionApprove": "No tiene permiso para aprobar/rechazar solicitudes"
+    }
+  },
+  "navigation": {
+    "citizens": "Ciudadanos",
+    "programs": "Programas",
+    "applications": "Solicitudes",
+    "appTitle": "Portal de Trabajador Social",
+    "sidenavTitle": "Plataforma del Ministerio de Protección Social",
+    "sidenavSubtitle": "Portal de Trabajador Social"
+  }
+}

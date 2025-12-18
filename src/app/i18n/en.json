@@ -1,0 +1,137 @@
+{
+  "common": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "search": "Search",
+    "close": "Close",
+    "submit": "Submit",
+    "actions": "Actions",
+    "noData": "No data found",
+    "language": "Language"
+  },
+  "citizens": {
+    "title": "Citizen Registry",
+    "addCitizen": "Add Citizen",
+    "editCitizen": "Edit Citizen",
+    "searchPlaceholder": "Search by National ID or Name",
+    "columns": {
+      "id": "ID",
+      "fullName": "Full Name",
+      "nationalId": "National ID",
+      "dateOfBirth": "Date of Birth",
+      "address": "Address",
+      "annualIncome": "Annual Income"
+    },
+    "form": {
+      "fullName": "Full Name",
+      "fullNameRequired": "Name is required",
+      "fullNameMinLength": "Name must be at least 2 characters",
+      "nationalId": "National ID",
+      "nationalIdRequired": "National ID is required",
+      "nationalIdNumeric": "National ID must be numeric",
+      "dateOfBirth": "Date of Birth",
+      "dateOfBirthRequired": "Date of Birth is required",
+      "address": "Address",
+      "addressRequired": "Address is required",
+      "annualIncome": "Annual Income",
+      "annualIncomeRequired": "Annual Income is required",
+      "annualIncomePositive": "Income must be positive"
+    },
+    "messages": {
+      "loadFailed": "Failed to load citizens",
+      "createSuccess": "Citizen created successfully",
+      "updateSuccess": "Citizen updated successfully",
+      "deleteSuccess": "Citizen deleted successfully",
+      "deleteConfirm": "Are you sure you want to delete {{name}}?",
+      "noPermission": "You do not have permission to manage citizens"
+    }
+  },
+  "programs": {
+    "title": "Assistance Program Catalog",
+    "addProgram": "Add Program",
+    "editProgram": "Edit Program",
+    "columns": {
+      "id": "ID",
+      "programName": "Program Name",
+      "status": "Status",
+      "minAge": "Min Age",
+      "maxAge": "Max Age",
+      "maxIncomeThreshold": "Max Income Threshold"
+    },
+    "form": {
+      "programName": "Program Name",
+      "programNameRequired": "Program name is required",
+      "programNameMinLength": "Name must be at least 2 characters",
+      "isActive": "Active Program",
+      "minAge": "Minimum Age",
+      "minAgeHint": "Optional: Minimum age requirement for eligibility",
+      "minAgePositive": "Age must be positive",
+      "maxAge": "Maximum Age",
+      "maxAgeHint": "Optional: Maximum age requirement for eligibility",
+      "maxAgePositive": "Age must be positive",
+      "maxIncomeThreshold": "Maximum Income Threshold",
+      "maxIncomeThresholdHint": "Optional: Maximum annual income for eligibility",
+      "maxIncomeThresholdPositive": "Income must be positive"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "messages": {
+      "loadFailed": "Failed to load programs",
+      "createSuccess": "Program created successfully",
+      "updateSuccess": "Program updated successfully",
+      "deleteSuccess": "Program deleted successfully",
+      "deleteConfirm": "Are you sure you want to delete {{name}}?",
+      "activateSuccess": "Program activated successfully",
+      "deactivateSuccess": "Program deactivated successfully"
+    }
+  },
+  "applications": {
+    "title": "Application Management",
+    "submitApplication": "Submit Application",
+    "columns": {
+      "id": "ID",
+      "citizen": "Citizen",
+      "program": "Program",
+      "status": "Status",
+      "submissionDate": "Submission Date"
+    },
+    "form": {
+      "citizen": "Citizen",
+      "citizenRequired": "Citizen is required",
+      "program": "Program",
+      "programRequired": "Program is required"
+    },
+    "status": {
+      "submitted": "SUBMITTED",
+      "review": "REVIEW",
+      "approved": "APPROVED",
+      "rejected": "REJECTED"
+    },
+    "actions": {
+      "markAsReview": "Mark as Review",
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "messages": {
+      "loadFailed": "Failed to load applications",
+      "submitSuccess": "Application submitted successfully",
+      "updateStatusSuccess": "Application status updated to {{status}}",
+      "deleteSuccess": "Application deleted successfully",
+      "deleteConfirm": "Are you sure you want to delete this application?",
+      "noPermissionApprove": "You do not have permission to approve/reject applications"
+    }
+  },
+  "navigation": {
+    "citizens": "Citizens",
+    "programs": "Programs",
+    "applications": "Applications",
+    "appTitle": "Social Worker Portal",
+    "sidenavTitle": "Ministry of Social Protection Platform",
+    "sidenavSubtitle": "Social Worker Portal"
+  }
+}

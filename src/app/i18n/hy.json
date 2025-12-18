@@ -1,0 +1,139 @@
+{
+  "common": {
+    "add": "Ավելացնել",
+    "edit": "Խմբագրել",
+    "delete": "Ջնջել",
+    "save": "Պահպանել",
+    "cancel": "Չեղարկել",
+    "search": "Որոնել",
+    "close": "Փակել",
+    "submit": "Ուղարկել",
+    "actions": "Գործողություններ",
+    "noData": "Տվյալներ չեն գտնվել",
+    "language": "Լեզու"
+  },
+  "citizens": {
+    "title": "Քաղաքացիների գրանցամատյան",
+    "addCitizen": "Ավելացնել քաղաքացի",
+    "editCitizen": "Խմբագրել քաղաքացուն",
+    "searchPlaceholder": "Որոնել՝ Ազգային ID-ով կամ անունով",
+    "columns": {
+      "id": "ID",
+      "fullName": "Ամբողջական անուն",
+      "nationalId": "Ազգային ID",
+      "dateOfBirth": "Ծննդյան ամսաթիվ",
+      "address": "Հասցե",
+      "annualIncome": "Տարեկան եկամուտ"
+    },
+    "form": {
+      "fullName": "Ամբողջական անուն",
+      "fullNameRequired": "Անունը պարտադիր է",
+      "fullNameMinLength": "Անունը պետք է լինի առնվազն 2 նիշ",
+      "nationalId": "Ազգային ID",
+      "nationalIdRequired": "Ազգային ID-ն պարտադիր է",
+      "nationalIdNumeric": "Ազգային ID-ն պետք է լինի թվային",
+      "dateOfBirth": "Ծննդյան ամսաթիվ",
+      "dateOfBirthRequired": "Ծննդյան ամսաթիվը պարտադիր է",
+      "address": "Հասցե",
+      "addressRequired": "Հասցեն պարտադիր է",
+      "annualIncome": "Տարեկան եկամուտ",
+      "annualIncomeRequired": "Եկամուտը պարտադիր է",
+      "annualIncomePositive": "Եկամուտը պետք է լինի դրական"
+    },
+    "messages": {
+      "loadFailed": "Չհաջողվեց բեռնել քաղաքացիների ցուցակը",
+      "createSuccess": "Քաղաքացին հաջողությամբ ստեղծվեց",
+      "updateSuccess": "Քաղաքացու տվյալները հաջողությամբ թարմացվեցին",
+      "deleteSuccess": "Քաղաքացին հաջողությամբ ջնջվեց",
+      "deleteConfirm": "Վստա՞հ եք, որ ցանկանում եք ջնջել {{name}}-ին",
+      "noPermission": "Դուք իրավունք չունեք կառավարել քաղաքացիներին"
+    }
+  },
+  "programs": {
+    "title": "Օգնության ծրագրերի կատալոգ",
+    "addProgram": "Ավելացնել ծրագիր",
+    "editProgram": "Խմբագրել ծրագիրը",
+    "columns": {
+      "id": "ID",
+      "programName": "Ծրագրի անուն",
+      "status": "Կարգավիճակ",
+      "minAge": "Նվազագույն տարիքը",
+      "maxAge": "Առավելագույն տարիքը",
+      "maxIncomeThreshold": "Եկամտի առավելագույն շեմ"
+    },
+    "form": {
+      "programName": "Ծրագրի անուն",
+      "programNameRequired": "Ծրագրի անունը պարտադիր է",
+      "programNameMinLength": "Անունը պետք է լինի առնվազն 2 նիշ",
+      "isActive": "Ակտիվ ծրագիր",
+      "minAge": "Նվազագույն տարիքը",
+      "minAgeHint": "Ընտրովի․ նվազագույն տարիքի պահանջ",
+      "minAgePositive": "Տարիքը պետք է լինի դրական",
+      "maxAge": "Առավելագույն տարիքը",
+      "maxAgeHint": "Ընտրովի․ առավելագույն տարիքի պահանջ",
+      "maxAgePositive": "Տարիքը պետք է լինի դրական",
+      "maxIncomeThreshold": "Եկամտի առավելագույն շեմ",
+      "maxIncomeThresholdHint": "Ընտրովի․ տարեկան եկամտի առավելագույն շեմ",
+      "maxIncomeThresholdPositive": "Եկամուտը պետք է լինի դրական"
+    },
+    "status": {
+      "active": "Ակտիվ",
+      "inactive": "Ոչ ակտիվ"
+    },
+    "messages": {
+      "loadFailed": "Չհաջողվեց բեռնել ծրագրերը",
+      "createSuccess": "Ծրագիրը հաջողությամբ ստեղծվեց",
+      "updateSuccess": "Ծրագիրը հաջողությամբ թարմացվեց",
+      "deleteSuccess": "Ծրագիրը հաջողությամբ ջնջվեց",
+      "deleteConfirm": "Վստա՞հ եք, որ ցանկանում եք ջնջել {{name}}-ը",
+      "activateSuccess": "Ծրագիրը ակտիվացվեց",
+      "deactivateSuccess": "Ծրագիրը ապաակտիվացվեց"
+    }
+  },
+  "applications": {
+    "title": "Դիմումների կառավարում",
+    "submitApplication": "Ներկայացնել դիմում",
+    "columns": {
+      "id": "ID",
+      "citizen": "Քաղաքացի",
+      "program": "Ծրագիր",
+      "status": "Կարգավիճակ",
+      "submissionDate": "Ներկայացման ամսաթիվ"
+    },
+    "form": {
+      "citizen": "Քաղաքացի",
+      "citizenRequired": "Քաղաքացին պարտադիր է",
+      "program": "Ծրագիր",
+      "programRequired": "Ծրագիրը պարտադիր է"
+    },
+    "status": {
+      "submitted": "ՆԵՐԿԱՅԱՑՎԱԾ",
+      "review": "ՔՆՆԱՐԿՄԱՆ",
+      "approved": "ՀԱՍՏԱՏՎԱԾ",
+      "rejected": "ՄԵՐԺՎԱԾ"
+    },
+    "actions": {
+      "markAsReview": "Նշել որպես քննարկման",
+      "approve": "Հաստատել",
+      "reject": "Մերժել"
+    },
+    "messages": {
+      "loadFailed": "Չհաջողվեց բեռնել դիմումները",
+      "submitSuccess": "Դիմումը հաջողությամբ ներկայացվեց",
+      "updateStatusSuccess": "Դիմումի կարգավիճակը թարմացվեց՝ {{status}}",
+      "deleteSuccess": "Դիմումը հաջողությամբ ջնջվեց",
+      "deleteConfirm": "Վստա՞հ եք, որ ցանկանում եք ջնջել այս դիմումը",
+      "noPermissionApprove": "Դուք իրավունք չունեք հաստատել/մերժել դիմումները"
+    }
+  },
+  "navigation": {
+    "citizens": "Քաղաքացիներ",
+    "programs": "Ծրագրեր",
+    "applications": "Դիմումներ",
+    "appTitle": "Սոցաշխատողի պորտալ",
+    "sidenavTitle": "Սոցիալական պաշտպանության նախարարության հարթակ",
+    "sidenavSubtitle": "Սոցաշխատողի պորտալ"
+  }
+}
+
+

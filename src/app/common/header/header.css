@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.top-toolbar {
+  flex: 0 0 auto;
+  font-size: clamp(14px, 1.4vw, 18px) !important;
+}
+
+.menu-button {
+  margin-right: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.locale-selector {
+  min-width: 150px;
+  margin-right: 16px;
+}
+
+

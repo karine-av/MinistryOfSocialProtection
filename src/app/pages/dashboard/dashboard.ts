@@ -1,33 +1,44 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy, inject } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { SidenavService } from '../../common/side-nav/sidenav.service';
+import { SidenavService} from '../../common/side-nav/sidenav.service';
 import { Subscription } from 'rxjs';
+import {LocaleService} from '../../core/services/locale.service';
+import {TranslationService} from '../../core/services/translation.service';
+import {FormsModule} from '@angular/forms';
+import { SideNav} from '../../common/side-nav/side-nav';
+import {Header} from '../../common/header/header';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [
     RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule,
+    SideNav,
+    Header
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class App implements AfterViewInit, OnDestroy {
+export class Dashboard implements AfterViewInit, OnDestroy {
   @ViewChild('drawer') drawer!: MatSidenav;
   private sidenavService = inject(SidenavService);
+  private localeService = inject(LocaleService);
+  private translationService = inject(TranslationService);
   private subscription?: Subscription;
+
+  selectedLocale = this.localeService.getLocale();
+  supportedLocales = this.localeService.supportedLocales;
 
   ngAfterViewInit() {
     this.subscription = this.sidenavService.closeSidenav$.subscribe(() => {
@@ -35,6 +46,14 @@ export class App implements AfterViewInit, OnDestroy {
         this.drawer.close();
       }
     });
+  }
+
+  onLocaleChange(locale: string) {
+    this.localeService.setLocale(locale);
+    this.translationService.setLocale(locale);
+    this.selectedLocale = locale;
+    // Reload to apply locale changes
+    window.location.reload();
   }
 
   ngOnDestroy() {
