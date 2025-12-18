@@ -3,13 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MinistryOfSocialProtection": {
+    "daily-driver": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -22,7 +18,6 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -30,13 +25,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+              "src/custom-theme.scss",
+              "src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -66,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "MinistryOfSocialProtection:build:production"
+              "buildTarget": "daily-driver:build:production"
             },
             "development": {
-              "buildTarget": "MinistryOfSocialProtection:build:development"
+              "buildTarget": "daily-driver:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -85,7 +76,6 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -93,7 +83,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/custom-theme.scss",
+              "src/styles.css"
             ]
           }
         }
@@ -101,6 +92,6 @@
     }
   },
   "cli": {
-    "analytics": "e863a7b4-c951-4353-b4c6-79df6e90cc09"
+    "analytics": "4aaf5876-3763-4e08-acb4-2dd57c1dd0b7"
   }
 }

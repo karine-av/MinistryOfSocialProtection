@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.shell-container {
+  height: 100%;
+}
+
+.shell-sidenav {
+  width: 260px;
+}
+
+.menu-button {
+  margin-right: 8px;
+}
+
+.sidenav-header {
+  padding: 16px 16px 8px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.app-subtitle {
+  margin: 4px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.shell-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.top-toolbar {
+  flex: 0 0 auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.main-content {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 16px;
+}
