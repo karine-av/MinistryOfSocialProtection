@@ -1,0 +1,137 @@
+{
+  "common": {
+    "add": "Добавить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "search": "Поиск",
+    "close": "Закрыть",
+    "submit": "Отправить",
+    "actions": "Действия",
+    "noData": "Данные не найдены",
+    "language": "Язык"
+  },
+  "citizens": {
+    "title": "Реестр граждан",
+    "addCitizen": "Добавить гражданина",
+    "editCitizen": "Редактировать гражданина",
+    "searchPlaceholder": "Поиск по национальному ID или имени",
+    "columns": {
+      "id": "ID",
+      "fullName": "ФИО",
+      "nationalId": "Национальный ID",
+      "dateOfBirth": "Дата рождения",
+      "address": "Адрес",
+      "annualIncome": "Годовой доход"
+    },
+    "form": {
+      "fullName": "ФИО",
+      "fullNameRequired": "Имя обязательно",
+      "fullNameMinLength": "Имя должно быть не короче 2 символов",
+      "nationalId": "Национальный ID",
+      "nationalIdRequired": "Национальный ID обязателен",
+      "nationalIdNumeric": "Национальный ID должен быть числом",
+      "dateOfBirth": "Дата рождения",
+      "dateOfBirthRequired": "Дата рождения обязательна",
+      "address": "Адрес",
+      "addressRequired": "Адрес обязателен",
+      "annualIncome": "Годовой доход",
+      "annualIncomeRequired": "Доход обязателен",
+      "annualIncomePositive": "Доход должен быть положительным"
+    },
+    "messages": {
+      "loadFailed": "Не удалось загрузить список граждан",
+      "createSuccess": "Гражданин успешно создан",
+      "updateSuccess": "Данные гражданина успешно обновлены",
+      "deleteSuccess": "Гражданин успешно удалён",
+      "deleteConfirm": "Вы уверены, что хотите удалить {{name}}?",
+      "noPermission": "У вас нет прав для управления гражданами"
+    }
+  },
+  "programs": {
+    "title": "Каталог программ помощи",
+    "addProgram": "Добавить программу",
+    "editProgram": "Редактировать программу",
+    "columns": {
+      "id": "ID",
+      "programName": "Название программы",
+      "status": "Статус",
+      "minAge": "Мин. возраст",
+      "maxAge": "Макс. возраст",
+      "maxIncomeThreshold": "Макс. порог дохода"
+    },
+    "form": {
+      "programName": "Название программы",
+      "programNameRequired": "Название программы обязательно",
+      "programNameMinLength": "Название должно быть не короче 2 символов",
+      "isActive": "Активная программа",
+      "minAge": "Минимальный возраст",
+      "minAgeHint": "Необязательно: минимальный возраст для права на участие",
+      "minAgePositive": "Возраст должен быть положительным",
+      "maxAge": "Максимальный возраст",
+      "maxAgeHint": "Необязательно: максимальный возраст для права на участие",
+      "maxAgePositive": "Возраст должен быть положительным",
+      "maxIncomeThreshold": "Максимальный порог дохода",
+      "maxIncomeThresholdHint": "Необязательно: максимальный годовой доход для права на участие",
+      "maxIncomeThresholdPositive": "Доход должен быть положительным"
+    },
+    "status": {
+      "active": "Активна",
+      "inactive": "Неактивна"
+    },
+    "messages": {
+      "loadFailed": "Не удалось загрузить программы",
+      "createSuccess": "Программа успешно создана",
+      "updateSuccess": "Программа успешно обновлена",
+      "deleteSuccess": "Программа успешно удалена",
+      "deleteConfirm": "Вы уверены, что хотите удалить {{name}}?",
+      "activateSuccess": "Программа активирована",
+      "deactivateSuccess": "Программа деактивирована"
+    }
+  },
+  "applications": {
+    "title": "Управление заявками",
+    "submitApplication": "Подать заявку",
+    "columns": {
+      "id": "ID",
+      "citizen": "Гражданин",
+      "program": "Программа",
+      "status": "Статус",
+      "submissionDate": "Дата подачи"
+    },
+    "form": {
+      "citizen": "Гражданин",
+      "citizenRequired": "Гражданин обязателен",
+      "program": "Программа",
+      "programRequired": "Программа обязательна"
+    },
+    "status": {
+      "submitted": "ОТПРАВЛЕНО",
+      "review": "НА РАССМОТРЕНИИ",
+      "approved": "ОДОБРЕНО",
+      "rejected": "ОТКЛОНЕНО"
+    },
+    "actions": {
+      "markAsReview": "Перевести на рассмотрение",
+      "approve": "Одобрить",
+      "reject": "Отклонить"
+    },
+    "messages": {
+      "loadFailed": "Не удалось загрузить заявки",
+      "submitSuccess": "Заявка успешно отправлена",
+      "updateStatusSuccess": "Статус заявки обновлён на {{status}}",
+      "deleteSuccess": "Заявка успешно удалена",
+      "deleteConfirm": "Вы уверены, что хотите удалить эту заявку?",
+      "noPermissionApprove": "У вас нет прав для одобрения/отклонения заявок"
+    }
+  },
+  "navigation": {
+    "citizens": "Граждане",
+    "programs": "Программы",
+    "applications": "Заявки",
+    "appTitle": "Портал соцработника",
+    "sidenavTitle": "Платформа Министерства социальной защиты",
+    "sidenavSubtitle": "Портал соцработника"
+  }
+}
