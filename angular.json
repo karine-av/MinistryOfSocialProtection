@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "daily-driver": {
+    "ministry-of-social-protection": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -63,10 +63,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "daily-driver:build:production"
+              "buildTarget": "ministry-of-social-protection:build:production"
             },
             "development": {
-              "buildTarget": "daily-driver:build:development"
+              "buildTarget": "ministry-of-social-protection:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -8,9 +8,16 @@ import { TranslatePipe} from '../../shared/pipes/translate.pipe';
   selector: 'app-side-nav',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, MatListModule, MatIconModule, TranslatePipe],
-  templateUrl: './side-nav.html',
-  styleUrls: ['./side-nav.css']
+  templateUrl: './side-nav.component.html',
+  styleUrls: ['./side-nav.component.scss']
 })
-export class SideNav {}
+export class SideNavComponent {
+  securityOpen = true;
+
+  toggleSecurity() {
+    this.securityOpen = !this.securityOpen;
+  }
+
+}
 
 

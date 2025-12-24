@@ -10,8 +10,51 @@
     "submit": "Submit",
     "actions": "Actions",
     "noData": "No data found",
-    "language": "Language"
+    "language": "Language",
+    "profile": "Profile",
+    "logout":  "Logout"
   },
+
+
+
+  "authentication": {
+    "login": {
+      "title": "Sign in",
+      "username": "Username",
+      "password": "Password",
+      "continue-with-google": "Continue with Google",
+      "login": "Login"
+    },
+
+    "setPassword": {
+      "title": "Set password",
+      "password": "New password",
+      "confirm-password": "Confirm password",
+      "save": "Save"
+    },
+
+    "messages": {
+      "username-is-required": "Username is required",
+      "password-is-required": "Password is required"
+    }
+  },
+
+
+
+  "navigation": {
+    "citizens": "Citizens",
+    "programs": "Programs",
+    "applications": "Applications",
+    "appTitle": "Social Worker Portal",
+    "sidenavTitle": "Ministry of Social Protection Platform",
+    "sidenavSubtitle": "Social Worker Portal",
+    "security": "Security",
+    "roles": "Roles",
+    "users": "Users"
+  },
+
+
+
   "citizens": {
     "title": "Citizen Registry",
     "addCitizen": "Add Citizen",
@@ -25,6 +68,7 @@
       "address": "Address",
       "annualIncome": "Annual Income"
     },
+
     "form": {
       "fullName": "Full Name",
       "fullNameRequired": "Name is required",
@@ -40,6 +84,7 @@
       "annualIncomeRequired": "Annual Income is required",
       "annualIncomePositive": "Income must be positive"
     },
+
     "messages": {
       "loadFailed": "Failed to load citizens",
       "createSuccess": "Citizen created successfully",
@@ -49,6 +94,9 @@
       "noPermission": "You do not have permission to manage citizens"
     }
   },
+
+
+
   "programs": {
     "title": "Assistance Program Catalog",
     "addProgram": "Add Program",
@@ -61,6 +109,7 @@
       "maxAge": "Max Age",
       "maxIncomeThreshold": "Max Income Threshold"
     },
+
     "form": {
       "programName": "Program Name",
       "programNameRequired": "Program name is required",
@@ -76,10 +125,12 @@
       "maxIncomeThresholdHint": "Optional: Maximum annual income for eligibility",
       "maxIncomeThresholdPositive": "Income must be positive"
     },
+
     "status": {
       "active": "Active",
       "inactive": "Inactive"
     },
+
     "messages": {
       "loadFailed": "Failed to load programs",
       "createSuccess": "Program created successfully",
@@ -90,6 +141,9 @@
       "deactivateSuccess": "Program deactivated successfully"
     }
   },
+
+
+
   "applications": {
     "title": "Application Management",
     "submitApplication": "Submit Application",
@@ -100,23 +154,27 @@
       "status": "Status",
       "submissionDate": "Submission Date"
     },
+
     "form": {
       "citizen": "Citizen",
       "citizenRequired": "Citizen is required",
       "program": "Program",
       "programRequired": "Program is required"
     },
+
     "status": {
       "submitted": "SUBMITTED",
       "review": "REVIEW",
       "approved": "APPROVED",
       "rejected": "REJECTED"
     },
+
     "actions": {
       "markAsReview": "Mark as Review",
       "approve": "Approve",
       "reject": "Reject"
     },
+
     "messages": {
       "loadFailed": "Failed to load applications",
       "submitSuccess": "Application submitted successfully",
@@ -126,12 +184,27 @@
       "noPermissionApprove": "You do not have permission to approve/reject applications"
     }
   },
-  "navigation": {
-    "citizens": "Citizens",
-    "programs": "Programs",
-    "applications": "Applications",
-    "appTitle": "Social Worker Portal",
-    "sidenavTitle": "Ministry of Social Protection Platform",
-    "sidenavSubtitle": "Social Worker Portal"
+
+
+
+  "security": {
+    "users": {
+      "title": "User Management",
+      "id": "ID",
+      "username": "Username",
+      "fullName": "Full name",
+      "email": "Email",
+      "status": "Status",
+      "roles": "Roles"
+    },
+
+    "roles": {
+      "title": "Role Management",
+      "id": "ID",
+      "roleName": "Role name",
+      "permissions": "Permissions",
+      "users": "Users"
+    }
   }
+
 }

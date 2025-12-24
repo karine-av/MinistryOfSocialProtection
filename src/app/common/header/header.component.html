@@ -1,0 +1,32 @@
+<mat-toolbar color="primary" class="top-toolbar">
+  <button mat-icon-button class="menu-button" (click)="onToggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span>{{ 'navigation.appTitle' | translate }}</span>
+  <span class="spacer"></span>
+
+  <div class="header-controls">
+    <!-- Locale button -->
+    <app-locale-selector
+      [selectedLocale]="selectedLocale"
+      [supportedLocales]="supportedLocales"
+      (selectedLocaleChange)="onLocaleChange($event)">
+    </app-locale-selector>
+
+    <!-- Separator -->
+    <div class="separator"></div>
+
+    <!-- User dropdown -->
+    <button mat-icon-button class="user-dropdown" [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+      <app-header-dropdown
+        (profileClick)="onProfile()"
+        (logoutClick)="onLogout()">
+      </app-header-dropdown>
+    </mat-menu>
+  </div>
+</mat-toolbar>

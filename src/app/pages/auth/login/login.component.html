@@ -1,16 +1,24 @@
 <div class="login-container">
 
+  <div class="login-header">
+    <app-locale-selector
+      [selectedLocale]="selectedLocale"
+      [supportedLocales]="supportedLocales"
+      (selectedLocaleChange)="onLocaleChange($event)">
+    </app-locale-selector>
+  </div>
+
   <mat-card class="login-card">
 
     <mat-card-content class="login-content">
 
-      <h2 class="login-title">Sign in</h2>
+      <h2 class="login-title">{{ 'authentication.login.title' | translate}}</h2>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <!-- Username -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Username</mat-label>
+          <mat-label>{{ 'authentication.login.username' | translate}}</mat-label>
           <input
             matInput
             formControlName="username"
@@ -18,13 +26,13 @@
           />
 
           @if (loginForm.get('username')?.hasError('required')) {
-            <mat-error>Username is required</mat-error>
+            <mat-error>{{ 'authentication.messages.username-is-required' | translate}}</mat-error>
           }
         </mat-form-field>
 
         <!-- Password -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
+          <mat-label>{{ 'authentication.login.password' | translate}}</mat-label>
           <input
             matInput
             [type]="hidePassword ? 'password' : 'text'"
@@ -43,7 +51,7 @@
           </button>
 
           @if (loginForm.get('password')?.hasError('required')) {
-            <mat-error>Password is required</mat-error>
+            <mat-error>{{ 'authentication.messages.password-is-required' | translate }}</mat-error>
           }
         </mat-form-field>
 
@@ -53,7 +61,7 @@
           color="primary"
           class="login-button"
           type="submit">
-          Login
+          {{ 'authentication.login.login' | translate}}
         </button>
 
       </form>

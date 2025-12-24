@@ -10,13 +10,57 @@
     "submit": "Отправить",
     "actions": "Действия",
     "noData": "Данные не найдены",
-    "language": "Язык"
+    "language": "Язык",
+    "profile": "Профиль",
+    "logout":  "Выйти"
   },
+
+
+
+  "authentication": {
+    "login": {
+      "title": "Вход",
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "continueWithGoogle": "Продолжить с Google",
+      "login": "Войти"
+    },
+
+    "setPassword": {
+      "title": "Установка пароля",
+      "password": "Новый пароль",
+      "confirmPassword": "Подтвердите пароль",
+      "save": "Сохранить"
+    },
+
+    "messages": {
+      "username-is-required": "Имя пользователя обязательно",
+      "password-is-required": "Пароль обязателен"
+    }
+  },
+
+
+
+  "navigation": {
+    "citizens": "Граждане",
+    "programs": "Программы",
+    "applications": "Заявки",
+    "appTitle": "Портал соцработника",
+    "sidenavTitle": "Платформа Министерства Социальной Защиты",
+    "sidenavSubtitle": "Портал соцработника",
+    "security": "Безопасность",
+    "roles": "Роли",
+    "users": "Пользователи"
+  },
+
+
+
   "citizens": {
     "title": "Реестр граждан",
     "addCitizen": "Добавить гражданина",
     "editCitizen": "Редактировать гражданина",
     "searchPlaceholder": "Поиск по национальному ID или имени",
+
     "columns": {
       "id": "ID",
       "fullName": "ФИО",
@@ -25,6 +69,7 @@
       "address": "Адрес",
       "annualIncome": "Годовой доход"
     },
+
     "form": {
       "fullName": "ФИО",
       "fullNameRequired": "Имя обязательно",
@@ -40,6 +85,7 @@
       "annualIncomeRequired": "Доход обязателен",
       "annualIncomePositive": "Доход должен быть положительным"
     },
+
     "messages": {
       "loadFailed": "Не удалось загрузить список граждан",
       "createSuccess": "Гражданин успешно создан",
@@ -49,10 +95,14 @@
       "noPermission": "У вас нет прав для управления гражданами"
     }
   },
+
+
+
   "programs": {
     "title": "Каталог программ помощи",
     "addProgram": "Добавить программу",
     "editProgram": "Редактировать программу",
+
     "columns": {
       "id": "ID",
       "programName": "Название программы",
@@ -61,6 +111,7 @@
       "maxAge": "Макс. возраст",
       "maxIncomeThreshold": "Макс. порог дохода"
     },
+
     "form": {
       "programName": "Название программы",
       "programNameRequired": "Название программы обязательно",
@@ -76,10 +127,12 @@
       "maxIncomeThresholdHint": "Необязательно: максимальный годовой доход для права на участие",
       "maxIncomeThresholdPositive": "Доход должен быть положительным"
     },
+
     "status": {
       "active": "Активна",
       "inactive": "Неактивна"
     },
+
     "messages": {
       "loadFailed": "Не удалось загрузить программы",
       "createSuccess": "Программа успешно создана",
@@ -90,9 +143,13 @@
       "deactivateSuccess": "Программа деактивирована"
     }
   },
+
+
+
   "applications": {
     "title": "Управление заявками",
     "submitApplication": "Подать заявку",
+
     "columns": {
       "id": "ID",
       "citizen": "Гражданин",
@@ -100,23 +157,27 @@
       "status": "Статус",
       "submissionDate": "Дата подачи"
     },
+
     "form": {
       "citizen": "Гражданин",
       "citizenRequired": "Гражданин обязателен",
       "program": "Программа",
       "programRequired": "Программа обязательна"
     },
+
     "status": {
       "submitted": "ОТПРАВЛЕНО",
       "review": "НА РАССМОТРЕНИИ",
       "approved": "ОДОБРЕНО",
       "rejected": "ОТКЛОНЕНО"
     },
+
     "actions": {
       "markAsReview": "Перевести на рассмотрение",
       "approve": "Одобрить",
       "reject": "Отклонить"
     },
+
     "messages": {
       "loadFailed": "Не удалось загрузить заявки",
       "submitSuccess": "Заявка успешно отправлена",
@@ -126,12 +187,27 @@
       "noPermissionApprove": "У вас нет прав для одобрения/отклонения заявок"
     }
   },
-  "navigation": {
-    "citizens": "Граждане",
-    "programs": "Программы",
-    "applications": "Заявки",
-    "appTitle": "Портал соцработника",
-    "sidenavTitle": "Платформа Министерства социальной защиты",
-    "sidenavSubtitle": "Портал соцработника"
+
+
+
+  "security": {
+    "users": {
+      "title": "Управление пользователями",
+      "id": "ID",
+      "username": "Имя пользователя",
+      "fullName": "Имя и фамилия",
+      "email": "Эл. почта",
+      "status": "Статус",
+      "roles": "Роли"
+    },
+
+    "roles": {
+      "title": "Управление ролями",
+      "id": "ID",
+      "roleName": "Название роли",
+      "permissions": "Разрешения",
+      "users": "Пользователи"
+    }
   }
+
 }

@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.top-toolbar {
+  flex: 0 0 auto;
+  font-size: clamp(14px, 1.4vw, 18px) !important;
+}
+
+.menu-button {
+  margin-right: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.locale-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 80px;
+  height: 36px;
+  padding: 0 12px;
+  background-color: #ffffff22;
+  border-radius: 4px;
+  font-size: 14px;
+
+  mat-icon {
+    font-size: 20px;
+  }
+}
+
+.separator {
+  width: 1px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.user-dropdown {
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff22;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    font-size: 24px;
+  }
+}

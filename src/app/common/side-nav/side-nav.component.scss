@@ -22,4 +22,12 @@
   background-color: rgba(0, 0, 0, 0.04);
 }
 
+.nested-list {
+  padding-left: 32px;
+  display: flex;
+  flex-direction: column;
+}
 
+.expand-icon {
+  margin-left: auto;
+}

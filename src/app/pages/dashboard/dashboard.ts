@@ -7,11 +7,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { SidenavService} from '../../common/side-nav/sidenav.service';
 import { Subscription } from 'rxjs';
-import {LocaleService} from '../../core/services/locale.service';
-import {TranslationService} from '../../core/services/translation.service';
-import {FormsModule} from '@angular/forms';
-import { SideNav} from '../../common/side-nav/side-nav';
-import {Header} from '../../common/header/header';
+import { LocaleService } from '../../core/services/locale.service';
+import { TranslationService } from '../../core/services/translation.service';
+import { FormsModule } from '@angular/forms';
+import { SideNavComponent } from '../../common/side-nav/side-nav.component';
+import { HeaderComponent } from '../../common/header/header.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,8 +24,8 @@ import {Header} from '../../common/header/header';
     MatListModule,
     MatIconModule,
     FormsModule,
-    SideNav,
-    Header
+    SideNavComponent,
+    HeaderComponent
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'

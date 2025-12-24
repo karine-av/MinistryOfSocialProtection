@@ -1,0 +1,49 @@
+<div class="sidenav-header">
+  <h1 class="app-title">{{ 'navigation.sidenavTitle' | translate }}</h1>
+  <p class="app-subtitle">{{ 'navigation.sidenavSubtitle' | translate }}</p>
+</div>
+
+<mat-nav-list class="sidenav-list">
+
+  <!-- Citizens -->
+  <a mat-list-item routerLink="/citizens" routerLinkActive="active-link">
+    <mat-icon matListIcon>group</mat-icon>
+    <span matLine>{{ 'navigation.citizens' | translate }}</span>
+  </a>
+
+  <!-- Programs -->
+  <a mat-list-item routerLink="/programs" routerLinkActive="active-link">
+    <mat-icon matListIcon>assignment</mat-icon>
+    <span matLine>{{ 'navigation.programs' | translate }}</span>
+  </a>
+
+  <!-- Applications -->
+  <a mat-list-item routerLink="/applications" routerLinkActive="active-link">
+    <mat-icon matListIcon>folder_shared</mat-icon>
+    <span matLine>{{ 'navigation.applications' | translate }}</span>
+  </a>
+
+  <!-- Security -->
+  <a mat-list-item (click)="toggleSecurity()" class="security-item">
+    <mat-icon matListIcon>security</mat-icon>
+    <span matLine>{{ 'navigation.security' | translate }}</span>
+    <mat-icon class="expand-icon">
+      {{ securityOpen ? 'expand_less' : 'expand_more' }}
+    </mat-icon>
+  </a>
+
+  <!-- Nested items -->
+  @if (securityOpen) {
+    <div class="nested-list">
+      <a mat-list-item routerLink="/users" routerLinkActive="active-link">
+        <mat-icon matListIcon>person</mat-icon>
+        <span matLine>{{ 'navigation.users' | translate }}</span>
+      </a>
+      <a mat-list-item routerLink="/roles" routerLinkActive="active-link">
+        <mat-icon matListIcon>badge</mat-icon>
+        <span matLine>{{ 'navigation.roles' | translate }}</span>
+      </a>
+    </div>
+  }
+
+</mat-nav-list>

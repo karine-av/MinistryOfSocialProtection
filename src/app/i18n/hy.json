@@ -10,13 +10,57 @@
     "submit": "Ուղարկել",
     "actions": "Գործողություններ",
     "noData": "Տվյալներ չեն գտնվել",
-    "language": "Լեզու"
+    "language": "Լեզու",
+    "profile": "Պրոֆիլ",
+    "logout":  "Դուրս գալ"
   },
+
+
+
+  "authentication": {
+    "login": {
+      "title": "Մուտք",
+      "username": "Օգտանուն",
+      "password": "Գաղտնաբառ",
+      "continueWithGoogle": "Շարունակել Google-ով",
+      "login": "Մուտք գործել"
+    },
+
+    "setPassword": {
+      "title": "Գաղտնաբառի սահմանում",
+      "password": "Նոր գաղտնաբառ",
+      "confirmPassword": "Հաստատել գաղտնաբառը",
+      "save": "Պահպանել"
+    },
+
+    "messages": {
+      "username-is-required": "Օգտանունը պարտադիր է",
+      "password-is-required": "Գաղտնաբառը պարտադիր է"
+    }
+  },
+
+
+
+  "navigation": {
+    "citizens": "Քաղաքացիներ",
+    "programs": "Ծրագրեր",
+    "applications": "Դիմումներ",
+    "appTitle": "Սոցաշխատողի պորտալ",
+    "sidenavTitle": "Սոցիալական պաշտպանության նախարարության հարթակ",
+    "sidenavSubtitle": "Սոցաշխատողի պորտալ",
+    "security": "Անվտանգություն",
+    "roles": "Դերեր",
+    "users": "Օգտատերեր"
+  },
+
+
+
   "citizens": {
     "title": "Քաղաքացիների գրանցամատյան",
     "addCitizen": "Ավելացնել քաղաքացի",
     "editCitizen": "Խմբագրել քաղաքացուն",
     "searchPlaceholder": "Որոնել՝ Ազգային ID-ով կամ անունով",
+
     "columns": {
       "id": "ID",
       "fullName": "Ամբողջական անուն",
@@ -25,6 +69,7 @@
       "address": "Հասցե",
       "annualIncome": "Տարեկան եկամուտ"
     },
+
     "form": {
       "fullName": "Ամբողջական անուն",
       "fullNameRequired": "Անունը պարտադիր է",
@@ -40,6 +85,7 @@
       "annualIncomeRequired": "Եկամուտը պարտադիր է",
       "annualIncomePositive": "Եկամուտը պետք է լինի դրական"
     },
+
     "messages": {
       "loadFailed": "Չհաջողվեց բեռնել քաղաքացիների ցուցակը",
       "createSuccess": "Քաղաքացին հաջողությամբ ստեղծվեց",
@@ -49,10 +95,14 @@
       "noPermission": "Դուք իրավունք չունեք կառավարել քաղաքացիներին"
     }
   },
+
+
+
   "programs": {
     "title": "Օգնության ծրագրերի կատալոգ",
     "addProgram": "Ավելացնել ծրագիր",
     "editProgram": "Խմբագրել ծրագիրը",
+
     "columns": {
       "id": "ID",
       "programName": "Ծրագրի անուն",
@@ -61,6 +111,7 @@
       "maxAge": "Առավելագույն տարիքը",
       "maxIncomeThreshold": "Եկամտի առավելագույն շեմ"
     },
+
     "form": {
       "programName": "Ծրագրի անուն",
       "programNameRequired": "Ծրագրի անունը պարտադիր է",
@@ -76,10 +127,12 @@
       "maxIncomeThresholdHint": "Ընտրովի․ տարեկան եկամտի առավելագույն շեմ",
       "maxIncomeThresholdPositive": "Եկամուտը պետք է լինի դրական"
     },
+
     "status": {
       "active": "Ակտիվ",
       "inactive": "Ոչ ակտիվ"
     },
+
     "messages": {
       "loadFailed": "Չհաջողվեց բեռնել ծրագրերը",
       "createSuccess": "Ծրագիրը հաջողությամբ ստեղծվեց",
@@ -90,9 +143,13 @@
       "deactivateSuccess": "Ծրագիրը ապաակտիվացվեց"
     }
   },
+
+
+
   "applications": {
     "title": "Դիմումների կառավարում",
     "submitApplication": "Ներկայացնել դիմում",
+
     "columns": {
       "id": "ID",
       "citizen": "Քաղաքացի",
@@ -100,23 +157,27 @@
       "status": "Կարգավիճակ",
       "submissionDate": "Ներկայացման ամսաթիվ"
     },
+
     "form": {
       "citizen": "Քաղաքացի",
       "citizenRequired": "Քաղաքացին պարտադիր է",
       "program": "Ծրագիր",
       "programRequired": "Ծրագիրը պարտադիր է"
     },
+
     "status": {
       "submitted": "ՆԵՐԿԱՅԱՑՎԱԾ",
       "review": "ՔՆՆԱՐԿՄԱՆ",
       "approved": "ՀԱՍՏԱՏՎԱԾ",
       "rejected": "ՄԵՐԺՎԱԾ"
     },
+
     "actions": {
       "markAsReview": "Նշել որպես քննարկման",
       "approve": "Հաստատել",
       "reject": "Մերժել"
     },
+
     "messages": {
       "loadFailed": "Չհաջողվեց բեռնել դիմումները",
       "submitSuccess": "Դիմումը հաջողությամբ ներկայացվեց",
@@ -126,14 +187,29 @@
       "noPermissionApprove": "Դուք իրավունք չունեք հաստատել/մերժել դիմումները"
     }
   },
-  "navigation": {
-    "citizens": "Քաղաքացիներ",
-    "programs": "Ծրագրեր",
-    "applications": "Դիմումներ",
-    "appTitle": "Սոցաշխատողի պորտալ",
-    "sidenavTitle": "Սոցիալական պաշտպանության նախարարության հարթակ",
-    "sidenavSubtitle": "Սոցաշխատողի պորտալ"
+
+
+
+  "security": {
+    "users": {
+      "title": "Օգտատերերի կառավարում",
+      "id": "ID",
+      "username": "Օգտանուն",
+      "fullName": "Անուն Ազգանուն",
+      "email": "Էլ. փոստ",
+      "status": "Կարգավիճակ",
+      "roles": "Դերեր"
+    },
+
+    "roles": {
+      "title": "Դերերի կառավարում",
+      "id": "ID",
+      "roleName": "Դերի անուն",
+      "permissions": "Թույլտվություններ",
+      "users": "Օգտատերեր"
+    }
   }
+
 }
 
 

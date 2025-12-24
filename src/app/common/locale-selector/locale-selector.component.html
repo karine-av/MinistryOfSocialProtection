@@ -1,0 +1,12 @@
+<button mat-button class="locale-button" [matMenuTriggerFor]="localeMenu">
+  <mat-icon>public</mat-icon>
+  <span>{{ getLanguageName(selectedLocale) }}</span>
+</button>
+
+<mat-menu #localeMenu="matMenu">
+  @for (locale of supportedLocales; track locale.code) {
+    <button mat-menu-item (click)="changeLocale(locale.code)">
+      {{ locale.name }}
+    </button>
+  }
+</mat-menu>
