@@ -16,6 +16,7 @@ export class HeaderDropdownComponent {
 
   onProfile() {
     this.profileClick.emit();
+    console.log("profile clicked")
   }
 
   onLogout() {

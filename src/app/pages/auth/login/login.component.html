@@ -2,43 +2,43 @@
 
   <div class="login-header">
     <app-locale-selector
-      [selectedLocale]="selectedLocale"
-      [supportedLocales]="supportedLocales"
+      [selectedLocale]="localeService.getLocale()"
+      [supportedLocales]="localeService.supportedLocales"
       (selectedLocaleChange)="onLocaleChange($event)">
     </app-locale-selector>
   </div>
 
   <mat-card class="login-card">
-
     <mat-card-content class="login-content">
 
-      <h2 class="login-title">{{ 'authentication.login.title' | translate}}</h2>
+      <h2 class="login-title">
+        {{ 'authentication.login.title' | translate }}
+      </h2>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
+
         <!-- Username -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'authentication.login.username' | translate}}</mat-label>
-          <input
-            matInput
-            formControlName="username"
-            autocomplete="username"
-          />
+          <mat-label>{{ 'authentication.login.username' | translate }}</mat-label>
+          <input matInput formControlName="username" autocomplete="username" />
 
           @if (loginForm.get('username')?.hasError('required')) {
-            <mat-error>{{ 'authentication.messages.username-is-required' | translate}}</mat-error>
+            <mat-error>
+              {{ 'authentication.messages.username-is-required' | translate }}
+            </mat-error>
           }
         </mat-form-field>
 
+
         <!-- Password -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'authentication.login.password' | translate}}</mat-label>
+          <mat-label>{{ 'authentication.login.password' | translate }}</mat-label>
           <input
             matInput
             [type]="hidePassword ? 'password' : 'text'"
             formControlName="password"
-            autocomplete="current-password"
-          />
+            autocomplete="current-password" />
 
           <button
             mat-icon-button
@@ -51,9 +51,19 @@
           </button>
 
           @if (loginForm.get('password')?.hasError('required')) {
-            <mat-error>{{ 'authentication.messages.password-is-required' | translate }}</mat-error>
+            <mat-error>
+              {{ 'authentication.messages.password-is-required' | translate }}
+            </mat-error>
           }
         </mat-form-field>
+
+
+
+        <!-- Continue with Google -->
+        <button mat-raised-button class="google-login-button" type="button">
+          {{ 'authentication.login.continue-with-google' | translate}}
+        </button>
+
 
         <!-- Submit -->
         <button
@@ -61,13 +71,12 @@
           color="primary"
           class="login-button"
           type="submit">
-          {{ 'authentication.login.login' | translate}}
+          {{ 'authentication.login.login' | translate }}
         </button>
 
       </form>
 
     </mat-card-content>
-
   </mat-card>
 
 </div>

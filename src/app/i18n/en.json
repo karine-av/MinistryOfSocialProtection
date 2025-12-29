@@ -30,12 +30,15 @@
       "title": "Set password",
       "password": "New password",
       "confirm-password": "Confirm password",
-      "save": "Save"
+      "save-password": "Save password"
     },
 
     "messages": {
       "username-is-required": "Username is required",
-      "password-is-required": "Password is required"
+      "password-is-required": "Password is required",
+      "confirm-password-is-required": "Confirm password is required",
+      "password-criteria": "Password must be at least 12 characters long and include an uppercase letter, a lowercase letter, a number, a special character, and no sequence of three identical characters.",
+      "passwords-do-not-match": "Passwords do not match"
     }
   },
 

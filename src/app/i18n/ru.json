@@ -22,20 +22,23 @@
       "title": "Вход",
       "username": "Имя пользователя",
       "password": "Пароль",
-      "continueWithGoogle": "Продолжить с Google",
+      "continue-with-google": "Продолжить через Google",
       "login": "Войти"
     },
 
     "setPassword": {
       "title": "Установка пароля",
       "password": "Новый пароль",
-      "confirmPassword": "Подтвердите пароль",
-      "save": "Сохранить"
+      "confirm-password": "Подтвердите пароль",
+      "save-password": "Сохранить пароль"
     },
 
     "messages": {
       "username-is-required": "Имя пользователя обязательно",
-      "password-is-required": "Пароль обязателен"
+      "password-is-required": "Пароль обязателен",
+      "confirm-password-is-required": "Подтверждение пароля обязательно",
+      "password-criteria": "Пароль должен быть не менее 12 символов, включать заглавную букву, строчную букву, цифру, специальный символ и не содержать последовательности из трёх одинаковых символов.",
+      "passwords-do-not-match": "Пароли не совпадают"
     }
   },
 

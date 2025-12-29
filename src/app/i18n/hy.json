@@ -22,20 +22,23 @@
       "title": "Մուտք",
       "username": "Օգտանուն",
       "password": "Գաղտնաբառ",
-      "continueWithGoogle": "Շարունակել Google-ով",
+      "continue-with-google": "Շարունակել Google-ով",
       "login": "Մուտք գործել"
     },
 
     "setPassword": {
       "title": "Գաղտնաբառի սահմանում",
       "password": "Նոր գաղտնաբառ",
-      "confirmPassword": "Հաստատել գաղտնաբառը",
-      "save": "Պահպանել"
+      "confirm-password": "Հաստատել գաղտնաբառը",
+      "save-password": "Պահպանել գաղտնաբառը"
     },
 
     "messages": {
       "username-is-required": "Օգտանունը պարտադիր է",
-      "password-is-required": "Գաղտնաբառը պարտադիր է"
+      "password-is-required": "Գաղտնաբառը պարտադիր է",
+      "confirm-password-is-required": "Գաղտնաբառի հաստատումը պարտադիր է",
+      "password-criteria": "Գաղտնաբառը պետք է լինի առնվազն 12 նիշ երկարությամբ, ներառի մեծատառ, փոքրատառ, թիվ, հատուկ նիշ և չունենա երեք նույնական նիշից բաղկացած հաջորդականություն։",
+      "passwords-do-not-match": "Գաղտնաբառերը չեն համընկնում"
     }
   },
 

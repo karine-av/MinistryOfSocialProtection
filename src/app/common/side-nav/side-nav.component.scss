@@ -18,8 +18,28 @@
   opacity: 0.8;
 }
 
+.sidenav-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.sidenav-item mat-icon {
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.sidenav-item span {
+  line-height: 1;
+}
+
 .active-link {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+.expand-icon {
+  margin-left: auto;
 }
 
 .nested-list {
@@ -28,6 +48,6 @@
   flex-direction: column;
 }
 
-.expand-icon {
-  margin-left: auto;
+.nested-item {
+  padding-left: 0;
 }

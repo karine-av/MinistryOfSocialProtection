@@ -7,14 +7,13 @@
   <span class="spacer"></span>
 
   <div class="header-controls">
-    <!-- Locale button -->
+    <!-- Locale selector -->
     <app-locale-selector
       [selectedLocale]="selectedLocale"
       [supportedLocales]="supportedLocales"
       (selectedLocaleChange)="onLocaleChange($event)">
     </app-locale-selector>
 
-    <!-- Separator -->
     <div class="separator"></div>
 
     <!-- User dropdown -->

@@ -1,32 +1,54 @@
-import { Component } from '@angular/core';
-import { LocaleSelectorService } from '../locale-selector/locale-selector.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
+
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { HeaderDropdownComponent } from '../header-dropdown/header-dropdown.component';
+import { LocaleSelectorComponent } from '../locale-selector/locale-selector.component';
+
+export interface HeaderLocaleOption {
+  code: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-header',
   standalone: true,
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    TranslatePipe,
+    HeaderDropdownComponent,
+    LocaleSelectorComponent
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  selectedLocale = '';
-  supportedLocales = [
-    { code: 'en', name: 'English' },
-    { code: 'hy', name: 'Հայերեն' },
-    { code: 'ru', name: 'Русский' }
-  ];
+  @Input({ required: true }) selectedLocale!: string;
+  @Input({ required: true }) supportedLocales!: HeaderLocaleOption[];
 
-  constructor(
-    private localeService: LocaleSelectorService,
-    private router: Router
-  ) {
-    this.localeService.locale$.subscribe(locale => {
-      this.selectedLocale = locale;
-    });
-  }
+  @Output() selectedLocaleChange = new EventEmitter<string>();
+  @Output() toggleSidenav = new EventEmitter<void>();
+
+  constructor(private router: Router) {}
 
   onLocaleChange(locale: string) {
-    this.localeService.setLocale(locale);
+    this.selectedLocaleChange.emit(locale);
+  }
+
+  onToggleSidenav() {
+    this.toggleSidenav.emit();
+  }
+
+  onProfile() {
+    // this.router.navigate(['/profile']);
+    // console.log("profile clicked");
   }
 
   onLogout() {

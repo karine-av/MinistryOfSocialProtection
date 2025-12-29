@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AuthService } from '../../../core/services/auth.service';
-import { LocaleService } from '../../../core/services/locale.service';
-import { TranslationService } from '../../../core/services/translation.service';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { LocaleSelectorComponent } from '../../../common/locale-selector/locale-selector.component';
+import { LocaleService } from '../../../core/services/locale.service';
+import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-set-password',
   standalone: true,
   imports: [
     CommonModule,
@@ -27,23 +25,29 @@ import { LocaleSelectorComponent } from '../../../common/locale-selector/locale-
     TranslatePipe,
     LocaleSelectorComponent
   ],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './set-password.component.html',
+  styleUrls: ['./set-password.component.scss']
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class SetPasswordComponent {
+  setPasswordForm: FormGroup;
   hidePassword = true;
+  hideConfirmPassword = true;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
     public localeService: LocaleService,
     private translationService: TranslationService
   ) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+    this.setPasswordForm = this.fb.group({
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.{12,})(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9])(?!.*(.)\1\1).*$/)
+        ]
+      ],
+      confirmPassword: ['', Validators.required]
     });
   }
 
@@ -52,11 +56,13 @@ export class LoginComponent {
     this.translationService.setLocale(locale);
   }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) return;
+  passwordsMatch(): boolean {
+    return this.setPasswordForm.get('password')?.value === this.setPasswordForm.get('confirmPassword')?.value;
+  }
 
-    this.authService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigate(['/analytics'])
-    });
+  onSubmit(): void {
+    if (this.setPasswordForm.invalid || !this.passwordsMatch()) return;
+
+    // console.log('password set');
   }
 }

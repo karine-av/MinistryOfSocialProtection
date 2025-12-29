@@ -8,7 +8,9 @@
 }
 
 .menu-button {
-  margin-right: 8px;
+  margin-right: 20px;
+  margin-left: 10px;
+  background-color: #ffffff22 !important;
 }
 
 .spacer {
@@ -21,32 +23,18 @@
   gap: 8px;
 }
 
-.locale-button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  min-width: 80px;
-  height: 36px;
-  padding: 0 12px;
-  background-color: #ffffff22;
-  border-radius: 4px;
-  font-size: 14px;
-
-  mat-icon {
-    font-size: 20px;
-  }
-}
-
 .separator {
   width: 1px;
   height: 24px;
   background-color: rgba(255, 255, 255, 0.5);
+  margin-left: 12px;
+  margin-right: 12px;
 }
 
 .user-dropdown {
   width: 40px;
   height: 40px;
-  background-color: #ffffff22;
+  background-color: #ffffff22 !important;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -54,5 +42,6 @@
 
   mat-icon {
     font-size: 24px;
+    color: white;
   }
 }

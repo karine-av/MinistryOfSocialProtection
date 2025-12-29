@@ -7,6 +7,7 @@ import { Analytics } from './features/analytics/analytics';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { Roles } from './features/security/roles/roles.component';
 import { UsersComponent } from './features/security/users/users.component';
+import {SetPasswordComponent} from './pages/auth/set-password/set-password.component';
 
 export const routes: Routes = [
   {
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'set-password',
+    component: SetPasswordComponent
   }
 ];
