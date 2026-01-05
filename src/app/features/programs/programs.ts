@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AssistanceProgramService } from '../../core/services/assistance-program.service';
 import { AssistanceProgram } from '../../shared/models/assistance-program.model';
 import { SidenavService } from '../../common/side-nav/sidenav.service';
+import {TranslatePipe} from '../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-programs',
@@ -32,7 +33,8 @@ import { SidenavService } from '../../common/side-nav/sidenav.service';
     MatToolbarModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MatChipsModule
+    MatChipsModule,
+    TranslatePipe
   ],
   templateUrl: './programs.html',
   styleUrl: './programs.scss',

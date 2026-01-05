@@ -21,6 +21,7 @@ import { SidenavService } from '../../common/side-nav/sidenav.service';
 import { Application, ApplicationStatus } from '../../shared/models/application';
 import { Citizen } from '../../shared/models/citizen';
 import { AssistanceProgram } from '../../shared/models/assistance-program.model';
+import {TranslatePipe} from '../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-applications',
@@ -39,7 +40,8 @@ import { AssistanceProgram } from '../../shared/models/assistance-program.model'
     MatToolbarModule,
     MatTooltipModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    TranslatePipe
   ],
   templateUrl: './applications.html',
   styleUrl: './applications.scss',

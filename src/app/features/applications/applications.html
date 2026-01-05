@@ -1,32 +1,40 @@
 <div class="applications-container">
   <mat-toolbar color="primary">
-    <span>Application Management</span>
+    <span>{{ 'applications.title' | translate }}</span>
     <span class="spacer"></span>
     <button mat-raised-button color="accent" (click)="openSubmitDialog()">
       <mat-icon>add</mat-icon>
-      Submit Application
+      {{ 'applications.submit' | translate }}
     </button>
   </mat-toolbar>
+
 
   <div class="table-container">
     <table mat-table [dataSource]="applications" class="mat-elevation-z2">
       <ng-container matColumnDef="application_id">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'applications.columns.id' | translate }}
+        </th>
         <td mat-cell *matCellDef="let application">{{ application.application_id }}</td>
       </ng-container>
 
       <ng-container matColumnDef="citizen_name">
-        <th mat-header-cell *matHeaderCellDef>Citizen</th>
-        <td mat-cell *matCellDef="let application">{{ getCitizenName(application.citizen_id) }}</td>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'applications.columns.citizen' | translate }}
+        </th>        <td mat-cell *matCellDef="let application">{{ getCitizenName(application.citizen_id) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="program_name">
-        <th mat-header-cell *matHeaderCellDef>Program</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'applications.columns.program' | translate }}
+        </th>
         <td mat-cell *matCellDef="let application">{{ getProgramName(application.program_id) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'applications.columns.status' | translate }}
+        </th>
         <td mat-cell *matCellDef="let application">
           <mat-chip [color]="getStatusColor(application.status)">
             {{ application.status }}
@@ -35,38 +43,48 @@
       </ng-container>
 
       <ng-container matColumnDef="submission_date">
-        <th mat-header-cell *matHeaderCellDef>Submission Date</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'applications.columns.submissionDate' | translate }}
+        </th>
         <td mat-cell *matCellDef="let application">{{ application.submission_date | date:'short' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'common.actions' | translate }}
+        </th>
         <td mat-cell *matCellDef="let application">
-          <button mat-icon-button [matMenuTriggerFor]="statusMenu"
-                  [disabled]="application.status === 'APPROVED' || application.status === 'REJECTED'">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="statusMenu"
+            [disabled]="application.status === 'APPROVED' || application.status === 'REJECTED'">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #statusMenu="matMenu">
             @if (canChangeToReview() && application.status !== 'REVIEW') {
               <button mat-menu-item (click)="updateStatus(application, 'REVIEW')">
                 <mat-icon>visibility</mat-icon>
-                <span>Mark as Review</span>
+                <span>{{ 'applications.actions.markAsReview' | translate }}</span>
               </button>
             }
             @if (canApproveReject() && application.status !== 'APPROVED') {
               <button mat-menu-item (click)="updateStatus(application, 'APPROVED')">
                 <mat-icon>check_circle</mat-icon>
-                <span>Approve</span>
+                <span>{{ 'applications.actions.approve' | translate }}</span>
               </button>
             }
             @if (canApproveReject() && application.status !== 'REJECTED') {
               <button mat-menu-item (click)="updateStatus(application, 'REJECTED')">
                 <mat-icon>cancel</mat-icon>
-                <span>Reject</span>
+                <span>{{ 'applications.actions.reject' | translate }}</span>
               </button>
             }
           </mat-menu>
-          <button mat-icon-button color="warn" (click)="deleteApplication(application)" matTooltip="Delete">
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteApplication(application)"
+            [matTooltip]="'common.delete' | translate">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -78,7 +96,7 @@
 
     @if (applications.length === 0) {
       <div class="no-data">
-        <p>No applications found</p>
+        <p>{{ 'common.noData' | translate }}</p>
       </div>
     }
   </div>
@@ -88,12 +106,16 @@
     <div class="dialog-overlay" (click)="closeDialog()">
       <mat-card class="dialog-card" (click)="$event.stopPropagation()">
         <mat-card-header>
-          <mat-card-title>Submit New Application</mat-card-title>
+          <mat-card-title>
+            {{ 'applications.submitApplication' | translate }}
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <form [formGroup]="applicationForm" (ngSubmit)="submitApplication()">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Citizen</mat-label>
+              <mat-label>
+                {{ 'applications.form.citizen' | translate }}
+              </mat-label>
               <mat-select formControlName="citizen_id" required>
                 @for (citizen of citizens; track citizen.citizen_id) {
                   <mat-option [value]="citizen.citizen_id">
@@ -102,12 +124,16 @@
                 }
               </mat-select>
               @if (applicationForm.get('citizen_id')?.hasError('required')) {
-                <mat-error>Citizen is required</mat-error>
+                <mat-error>
+                  {{ 'applications.form.citizenRequired' | translate }}
+                </mat-error>
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Program</mat-label>
+              <mat-label>
+                {{ 'applications.form.program' | translate }}
+              </mat-label>
               <mat-select formControlName="program_id" required>
                 @for (program of programs; track program.program_id) {
                   <mat-option [value]="program.program_id">
@@ -126,7 +152,9 @@
                 }
               </mat-select>
               @if (applicationForm.get('program_id')?.hasError('required')) {
-                <mat-error>Program is required</mat-error>
+                <mat-error>
+                  {{ 'applications.form.programRequired' | translate }}
+                </mat-error>
               }
             </mat-form-field>
 
@@ -138,8 +166,13 @@
             }
 
             <div class="dialog-actions">
-              <button mat-button type="button" (click)="closeDialog()">Cancel</button>
-              <button mat-raised-button color="primary" type="submit">Submit</button>
+              <button mat-button type="button" (click)="closeDialog()">
+                {{ 'common.cancel' | translate }}
+              </button>
+
+              <button mat-raised-button color="primary" type="submit">
+                {{ 'common.submit' | translate }}
+              </button>
             </div>
           </form>
         </mat-card-content>

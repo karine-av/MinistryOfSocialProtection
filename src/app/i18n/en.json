@@ -89,6 +89,7 @@
     },
 
     "messages": {
+      "noData": "No citizens found",
       "loadFailed": "Failed to load citizens",
       "createSuccess": "Citizen created successfully",
       "updateSuccess": "Citizen updated successfully",
@@ -149,15 +150,20 @@
 
   "applications": {
     "title": "Application Management",
-    "submitApplication": "Submit Application",
+    "submit": "Submit Application",
+    "noData": "No applications found",
+
     "columns": {
       "id": "ID",
       "citizen": "Citizen",
       "program": "Program",
       "status": "Status",
-      "submissionDate": "Submission Date"
+      "submissionDate": "Submission Date",
+      "actions": "Actions"
     },
-
+    "dialog": {
+      "title": "Submit New Application"
+    },
     "form": {
       "citizen": "Citizen",
       "citizenRequired": "Citizen is required",
@@ -187,8 +193,6 @@
       "noPermissionApprove": "You do not have permission to approve/reject applications"
     }
   },
-
-
 
   "security": {
     "users": {

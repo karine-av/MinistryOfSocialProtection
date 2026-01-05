@@ -16,6 +16,7 @@ import { Citizen } from '../../shared/models/citizen';
 import { MaskIncomePipe } from '../../shared/pipes/mask-income.pipe';
 import { PermissionService } from '../../core/permission.service';
 import { SidenavService } from '../../common/side-nav/sidenav.service';
+import {TranslatePipe} from '../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-citizens',
@@ -33,7 +34,8 @@ import { SidenavService } from '../../common/side-nav/sidenav.service';
     MatSnackBarModule,
     MatToolbarModule,
     MatTooltipModule,
-    MaskIncomePipe
+    MaskIncomePipe,
+    TranslatePipe
   ],
   templateUrl: './citizens.html',
   styleUrl: './citizens.scss',

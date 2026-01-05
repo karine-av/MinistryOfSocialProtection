@@ -1,17 +1,19 @@
 <div class="citizens-container">
   <mat-toolbar color="primary">
-    <span>Citizen Registry</span>
+    <span>{{ 'citizens.title' | translate }}</span>
     <span class="spacer"></span>
     <button mat-raised-button color="accent" (click)="openAddDialog()" [disabled]="!canManageCitizens">
       <mat-icon>add</mat-icon>
-      Add Citizen
+      {{ 'citizens.addCitizen' | translate }}
     </button>
   </mat-toolbar>
 
   <div class="search-container">
     <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search by National ID or Name</mat-label>
-      <input matInput [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Enter search query">
+      <mat-label>
+        {{ 'citizens.searchPlaceholder' | translate }}
+      </mat-label>
+      <input matInput [(ngModel)]="searchQuery" (keyup.enter)="search()" [placeholder]="'citizens.searchPlaceholder' | translate">
       <button mat-icon-button matSuffix (click)="search()">
         <mat-icon>search</mat-icon>
       </button>
@@ -21,42 +23,56 @@
   <div class="table-container">
     <table mat-table [dataSource]="citizens" class="mat-elevation-z2">
       <ng-container matColumnDef="citizen_id">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'citizens.columns.id' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">{{ citizen.citizen_id }}</td>
       </ng-container>
 
       <ng-container matColumnDef="full_name">
-        <th mat-header-cell *matHeaderCellDef>Full Name</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'citizens.columns.fullName' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">{{ citizen.full_name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="national_id">
-        <th mat-header-cell *matHeaderCellDef>National ID</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'citizens.columns.nationalId' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">{{ citizen.national_id }}</td>
       </ng-container>
 
       <ng-container matColumnDef="date_of_birth">
-        <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'citizens.columns.dateOfBirth' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">{{ citizen.date_of_birth | date:'shortDate' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'citizens.columns.address' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">{{ citizen.address }}</td>
       </ng-container>
 
       <ng-container matColumnDef="annual_income">
-        <th mat-header-cell *matHeaderCellDef>Annual Income</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'citizens.columns.annualIncome' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">{{ citizen.annual_income | maskIncome }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'common.actions' | translate }}
+        </th>
         <td mat-cell *matCellDef="let citizen">
-          <button mat-icon-button color="primary" (click)="openEditDialog(citizen)" matTooltip="Edit" [disabled]="!canManageCitizens">
+          <button mat-icon-button color="primary" (click)="openEditDialog(citizen)"  [matTooltip]="'common.edit' | translate" [disabled]="!canManageCitizens">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteCitizen(citizen)" matTooltip="Delete" [disabled]="!canManageCitizens">
+          <button mat-icon-button color="warn" (click)="deleteCitizen(citizen)" [matTooltip]="'common.delete' | translate" [disabled]="!canManageCitizens">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -68,7 +84,7 @@
 
     @if (citizens.length === 0) {
       <div class="no-data">
-        <p>No citizens found</p>
+        <p>{{ 'common.noData' | translate }}</p>
       </div>
     }
   </div>
@@ -78,62 +94,68 @@
     <div class="dialog-overlay" (click)="closeDialog()">
       <mat-card class="dialog-card" (click)="$event.stopPropagation()">
         <mat-card-header>
-          <mat-card-title>{{ isEditMode ? 'Edit Citizen' : 'Add New Citizen' }}</mat-card-title>
+          <mat-card-title>
+            {{ isEditMode ? ('citizens.editCitizen' | translate) : ('citizens.addCitizen' | translate) }}
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <form [formGroup]="citizenForm" (ngSubmit)="saveCitizen()">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Full Name</mat-label>
+              <mat-label>{{ 'citizens.form.fullName' | translate }}</mat-label>
               <input matInput formControlName="full_name" required>
               @if (citizenForm.get('full_name')?.hasError('required')) {
-                <mat-error>Name is required</mat-error>
+                {{ 'citizens.form.fullNameRequired' | translate }}
               }
               @if (citizenForm.get('full_name')?.hasError('minlength')) {
-                <mat-error>Name must be at least 2 characters</mat-error>
+                {{ 'citizens.form.fullNameMinLength' | translate }}
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>National ID</mat-label>
+              <mat-label>{{ 'citizens.form.nationalId' | translate }}</mat-label>
               <input matInput formControlName="national_id" required>
               @if (citizenForm.get('national_id')?.hasError('required')) {
-                <mat-error>National ID is required</mat-error>
+                {{ 'citizens.form.nationalIdRequired' | translate }}
               }
               @if (citizenForm.get('national_id')?.hasError('pattern')) {
-                <mat-error>National ID must be numeric</mat-error>
+                {{ 'citizens.form.nationalIdNumeric' | translate }}
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Date of Birth</mat-label>
+              <mat-label>{{ 'citizens.form.dateOfBirth' | translate }}</mat-label>
               <input matInput type="date" formControlName="date_of_birth" required>
               @if (citizenForm.get('date_of_birth')?.hasError('required')) {
-                <mat-error>Date of Birth is required</mat-error>
+                {{ 'citizens.form.dateOfBirthRequired' | translate }}
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Address</mat-label>
+              <mat-label>{{ 'citizens.form.address' | translate }}</mat-label>
               <textarea matInput formControlName="address" rows="3" required></textarea>
               @if (citizenForm.get('address')?.hasError('required')) {
-                <mat-error>Address is required</mat-error>
+                {{ 'citizens.form.addressRequired' | translate }}
               }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Annual Income</mat-label>
+              <mat-label>{{ 'citizens.form.annualIncome' | translate }}</mat-label>
               <input matInput type="number" formControlName="annual_income" required>
               @if (citizenForm.get('annual_income')?.hasError('required')) {
-                <mat-error>Annual Income is required</mat-error>
+                {{ 'citizens.form.annualIncomeRequired' | translate }}
               }
               @if (citizenForm.get('annual_income')?.hasError('min')) {
-                <mat-error>Income must be positive</mat-error>
+                {{ 'citizens.form.annualIncomePositive' | translate }}
               }
             </mat-form-field>
 
             <div class="dialog-actions">
-              <button mat-button type="button" (click)="closeDialog()">Cancel</button>
-              <button mat-raised-button color="primary" type="submit">Save</button>
+              <button mat-button type="button" (click)="closeDialog()">
+                {{ 'common.cancel' | translate }}
+              </button>
+              <button mat-raised-button color="primary" type="submit">
+                {{ 'common.save' | translate }}
+              </button>
             </div>
           </form>
         </mat-card-content>

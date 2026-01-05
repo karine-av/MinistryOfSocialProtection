@@ -90,6 +90,7 @@
     },
 
     "messages": {
+      "noData": "Граждане не найдены",
       "loadFailed": "Не удалось загрузить список граждан",
       "createSuccess": "Гражданин успешно создан",
       "updateSuccess": "Данные гражданина успешно обновлены",
@@ -151,14 +152,16 @@
 
   "applications": {
     "title": "Управление заявками",
-    "submitApplication": "Подать заявку",
+    "submit": "Подать заявку",
+    "noData": "Заявки не найдены",
 
     "columns": {
       "id": "ID",
       "citizen": "Гражданин",
       "program": "Программа",
       "status": "Статус",
-      "submissionDate": "Дата подачи"
+      "submissionDate": "Дата подачи",
+      "actions": "Действия"
     },
 
     "form": {
@@ -167,7 +170,9 @@
       "program": "Программа",
       "programRequired": "Программа обязательна"
     },
-
+    "dialog": {
+      "title": "Подать Новую Заявку"
+    },
     "status": {
       "submitted": "ОТПРАВЛЕНО",
       "review": "НА РАССМОТРЕНИИ",

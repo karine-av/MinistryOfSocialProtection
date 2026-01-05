@@ -17,6 +17,7 @@
     "addCitizen": "Ajouter un Citoyen",
     "editCitizen": "Modifier le Citoyen",
     "searchPlaceholder": "Rechercher par ID National ou Nom",
+
     "columns": {
       "id": "ID",
       "fullName": "Nom Complet",
@@ -41,6 +42,7 @@
       "annualIncomePositive": "Le revenu doit être positif"
     },
     "messages": {
+      "noData": "Aucun citoyen trouvé",
       "loadFailed": "Échec du chargement des citoyens",
       "createSuccess": "Citoyen créé avec succès",
       "updateSuccess": "Citoyen mis à jour avec succès",
@@ -92,14 +94,21 @@
   },
   "applications": {
     "title": "Gestion des Demandes",
-    "submitApplication": "Soumettre une Demande",
+    "submit": "Soumettre une Demande",
+    "noData": "Aucune demande trouvée",
+
     "columns": {
       "id": "ID",
       "citizen": "Citoyen",
       "program": "Programme",
       "status": "Statut",
-      "submissionDate": "Date de Soumission"
+      "submissionDate": "Date de Soumission",
+      "actions": "Actions"
     },
+    "dialog": {
+      "title": "Soumettre une Nouvelle Demande"
+    },
+
     "form": {
       "citizen": "Citoyen",
       "citizenRequired": "Le citoyen est requis",

@@ -41,6 +41,7 @@
       "annualIncomePositive": "El ingreso debe ser positivo"
     },
     "messages": {
+      "noData": "No se encontraron ciudadanos",
       "loadFailed": "Error al cargar ciudadanos",
       "createSuccess": "Ciudadano creado exitosamente",
       "updateSuccess": "Ciudadano actualizado exitosamente",
@@ -92,14 +93,18 @@
   },
   "applications": {
     "title": "Gestión de Solicitudes",
-    "submitApplication": "Enviar Solicitud",
+    "submit": "Enviar Solicitud",
+    "noData": "No se encontraron solicitudes",
+
     "columns": {
       "id": "ID",
       "citizen": "Ciudadano",
       "program": "Programa",
       "status": "Estado",
-      "submissionDate": "Fecha de Envío"
+      "submissionDate": "Fecha de Envío",
+      "actions": "Acciones"
     },
+
     "form": {
       "citizen": "Ciudadano",
       "citizenRequired": "El ciudadano es obligatorio",
@@ -114,8 +119,12 @@
     },
     "actions": {
       "markAsReview": "Marcar como Revisión",
+      "review": "Marcar como Revisión",
       "approve": "Aprobar",
       "reject": "Rechazar"
+    },
+    "dialog": {
+      "title": "Enviar Nueva Solicitud"
     },
     "messages": {
       "loadFailed": "Error al cargar solicitudes",
@@ -124,6 +133,10 @@
       "deleteSuccess": "Solicitud eliminada exitosamente",
       "deleteConfirm": "¿Está seguro de que desea eliminar esta solicitud?",
       "noPermissionApprove": "No tiene permiso para aprobar/rechazar solicitudes"
+    },
+    "validation": {
+      "citizenRequired": "El ciudadano es obligatorio",
+      "programRequired": "El programa es obligatorio"
     }
   },
   "navigation": {
@@ -135,3 +148,4 @@
     "sidenavSubtitle": "Portal de Trabajador Social"
   }
 }
+
