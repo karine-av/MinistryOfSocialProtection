@@ -56,13 +56,23 @@ export class SetPasswordComponent {
     this.translationService.setLocale(locale);
   }
 
-  passwordsMatch(): boolean {
-    return this.setPasswordForm.get('password')?.value === this.setPasswordForm.get('confirmPassword')?.value;
-  }
-
   onSubmit(): void {
-    if (this.setPasswordForm.invalid || !this.passwordsMatch()) return;
+    const password = this.setPasswordForm.get('password');
+    const confirmPassword = this.setPasswordForm.get('confirmPassword');
 
-    // console.log('password set');
+    this.setPasswordForm.markAllAsTouched();
+
+    if (password?.value !== confirmPassword?.value) {
+      confirmPassword?.setErrors({ passwordMismatch: true });
+      return;
+    } else {
+      if (confirmPassword?.hasError('passwordMismatch')) {
+        confirmPassword.setErrors(null);
+      }
+    }
+
+    if (this.setPasswordForm.invalid) return;
+
+    console.log('password set');
   }
 }

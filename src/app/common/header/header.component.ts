@@ -46,11 +46,6 @@ export class HeaderComponent {
     this.toggleSidenav.emit();
   }
 
-  onProfile() {
-    // this.router.navigate(['/profile']);
-    // console.log("profile clicked");
-  }
-
   onLogout() {
     this.router.navigate(['/login']);
   }

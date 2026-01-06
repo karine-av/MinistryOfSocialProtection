@@ -11,13 +11,7 @@ import { TranslatePipe } from '../../shared/pipes/translate.pipe';
   styleUrls: ['./header-dropdown.component.scss']
 })
 export class HeaderDropdownComponent {
-  @Output() profileClick = new EventEmitter<void>();
   @Output() logoutClick = new EventEmitter<void>();
-
-  onProfile() {
-    this.profileClick.emit();
-    console.log("profile clicked")
-  }
 
   onLogout() {
     this.logoutClick.emit();
