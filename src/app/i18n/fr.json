@@ -10,6 +10,7 @@
     "submit": "Soumettre",
     "actions": "Actions",
     "noData": "Aucune donnée trouvée",
+    "loading": "Chargement...",
     "language": "Langue"
   },
   "citizens": {
@@ -45,10 +46,17 @@
       "noData": "Aucun citoyen trouvé",
       "loadFailed": "Échec du chargement des citoyens",
       "createSuccess": "Citoyen créé avec succès",
+      "createFailed": "Échec de la création du citoyen",
       "updateSuccess": "Citoyen mis à jour avec succès",
+      "updateFailed": "Échec de la mise à jour du citoyen",
       "deleteSuccess": "Citoyen supprimé avec succès",
+      "deleteFailed": "Échec de la suppression du citoyen",
       "deleteConfirm": "Êtes-vous sûr de vouloir supprimer {{name}}?",
-      "noPermission": "Vous n'avez pas la permission de gérer les citoyens"
+      "noPermission": "Vous n'avez pas la permission de gérer les citoyens",
+      "noPermissionAdd": "Vous n'avez pas la permission d'ajouter des citoyens",
+      "noPermissionEdit": "Vous n'avez pas la permission de modifier les citoyens",
+      "noPermissionDelete": "Vous n'avez pas la permission de supprimer les citoyens",
+      "searchFailed": "Échec de la recherche"
     }
   },
   "programs": {
@@ -85,16 +93,21 @@
     "messages": {
       "loadFailed": "Échec du chargement des programmes",
       "createSuccess": "Programme créé avec succès",
+      "createFailed": "Échec de la création du programme",
       "updateSuccess": "Programme mis à jour avec succès",
+      "updateFailed": "Échec de la mise à jour du programme",
       "deleteSuccess": "Programme supprimé avec succès",
+      "deleteFailed": "Échec de la suppression du programme",
       "deleteConfirm": "Êtes-vous sûr de vouloir supprimer {{name}}?",
       "activateSuccess": "Programme activé avec succès",
-      "deactivateSuccess": "Programme désactivé avec succès"
+      "deactivateSuccess": "Programme désactivé avec succès",
+      "updateStatusFailed": "Échec de la mise à jour du statut du programme"
     }
   },
   "applications": {
     "title": "Gestion des Demandes",
     "submit": "Soumettre une Demande",
+    "submitApplication": "Soumettre une Demande",
     "noData": "Aucune demande trouvée",
 
     "columns": {
@@ -129,8 +142,11 @@
     "messages": {
       "loadFailed": "Échec du chargement des demandes",
       "submitSuccess": "Demande soumise avec succès",
+      "submitFailed": "Échec de la soumission de la demande",
       "updateStatusSuccess": "Statut de la demande mis à jour à {{status}}",
+      "updateStatusFailed": "Échec de la mise à jour du statut de la demande",
       "deleteSuccess": "Demande supprimée avec succès",
+      "deleteFailed": "Échec de la suppression de la demande",
       "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette demande?",
       "noPermissionApprove": "Vous n'avez pas la permission d'approuver/rejeter les demandes"
     }

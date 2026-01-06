@@ -5,6 +5,8 @@ export interface Citizen {
   date_of_birth: string;
   address: string;
   annual_income: number;
+  parent_id?: number | null;
+  children_ids?: number[];
 
   createdAt?: string;
   updatedAt?: string;

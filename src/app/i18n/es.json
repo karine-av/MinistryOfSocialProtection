@@ -10,6 +10,7 @@
     "submit": "Enviar",
     "actions": "Acciones",
     "noData": "No se encontraron datos",
+    "loading": "Cargando...",
     "language": "Idioma"
   },
   "citizens": {
@@ -44,10 +45,17 @@
       "noData": "No se encontraron ciudadanos",
       "loadFailed": "Error al cargar ciudadanos",
       "createSuccess": "Ciudadano creado exitosamente",
+      "createFailed": "Error al crear ciudadano",
       "updateSuccess": "Ciudadano actualizado exitosamente",
+      "updateFailed": "Error al actualizar ciudadano",
       "deleteSuccess": "Ciudadano eliminado exitosamente",
+      "deleteFailed": "Error al eliminar ciudadano",
       "deleteConfirm": "¿Está seguro de que desea eliminar a {{name}}?",
-      "noPermission": "No tiene permiso para gestionar ciudadanos"
+      "noPermission": "No tiene permiso para gestionar ciudadanos",
+      "noPermissionAdd": "No tiene permiso para agregar ciudadanos",
+      "noPermissionEdit": "No tiene permiso para editar ciudadanos",
+      "noPermissionDelete": "No tiene permiso para eliminar ciudadanos",
+      "searchFailed": "Error en la búsqueda"
     }
   },
   "programs": {
@@ -84,16 +92,21 @@
     "messages": {
       "loadFailed": "Error al cargar programas",
       "createSuccess": "Programa creado exitosamente",
+      "createFailed": "Error al crear programa",
       "updateSuccess": "Programa actualizado exitosamente",
+      "updateFailed": "Error al actualizar programa",
       "deleteSuccess": "Programa eliminado exitosamente",
+      "deleteFailed": "Error al eliminar programa",
       "deleteConfirm": "¿Está seguro de que desea eliminar {{name}}?",
       "activateSuccess": "Programa activado exitosamente",
-      "deactivateSuccess": "Programa desactivado exitosamente"
+      "deactivateSuccess": "Programa desactivado exitosamente",
+      "updateStatusFailed": "Error al actualizar el estado del programa"
     }
   },
   "applications": {
     "title": "Gestión de Solicitudes",
     "submit": "Enviar Solicitud",
+    "submitApplication": "Enviar Solicitud",
     "noData": "No se encontraron solicitudes",
 
     "columns": {
@@ -129,8 +142,11 @@
     "messages": {
       "loadFailed": "Error al cargar solicitudes",
       "submitSuccess": "Solicitud enviada exitosamente",
+      "submitFailed": "Error al enviar solicitud",
       "updateStatusSuccess": "Estado de la solicitud actualizado a {{status}}",
+      "updateStatusFailed": "Error al actualizar el estado de la solicitud",
       "deleteSuccess": "Solicitud eliminada exitosamente",
+      "deleteFailed": "Error al eliminar solicitud",
       "deleteConfirm": "¿Está seguro de que desea eliminar esta solicitud?",
       "noPermissionApprove": "No tiene permiso para aprobar/rechazar solicitudes"
     },

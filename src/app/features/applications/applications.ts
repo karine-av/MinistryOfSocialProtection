@@ -21,7 +21,12 @@ import { SidenavService } from '../../common/side-nav/sidenav.service';
 import { Application, ApplicationStatus } from '../../shared/models/application';
 import { Citizen } from '../../shared/models/citizen';
 import { AssistanceProgram } from '../../shared/models/assistance-program.model';
-import {TranslatePipe} from '../../shared/pipes/translate.pipe';
+import { TranslatePipe } from '../../shared/pipes/translate.pipe';
+import { LocaleDatePipe } from '../../shared/pipes/locale-date.pipe';
+import { TranslationService } from '../../core/services/translation.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.component';
 
 @Component({
   selector: 'app-applications',
@@ -41,6 +46,9 @@ import {TranslatePipe} from '../../shared/pipes/translate.pipe';
     MatTooltipModule,
     MatChipsModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    LocaleDatePipe,
     TranslatePipe
   ],
   templateUrl: './applications.html',
@@ -51,16 +59,23 @@ export class Applications implements OnInit {
   private citizenService = inject(CitizenService);
   private programService = inject(AssistanceProgramService);
   private permissionService = inject(PermissionService);
+  private translationService = inject(TranslationService);
   private sidenavService = inject(SidenavService);
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
 
   applications: Application[] = [];
+  drafts: Application[] = [];
   citizens: Citizen[] = [];
   programs: AssistanceProgram[] = [];
   displayedColumns: string[] = ['application_id', 'citizen_name', 'program_name', 'status', 'submission_date', 'actions'];
   isDialogOpen = false;
+  isDraftDialogOpen = false;
   validationError: string | null = null;
+  isLoading = false;
+  isSubmitting = false;
+  selectedDraft: Application | null = null;
 
   applicationForm: FormGroup = this.fb.group({
     citizen_id: ['', Validators.required],
@@ -69,14 +84,17 @@ export class Applications implements OnInit {
 
   ngOnInit() {
     this.loadApplications();
+    this.loadDrafts();
     this.loadCitizens();
     this.loadPrograms();
   }
 
   loadApplications() {
+    this.isLoading = true;
     this.applicationService.getAll().subscribe({
       next: (data) => {
         this.applications = data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Failed to load applications:', err);
@@ -90,16 +108,17 @@ export class Applications implements OnInit {
         });
 
         if (err?.error && typeof err.error === 'string' && err.error.includes('<!DOCTYPE')) {
-          this.showError('Backend API not available. Please ensure the backend server is running on port 8080.');
+          this.showError(this.translate('errors.backendNotAvailable'));
         } else if (err?.status === 200 && !err?.ok) {
-          this.showError('Invalid response from server. Check if backend API is running and returning JSON.');
+          this.showError(this.translate('errors.invalidResponse'));
         } else if (err?.status === 500) {
-          this.showError('Backend server error (500). Please check if the backend server is running on port 8080 and accessible.');
+          this.showError(this.translate('errors.serverError'));
         } else if (err?.status === 0 || err?.status === 504) {
-          this.showError('Cannot connect to backend server. Please ensure the backend is running on port 8080.');
+          this.showError(this.translate('errors.connectionFailed'));
         } else {
-          this.showError(`Failed to load applications: ${err?.message || `Status ${err?.status || 'Unknown error'}`}`);
+          this.showError(this.translate('applications.messages.loadFailed', { message: err?.error?.message  || this.translate('errors.generic') }));
         }
+        this.isLoading = false;
       }
     });
   }
@@ -136,13 +155,43 @@ export class Applications implements OnInit {
     this.sidenavService.close();
     this.validationError = null;
     this.applicationForm.reset();
+    this.selectedDraft = null;
     this.isDialogOpen = true;
+  }
+
+  openDraftDialog(draft?: Application) {
+    this.sidenavService.close();
+    this.validationError = null;
+    if (draft) {
+      this.selectedDraft = draft;
+      this.applicationForm.patchValue({
+        citizen_id: draft.citizen_id,
+        program_id: draft.program_id
+      });
+    } else {
+      this.selectedDraft = null;
+      this.applicationForm.reset();
+    }
+    this.isDraftDialogOpen = true;
   }
 
   closeDialog() {
     this.isDialogOpen = false;
+    this.isDraftDialogOpen = false;
     this.applicationForm.reset();
     this.validationError = null;
+    this.selectedDraft = null;
+  }
+
+  loadDrafts() {
+    this.applicationService.getDrafts().subscribe({
+      next: (data) => {
+        this.drafts = data;
+      },
+      error: (err) => {
+        console.error('Failed to load drafts:', err);
+      }
+    });
   }
 
   submitApplication() {
@@ -151,62 +200,175 @@ export class Applications implements OnInit {
       return;
     }
 
+    this.isSubmitting = true;
     this.validationError = null;
     const formValue = this.applicationForm.value;
-
-    this.applicationService.submit({
+    const request = {
       citizen_id: Number(formValue.citizen_id),
       program_id: Number(formValue.program_id)
-    }).subscribe({
-      next: () => {
-        this.showSuccess('Application submitted successfully');
-        this.closeDialog();
-        this.loadApplications();
-      },
-      error: (err) => {
-        if (err.status === 400 && err.error?.message) {
-          this.validationError = err.error.message;
-        } else {
-          this.showError('Failed to submit application');
+    };
+
+  // If editing a draft, update it first, then submit
+    if (this.selectedDraft) {
+      this.applicationService.updateDraft(this.selectedDraft.application_id, request).subscribe({
+        next: () => {
+          // After updating draft, submit it
+          this.applicationService.submit(request).subscribe({
+            next: () => {
+              this.showSuccess(this.translate('applications.messages.submitSuccess'));
+              this.closeDialog();
+              this.loadApplications();
+              this.loadDrafts();
+              this.isSubmitting = false;
+            },
+            error: (err) => this.handleSubmitError(err)
+          });
+        },
+        error: (err) => {
+          this.showError(this.translate('applications.messages.saveDraftFailed'));
+          this.isSubmitting = false;
           console.error(err);
         }
-      }
+      });
+    } else {
+      this.applicationService.submit(request).subscribe({
+        next: () => {
+          this.showSuccess(this.translate('applications.messages.submitSuccess'));
+          this.closeDialog();
+          this.loadApplications();
+          this.isSubmitting = false;
+        },
+        error: (err) => this.handleSubmitError(err)
+      });
+    }
+  }
+
+  saveAsDraft() {
+    // Drafts bypass validation - allow saving incomplete forms
+    this.isSubmitting = true;
+    this.validationError = null;
+    const formValue = this.applicationForm.value;
+    const request = {
+      citizen_id: Number(formValue.citizen_id),
+      program_id: Number(formValue.program_id)
+    };
+
+    if (this.selectedDraft) {
+      // Update existing draft
+      this.applicationService.updateDraft(this.selectedDraft.application_id, request).subscribe({
+        next: () => {
+          this.showSuccess(this.translate('applications.messages.draftSaved'));
+          this.closeDialog();
+          this.loadDrafts();
+          this.isSubmitting = false;
+        },
+        error: (err) => {
+          this.showError(this.translate('applications.messages.saveDraftFailed'));
+          this.isSubmitting = false;
+          console.error(err);
+        }
+      });
+    } else {
+      // Create new draft
+      this.applicationService.saveDraft(request).subscribe({
+        next: () => {
+          this.showSuccess(this.translate('applications.messages.draftSaved'));
+          this.closeDialog();
+          this.loadDrafts();
+          this.isSubmitting = false;
+        },
+        error: (err) => {
+          this.showError(this.translate('applications.messages.saveDraftFailed'));
+          this.isSubmitting = false;
+          console.error(err);
+        }
+      });
+    }
+  }
+
+  submitDraft(draft: Application) {
+    // Open the submit dialog with the draft pre-filled
+    this.selectedDraft = draft;
+    this.applicationForm.patchValue({
+      citizen_id: draft.citizen_id,
+      program_id: draft.program_id
     });
+    this.isDialogOpen = true;
+    this.isDraftDialogOpen = false;
+  }
+
+  private handleSubmitError(err: any) {
+    if (err.status === 400 && err.error?.message) {
+      // Parse and translate validation errors
+      const errorMessage = err.error.message;
+      if (errorMessage.includes('age') || errorMessage.includes('Age')) {
+        this.validationError = this.translate('applications.errors.ageNotInRange');
+      } else if (errorMessage.includes('income') || errorMessage.includes('Income')) {
+        this.validationError = this.translate('applications.errors.incomeTooHigh');
+      } else if (errorMessage.includes('already') || errorMessage.includes('Already')) {
+        this.validationError = this.translate('applications.errors.alreadyApplied');
+      } else {
+        this.validationError = this.translate('applications.errors.generic') + ': ' + errorMessage;
+      }
+    } else {
+      this.showError(this.translate('applications.messages.submitFailed'));
+      console.error(err);
+    }
+    this.isSubmitting = false;
   }
 
   updateStatus(application: Application, newStatus: ApplicationStatus) {
     // Check permissions for APPROVED/REJECTED
     if ((newStatus === 'APPROVED' || newStatus === 'REJECTED') &&
-      !this.permissionService.has('APPLICATION:APPROVE')) {
-      this.showError('You do not have permission to approve/reject applications');
+    !this.permissionService.has('APPLICATION:APPROVE')) {
+      this.showError(this.translate('applications.messages.noPermissionApprove'));
       return;
     }
 
+    this.isLoading = true;
     this.applicationService.updateStatus(application.application_id, newStatus).subscribe({
       next: () => {
-        this.showSuccess(`Application status updated to ${newStatus}`);
+        this.showSuccess(this.translate('applications.messages.updateStatusSuccess').replace('{{status}}', newStatus));
         this.loadApplications();
+        this.isLoading = false;
       },
       error: (err) => {
-        this.showError('Failed to update application status');
+        this.showError(this.translate('applications.messages.updateStatusFailed'));
+        this.isLoading = false;
         console.error(err);
       }
     });
   }
 
   deleteApplication(application: Application) {
-    if (confirm(`Are you sure you want to delete this application?`)) {
-      this.applicationService.delete(application.application_id).subscribe({
-        next: () => {
-          this.showSuccess('Application deleted successfully');
-          this.loadApplications();
-        },
-        error: (err) => {
-          this.showError('Failed to delete application');
-          console.error(err);
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: this.translate('applications.messages.deleteConfirm'),
+        title: this.translate('common.delete')
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        this.applicationService.delete(application.application_id).subscribe({
+          next: () => {
+            this.showSuccess(this.translate('applications.messages.deleteSuccess'));
+            this.loadApplications();
+            this.isLoading = false;
+          },
+          error: (err) => {
+            this.showError(this.translate('applications.messages.deleteFailed'));
+            this.isLoading = false;
+            console.error(err);
+          }
+        });
+      }
+    });
+  }
+
+  private translate(key: string, params?: { [key: string]: string | number }): string {
+    return this.translationService.translate(key, params);
   }
 
   getCitizenName(citizenId: number): string {
@@ -248,4 +410,3 @@ export class Applications implements OnInit {
     this.snackBar.open(message, 'Close', { duration: 5000 });
   }
 }
-

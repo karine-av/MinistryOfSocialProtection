@@ -45,5 +45,16 @@ export class ApplicationService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  saveDraft(request: ApplicationSubmissionRequest): Observable<Application> {
+    return this.http.post<Application>(`${this.apiUrl}/draft`, request);
+  }
+
+  updateDraft(id: number, request: ApplicationSubmissionRequest): Observable<Application> {
+    return this.http.put<Application>(`${this.apiUrl}/draft/${id}`, request);
+  }
+
+  getDrafts(): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.apiUrl}/drafts`);
+  }
 }
 

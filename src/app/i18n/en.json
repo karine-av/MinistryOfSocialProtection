@@ -10,9 +10,16 @@
     "submit": "Submit",
     "actions": "Actions",
     "noData": "No data found",
+    "noSearchResults": "No results found for \"{{query}}\"",
+    "loading": "Loading...",
     "language": "Language",
     "profile": "Profile",
-    "logout":  "Logout"
+    "logout":  "Logout",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
   },
 
 
@@ -69,7 +76,9 @@
       "nationalId": "National ID",
       "dateOfBirth": "Date of Birth",
       "address": "Address",
-      "annualIncome": "Annual Income"
+      "annualIncome": "Annual Income",
+      "annualIncome": "Annual Income",
+      "family": "Family"
     },
 
     "form": {
@@ -85,9 +94,19 @@
       "addressRequired": "Address is required",
       "annualIncome": "Annual Income",
       "annualIncomeRequired": "Annual Income is required",
-      "annualIncomePositive": "Income must be positive"
+      "annualIncomePositive": "Income must be positive",
+      "parent": "Parent",
+      "noParent": "No Parent",
+      "parentHint": "Select a parent to link this citizen to a family",
+      "children": "Children",
+      "childrenHint": "Select children to link to this citizen (parent)",
+      "householdIncome": "Household Income"
     },
-
+    "family": {
+      "hasParent": "Has Parent",
+      "hasChildren": "{{count}} Children",
+      "noFamily": "No Family Links"
+    },
     "messages": {
       "noData": "No citizens found",
       "loadFailed": "Failed to load citizens",
@@ -95,7 +114,14 @@
       "updateSuccess": "Citizen updated successfully",
       "deleteSuccess": "Citizen deleted successfully",
       "deleteConfirm": "Are you sure you want to delete {{name}}?",
-      "noPermission": "You do not have permission to manage citizens"
+      "noPermission": "You do not have permission to manage citizens",
+      "noPermissionAdd": "You do not have permission to add citizens",
+      "noPermissionEdit": "You do not have permission to edit citizens",
+      "noPermissionDelete": "You do not have permission to delete citizens",
+      "createFailed": "Failed to create citizen",
+      "updateFailed": "Failed to update citizen",
+      "deleteFailed": "Failed to delete citizen",
+      "searchFailed": "Search failed"
     }
   },
 
@@ -138,11 +164,15 @@
     "messages": {
       "loadFailed": "Failed to load programs",
       "createSuccess": "Program created successfully",
+      "createFailed": "Failed to create program",
       "updateSuccess": "Program updated successfully",
+      "updateFailed": "Failed to update program",
       "deleteSuccess": "Program deleted successfully",
+      "deleteFailed": "Failed to delete program",
       "deleteConfirm": "Are you sure you want to delete {{name}}?",
       "activateSuccess": "Program activated successfully",
-      "deactivateSuccess": "Program deactivated successfully"
+      "deactivateSuccess": "Program deactivated successfully",
+      "updateStatusFailed": "Failed to update program status"
     }
   },
 
@@ -151,6 +181,7 @@
   "applications": {
     "title": "Application Management",
     "submit": "Submit Application",
+    "submitApplication": "Submit Application",
     "noData": "No applications found",
 
     "columns": {
@@ -172,6 +203,7 @@
     },
 
     "status": {
+      "draft": "DRAFT",
       "submitted": "SUBMITTED",
       "review": "REVIEW",
       "approved": "APPROVED",
@@ -187,12 +219,53 @@
     "messages": {
       "loadFailed": "Failed to load applications",
       "submitSuccess": "Application submitted successfully",
+      "submitFailed": "Failed to submit application",
       "updateStatusSuccess": "Application status updated to {{status}}",
+      "updateStatusFailed": "Failed to update application status",
       "deleteSuccess": "Application deleted successfully",
+      "deleteFailed": "Failed to delete application",
       "deleteConfirm": "Are you sure you want to delete this application?",
-      "noPermissionApprove": "You do not have permission to approve/reject applications"
+      "noPermissionApprove": "You do not have permission to approve/reject applications",
+      "draftSaved": "Draft saved successfully",
+      "saveDraftFailed": "Failed to save draft"
+    },
+    "drafts": {
+      "title": "Draft Applications",
+      "newDraft": "New Draft",
+      "editDraft": "Edit Draft",
+      "edit": "Edit",
+      "submit": "Submit",
+      "lastModified": "Last Modified"
+    },
+    "newDraft": "New Draft",
+    "saveAsDraft": "Save as Draft",
+    "form": {
+      "citizen": "Citizen",
+      "citizenRequired": "Citizen is required",
+      "program": "Program",
+      "programRequired": "Program is required",
+      "selectCitizen": "Select Citizen",
+      "selectProgram": "Select Program"
+    },
+    "errors": {
+      "generic": "Application validation failed",
+      "ageNotInRange": "Citizen age does not meet program requirements",
+      "incomeTooHigh": "Citizen income exceeds program threshold",
+      "citizenNotFound": "Citizen not found",
+      "programNotFound": "Program not found",
+      "alreadyApplied": "Citizen has already applied for this program"
     }
   },
+
+  "errors": {
+    "backendNotAvailable": "Backend API not available. Please ensure the backend server is running on port 8080.",
+    "connectionFailed": "Cannot connect to backend server. Please ensure the backend is running on port 8080.",
+    "serverError": "Backend server error (500). Please check if the backend server is running on port 8080 and accessible.",
+    "invalidResponse": "Invalid response from server. Check if backend API is running and returning JSON.",
+    "missingPermission": "Failed to load data (missing permission)",
+    "generic": "An error occurred. Please try again."
+  },
+
 
   "security": {
     "users": {
