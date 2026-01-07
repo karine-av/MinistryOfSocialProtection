@@ -14,4 +14,3 @@ export class TranslatePipe implements PipeTransform {
     return this.translationService.translate(key, params);
   }
 }
-

@@ -112,4 +112,3 @@ export class TranslationService {
     return path.split('.').reduce((current, key) => current?.[key], obj) || '';
   }
 }
-
