@@ -32,6 +32,14 @@ export class AssistanceProgramService {
     return this.http.put<AssistanceProgram>(`${this.apiUrl}/${id}`, program);
   }
 
+  toggleActive(id: number): Observable<AssistanceProgram> {
+    return this.http.patch<AssistanceProgram>(
+      `${this.apiUrl}/${id}/active`,
+      {}
+    );
+  }
+
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

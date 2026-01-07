@@ -66,7 +66,7 @@ export class Programs implements OnInit {
   loadPrograms() {
     this.programService.getAll().subscribe({
       next: (data) => {
-        this.programs = data;
+        this.programs = [...data];
       },
       error: (err) => {
         console.error('Failed to load programs:', err);
@@ -179,7 +179,7 @@ export class Programs implements OnInit {
   }
 
   toggleActive(program: AssistanceProgram) {
-    this.programService.update(program.program_id, { is_active: !program.is_active }).subscribe({
+    this.programService.toggleActive(program.program_id).subscribe({
       next: () => {
         this.showSuccess(`Program ${!program.is_active ? 'activated' : 'deactivated'} successfully`);
         this.loadPrograms();

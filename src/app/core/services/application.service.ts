@@ -3,11 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Application, ApplicationStatus } from '../../shared/models/application';
 
-export interface ApplicationValidationError {
-  field: string;
-  message: string;
-}
-
 export interface ApplicationSubmissionRequest {
   citizen_id: number;
   program_id: number;
@@ -48,27 +43,9 @@ export class ApplicationService {
     );
   }
 
-  updateDraft(id: number, request: ApplicationSubmissionRequest): Observable<Application> {
-    return this.http.post<Application>(
-      `${this.apiUrl}?citizenId=${request.citizen_id}&programId=${request.program_id}&isDraft=true`,
-      {}
-    );
-  }
-
-  getDrafts(): Observable<Application[]> {
-    return this.http.get<Application[]>(`${this.apiUrl}?status=DRAFT`);
-  }
-
   updateStatus(id: number, status: ApplicationStatus): Observable<Application> {
     return this.http.patch<Application>(
       `${this.apiUrl}/${id}/status?status=${status}`,
-      {}
-    );
-  }
-
-  finalSubmit(id: number): Observable<Application> {
-    return this.http.post<Application>(
-      `${this.apiUrl}/${id}/final-submit`,
       {}
     );
   }
