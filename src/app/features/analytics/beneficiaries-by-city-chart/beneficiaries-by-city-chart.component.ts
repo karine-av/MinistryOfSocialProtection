@@ -4,7 +4,9 @@ import {
   ViewChild,
   effect,
   inject,
-  computed
+  computed,
+  AfterViewInit,
+  HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -19,9 +21,10 @@ import { MetricsApiService } from '../services/metrics-api.service';
 import { FilterStateService } from '../services/filter-state.service';
 import { BeneficiariesByCityDto } from '../models/metrics.model';
 import { ExportCsvButtonComponent } from '../export-csv-button.component/export-csv-button.component';
-import {BeneficiariesByCityDialogComponent}
-  from '../beneficiaries-by-city-dialog.component/beneficiaries-by-city-dialog.component';
-import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
+import {
+  BeneficiariesByCityDialogComponent
+} from '../beneficiaries-by-city-dialog.component/beneficiaries-by-city-dialog.component';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-beneficiaries-by-city-chart',
@@ -38,7 +41,7 @@ import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
   styleUrls: ['./beneficiaries-by-city-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BeneficiariesByCityChartComponent {
+export class BeneficiariesByCityChartComponent implements AfterViewInit {
   private readonly metricsApi = inject(MetricsApiService);
   private readonly filterState = inject(FilterStateService);
   private readonly dialog = inject(MatDialog);
@@ -58,10 +61,8 @@ export class BeneficiariesByCityChartComponent {
 
   readonly loading = computed(() => this.data() === null);
 
-  /** Full list (never mutated) */
   readonly allItems = computed(() => this.data()?.items ?? []);
 
-  /** Chart shows only first 12 */
   readonly visibleItems = computed(() =>
     this.allItems().slice(0, 12)
   );
@@ -80,9 +81,15 @@ export class BeneficiariesByCityChartComponent {
     ]
   }));
 
+
   readonly chartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
-    scales: { y: { beginAtZero: true } }
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
   };
 
   openDialog(): void {
@@ -96,7 +103,22 @@ export class BeneficiariesByCityChartComponent {
     });
   }
 
+
+  ngAfterViewInit(): void {
+    // Allow layout to settle before resizing
+    setTimeout(() => {
+      this.chart?.chart?.resize();
+    });
+  }
+
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.chart?.chart?.resize();
+  }
+
   constructor() {
+
     effect(() => {
       this.chartData();
       queueMicrotask(() => this.chart?.update());
