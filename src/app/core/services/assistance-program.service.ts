@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AssistanceProgram } from '../../shared/models/assistance-program.model';
 
 @Injectable({ providedIn: 'root' })
 export class AssistanceProgramService {
   private http = inject(HttpClient);
-  private apiUrl = '/api/programs';
+  private apiUrl = 'http://localhost:1110/programs';
 
   getAll(): Observable<AssistanceProgram[]> {
     return this.http.get<AssistanceProgram[]>(this.apiUrl);
@@ -17,10 +17,14 @@ export class AssistanceProgramService {
   }
 
   getActive(): Observable<AssistanceProgram[]> {
-    return this.http.get<AssistanceProgram[]>(`${this.apiUrl}/active`);
+    return this.getAll().pipe(
+      map(programs => programs.filter(p => p.is_active === true))
+    );
   }
 
-  create(program: Omit<AssistanceProgram, 'program_id' | 'createdAt' | 'updatedAt'>): Observable<AssistanceProgram> {
+  create(
+    program: Omit<AssistanceProgram, 'program_id' | 'createdAt' | 'updatedAt'>
+  ): Observable<AssistanceProgram> {
     return this.http.post<AssistanceProgram>(this.apiUrl, program);
   }
 
@@ -32,4 +36,3 @@ export class AssistanceProgramService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
-

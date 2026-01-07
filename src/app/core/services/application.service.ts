@@ -16,7 +16,7 @@ export interface ApplicationSubmissionRequest {
 @Injectable({ providedIn: 'root' })
 export class ApplicationService {
   private http = inject(HttpClient);
-  private apiUrl = '/api/applications';
+  private apiUrl = 'http://localhost:1110/applications';
 
   getAll(): Observable<Application[]> {
     return this.http.get<Application[]>(this.apiUrl);
@@ -35,26 +35,45 @@ export class ApplicationService {
   }
 
   submit(request: ApplicationSubmissionRequest): Observable<Application> {
-    return this.http.post<Application>(`${this.apiUrl}/submit`, request);
+    return this.http.post<Application>(
+      `${this.apiUrl}?citizenId=${request.citizen_id}&programId=${request.program_id}&isDraft=false`,
+      {}
+    );
+  }
+
+  saveDraft(request: ApplicationSubmissionRequest): Observable<Application> {
+    return this.http.post<Application>(
+      `${this.apiUrl}?citizenId=${request.citizen_id}&programId=${request.program_id}&isDraft=true`,
+      {}
+    );
+  }
+
+  updateDraft(id: number, request: ApplicationSubmissionRequest): Observable<Application> {
+    return this.http.post<Application>(
+      `${this.apiUrl}?citizenId=${request.citizen_id}&programId=${request.program_id}&isDraft=true`,
+      {}
+    );
+  }
+
+  getDrafts(): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.apiUrl}?status=DRAFT`);
   }
 
   updateStatus(id: number, status: ApplicationStatus): Observable<Application> {
-    return this.http.patch<Application>(`${this.apiUrl}/${id}/status`, { status });
+    return this.http.patch<Application>(
+      `${this.apiUrl}/${id}/status?status=${status}`,
+      {}
+    );
+  }
+
+  finalSubmit(id: number): Observable<Application> {
+    return this.http.post<Application>(
+      `${this.apiUrl}/${id}/final-submit`,
+      {}
+    );
   }
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-  saveDraft(request: ApplicationSubmissionRequest): Observable<Application> {
-    return this.http.post<Application>(`${this.apiUrl}/draft`, request);
-  }
-
-  updateDraft(id: number, request: ApplicationSubmissionRequest): Observable<Application> {
-    return this.http.put<Application>(`${this.apiUrl}/draft/${id}`, request);
-  }
-
-  getDrafts(): Observable<Application[]> {
-    return this.http.get<Application[]>(`${this.apiUrl}/drafts`);
-  }
 }
-

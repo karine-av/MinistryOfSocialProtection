@@ -163,17 +163,17 @@ export class Citizens implements OnInit {
   private performSearch(query: string) {
     this.isLoading = true;
     this.citizenService.search(query).subscribe({
-      next: (data) => {
+      next: (data: Citizen[]) => {
         this.citizens = data;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.showError(this.translate('citizens.messages.searchFailed'));
         this.isLoading = false;
         console.error(err);
       }
     });
-  }
+    }
 
   openAddDialog() {
     if (!this.canManageCitizens) {
