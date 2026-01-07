@@ -5,7 +5,7 @@
 
   <mat-card-content>
     @if (loading()) {
-      <div>Loading...</div>
+      <div>{{ 'analytics.applicationFunnel.loading' | translate }}</div>
     } @else if (allRows().length === 0) {
       <div>{{ 'analytics.financialLiability.noData' | translate }}</div>
     } @else {
