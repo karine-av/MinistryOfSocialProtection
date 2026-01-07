@@ -2,7 +2,7 @@
   <div class="filters-row">
 
     <mat-form-field appearance="outline">
-      <mat-label>From</mat-label>
+      <mat-label>{{ 'analytics.dashboard.filters.from' | translate }}</mat-label>
       <input
         matInput
         [matDatepicker]="fromPicker"
@@ -13,7 +13,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>To</mat-label>
+      <mat-label>{{ 'analytics.dashboard.filters.to' | translate }}</mat-label>
       <input
         matInput
         [matDatepicker]="toPicker"
@@ -24,11 +24,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Program</mat-label>
+      <mat-label>{{ 'analytics.dashboard.filters.program' | translate }}</mat-label>
 
       <mat-select [(ngModel)]="programId">
         <mat-option [value]="null">
-          All programs
+          {{ 'analytics.dashboard.filters.allPrograms' | translate }}
         </mat-option>
 
         @for (program of programs; track program.programId) {
@@ -46,7 +46,7 @@
       color="primary"
       (click)="apply()"
     >
-      Apply
+      {{ 'analytics.dashboard.filters.apply' | translate }}
     </button>
 
 
@@ -54,7 +54,7 @@
       mat-stroked-button
       (click)="clear()"
     >
-      Clear
+      {{ 'analytics.dashboard.filters.clear' | translate }}
     </button>
 
   </div>

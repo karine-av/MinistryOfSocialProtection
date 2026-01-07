@@ -290,6 +290,52 @@
       "roleName": "Role name",
       "permissions": "Permissions"
     }
+  },
+
+  "analytics": {
+    "dashboard": {
+      "filters": {
+        "from": "From",
+        "to": "To",
+        "program": "Program",
+        "allPrograms": "All programs",
+        "apply": "Apply",
+        "clear": "Clear"
+      }
+    },
+    "applicationFunnel": {
+      "title": "Application Funnel",
+      "loading": "Loading...",
+      "noData": "No data for selected filters.",
+      "total": "Total"
+    },
+    "beneficiariesByCity": {
+      "title": "Beneficiaries by City",
+      "fullViewTitle": "Beneficiaries by City – Full View",
+      "beneficiaries": "Beneficiaries",
+      "unknownCity": "Unknown",
+      "showMore": "Show more",
+      "loading": "Loading...",
+      "noData": "No data for selected filters.",
+      "exportCsv": "Export CSV",
+      "close": "Close"
+    },
+    "financialLiability": {
+      "title": "Financial Liability",
+      "fullViewTitle": "Financial Liability – Full Breakdown",
+      "totalLabel": "Total Projected Liability",
+      "columns": {
+        "program": "Program",
+        "approved": "Approved",
+        "payoutAmount": "Payout Amount",
+        "projectedLiability": "Projected Liability"
+      },
+      "showMore": "Show more",
+      "loading": "Loading...",
+      "noData": "No liability data for selected filters.",
+      "close": "Close"
+    }
   }
+
 
 }

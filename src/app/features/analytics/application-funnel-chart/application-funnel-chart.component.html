@@ -1,14 +1,14 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Application Funnel</mat-card-title>
+    <mat-card-title>{{ 'analytics.applicationFunnel.title' | translate }}</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
     <div class="application-funnel-container">
       @if (loading()) {
-        <div>Loading...</div>
+        <div>{{ 'analytics.applicationFunnel.loading' | translate }}</div>
       } @else if (data() === null) {
-        <div>No data for selected filters.</div>
+        <div>{{ 'analytics.applicationFunnel.noData' | translate }}</div>
       } @else {
         <div class="pie-chart">
           <canvas

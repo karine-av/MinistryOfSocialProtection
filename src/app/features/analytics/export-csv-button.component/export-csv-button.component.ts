@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { BeneficiariesByCityDto } from '../models/metrics.model';
+import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-export-csv-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, MatButtonModule, TranslatePipe],
   templateUrl: './export-csv-button.component.html',
   styleUrls: ['./export-csv-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
