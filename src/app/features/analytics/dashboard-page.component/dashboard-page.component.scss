@@ -3,22 +3,24 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 0 16px;
+
+  /* IMPORTANT */
+  box-sizing: border-box;
 }
 
 .dashboard-grid {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
+  align-items: stretch;
+  width: 100%;
 }
 
 .grid-column {
-  width: 33%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  min-width: 0; /* VERY IMPORTANT for charts */
 }
 
 .grid-column > * {
-  flex: 1 1 100%;
+  width: 100%;
 }
