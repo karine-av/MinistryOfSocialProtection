@@ -6,7 +6,7 @@ import { Role } from '../../shared/models/role';
 @Injectable({ providedIn: 'root' })
 export class RoleService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080//roles';
+  private apiUrl = 'http://localhost:8080/api/roles';
 
   getAll(): Observable<Role[]> {
     return this.http.get<Role[]>(this.apiUrl);

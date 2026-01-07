@@ -19,10 +19,12 @@ export class AuthService {
   private readonly PERMISSIONS_KEY = 'permissions';
   private readonly USERNAME_KEY = 'username';
 
+  private readonly apiBaseUrl = 'http://localhost:8080';
+
   constructor(private http: HttpClient) {}
 
   login(credentials: { username: string; password: string }): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('/login', credentials).pipe(
+    return this.http.post<LoginResponse>(`${this.apiBaseUrl}/login`, credentials).pipe(
       tap(res => {
         this.saveToken(res.token);
         this.saveFirstLogin(res.isFirstLogin);
@@ -33,7 +35,7 @@ export class AuthService {
   }
 
   setPassword(data: { password: string }): Observable<void> {
-    return this.http.post<void>('/set-password', data).pipe(
+    return this.http.post<void>(`${this.apiBaseUrl}/set-password`, data).pipe(
       tap(() => {
         this.clearFirstLogin();
       })
@@ -92,3 +94,4 @@ export class AuthService {
     return localStorage.getItem(this.USERNAME_KEY);
   }
 }
+
