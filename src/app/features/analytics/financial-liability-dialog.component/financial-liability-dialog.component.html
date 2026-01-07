@@ -1,0 +1,46 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>Financial Liability – Full Breakdown</h2>
+
+
+</div>
+
+<mat-dialog-content>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="programName">
+      <th mat-header-cell *matHeaderCellDef>Program</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.programName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="approvedCount">
+      <th mat-header-cell *matHeaderCellDef>Approved</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.approvedCount }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="payoutAmount">
+      <th mat-header-cell *matHeaderCellDef>Payout Amount</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.payoutAmount | number:'1.2-2' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="projectedLiability">
+      <th mat-header-cell *matHeaderCellDef>Projected Liability</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.projectedLiability | number:'1.2-2' }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>
