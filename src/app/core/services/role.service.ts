@@ -3,6 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Role } from '../../shared/models/role';
 
+export interface RoleDetailsDto {
+  id: number;
+  roleName: string;
+  permissionIds: number[];
+  usernames: string[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class RoleService {
   private http = inject(HttpClient);
@@ -22,6 +29,25 @@ export class RoleService {
 
   delete(id: number) {
     return this.http.delete(`http://localhost:8080/api/roles/${id}`);
+  }
+
+  getById(id: number) {
+    return this.http.get<{
+      id: number;
+      roleName: string;
+      permissionIds: number[];
+      usernames: string[];
+    }>(`http://localhost:8080/api/roles/${id}`);
+  }
+
+  patchRole(id: number, payload: {
+    roleName?: string;
+    addUsers?: string[];
+    removeUsers?: string[];
+    addPermissionIds?: number[];
+    removePermissionIds?: number[];
+  }) {
+    return this.http.patch(`http://localhost:8080/api/roles/${id}`, payload);
   }
 
 

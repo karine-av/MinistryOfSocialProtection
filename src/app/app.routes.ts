@@ -12,6 +12,7 @@ import { SetPasswordComponent } from './pages/auth/set-password/set-password.com
 
 import { authGuard } from './core/guards/auth.guard';
 import {RoleCreateComponent} from './features/security/roles/role-create/role-create.component';
+import {RoleEditComponent} from './features/security/roles/role-edit/role-edit.component';
 // import { RoleCreateComponent } from './pages/security/roles/role-create/role-create.component';
 
 
@@ -42,6 +43,8 @@ export const routes: Routes = [
 
   { path: 'security/roles', component: RolesComponent },
   { path: 'security/roles/create', component: RoleCreateComponent },
+  { path: 'security/roles/:id/edit', component: RoleEditComponent },
+
 
 ];
 
