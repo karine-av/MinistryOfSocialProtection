@@ -31,7 +31,7 @@ export class RolesComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   roles: Role[] = [];
-  displayedColumns: string[] = ['id', 'roleName', 'permissions'];
+  displayedColumns: string[] = ['id', 'roleName'];
   isLoading = false;
   loadError: string | null = null;
 
