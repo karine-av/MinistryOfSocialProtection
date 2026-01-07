@@ -11,6 +11,9 @@ import { UsersComponent } from './features/security/users/users.component';
 import { SetPasswordComponent } from './pages/auth/set-password/set-password.component';
 
 import { authGuard } from './core/guards/auth.guard';
+import {RoleCreateComponent} from './features/security/roles/role-create/role-create.component';
+// import { RoleCreateComponent } from './pages/security/roles/role-create/role-create.component';
+
 
 export const routes: Routes = [
   {
@@ -37,6 +40,8 @@ export const routes: Routes = [
     component: LoginComponent
   },
 
+  { path: 'security/roles', component: RolesComponent },
+  { path: 'security/roles/create', component: RoleCreateComponent },
 
 ];
 

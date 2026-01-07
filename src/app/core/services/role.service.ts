@@ -12,4 +12,13 @@ export class RoleService {
     return this.http.get<Role[]>(this.apiUrl);
   }
 
+  getPermissionMatrix() {
+    return this.http.get<any>('http://localhost:8080/api/permissions/matrix');
+  }
+
+  createRole(payload: { roleName: string; permissionIds: number[] }) {
+    return this.http.post('http://localhost:8080/api/roles', payload);
+  }
+
+
 }
