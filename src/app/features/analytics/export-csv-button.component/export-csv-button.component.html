@@ -1,0 +1,8 @@
+<button
+  mat-stroked-button
+  color="primary"
+  (click)="exportCsv()"
+  [disabled]="!data || !data.items?.length"
+>
+  Export CSV
+</button>

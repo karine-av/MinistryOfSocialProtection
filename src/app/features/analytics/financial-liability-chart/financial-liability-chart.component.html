@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Financial Liability</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (loading()) {
+      <div>Loading...</div>
+    } @else if (allRows().length === 0) {
+      <div>No liability data for selected filters.</div>
+    } @else {
+      <!-- Total Liability -->
+      <div class="total-liability">
+        <div class="label">Total Projected Liability</div>
+        <div class="value">
+          {{ data()!.totalLiability | number:'1.2-2' }}
+        </div>
+      </div>
+
+      <mat-divider />
+
+      <table
+        mat-table
+        [dataSource]="visibleRows()"
+        class="liability-table"
+      >
+        <ng-container matColumnDef="programName">
+          <th mat-header-cell *matHeaderCellDef>Program</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.programName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="approvedCount">
+          <th mat-header-cell *matHeaderCellDef>Approved</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.approvedCount }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="payoutAmount">
+          <th mat-header-cell *matHeaderCellDef>Payout Amount</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.payoutAmount | number:'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectedLiability">
+          <th mat-header-cell *matHeaderCellDef>Projected Liability</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.projectedLiability | number:'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (hasMoreRows()) {
+        <div class="show-more-container">
+          <button mat-button color="primary" (click)="openDialog()">
+            Show more
+          </button>
+        </div>
+      }
+    }
+  </mat-card-content>
+</mat-card>

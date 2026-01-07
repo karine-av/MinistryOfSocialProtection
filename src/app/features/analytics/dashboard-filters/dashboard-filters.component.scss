@@ -1,0 +1,25 @@
+.filters-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+.filters-card {
+  margin-bottom: 16px;
+  padding: 16px 16px 0 16px;
+  justify-content: center;
+}
+
+.clear-button{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+mat-form-field {
+  min-width: 260px;
+}

@@ -1,0 +1,61 @@
+<mat-card class="filters-card">
+  <div class="filters-row">
+
+    <mat-form-field appearance="outline">
+      <mat-label>From</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fromPicker"
+        [(ngModel)]="from"
+      />
+      <mat-datepicker-toggle matSuffix [for]="fromPicker" />
+      <mat-datepicker #fromPicker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To</mat-label>
+      <input
+        matInput
+        [matDatepicker]="toPicker"
+        [(ngModel)]="to"
+      />
+      <mat-datepicker-toggle matSuffix [for]="toPicker" />
+      <mat-datepicker #toPicker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Program</mat-label>
+
+      <mat-select [(ngModel)]="programId">
+        <mat-option [value]="null">
+          All programs
+        </mat-option>
+
+        @for (program of programs; track program.programId) {
+          <mat-option [value]="program.programId">
+            {{ program.programName }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+
+
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="apply()"
+    >
+      Apply
+    </button>
+
+
+    <button
+      mat-stroked-button
+      (click)="clear()"
+    >
+      Clear
+    </button>
+
+  </div>
+</mat-card>
