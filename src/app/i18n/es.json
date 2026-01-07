@@ -162,6 +162,52 @@
     "appTitle": "Portal de Trabajador Social",
     "sidenavTitle": "Plataforma del Ministerio de Protección Social",
     "sidenavSubtitle": "Portal de Trabajador Social"
+  },
+
+  "analytics": {
+    "dashboard": {
+      "filters": {
+        "from": "Desde",
+        "to": "Hasta",
+        "program": "Programa",
+        "allPrograms": "Todos los programas",
+        "apply": "Aplicar",
+        "clear": "Limpiar"
+      }
+    },
+    "applicationFunnel": {
+      "title": "Embudo de Solicitudes",
+      "loading": "Cargando...",
+      "noData": "No hay datos para los filtros seleccionados.",
+      "total": "Total"
+    },
+    "beneficiariesByCity": {
+      "title": "Beneficiarios por Ciudad",
+      "fullViewTitle": "Beneficiarios por Ciudad – Vista Completa",
+      "beneficiaries": "Beneficiarios",
+      "unknownCity": "Desconocido",
+      "showMore": "Mostrar más",
+      "loading": "Cargando...",
+      "noData": "No hay datos para los filtros seleccionados.",
+      "exportCsv": "Exportar CSV",
+      "close": "Cerrar"
+    },
+    "financialLiability": {
+      "title": "Responsabilidad Financiera",
+      "fullViewTitle": "Responsabilidad Financiera – Desglose Completo",
+      "totalLabel": "Responsabilidad Total Proyectada",
+      "columns": {
+        "program": "Programa",
+        "approved": "Aprobado",
+        "payoutAmount": "Monto de Pago",
+        "projectedLiability": "Responsabilidad Proyectada"
+      },
+      "showMore": "Mostrar más",
+      "loading": "Cargando...",
+      "noData": "No hay datos de responsabilidad para los filtros seleccionados.",
+      "close": "Cerrar"
+    }
   }
+
 }
 

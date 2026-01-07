@@ -1,17 +1,17 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Financial Liability</mat-card-title>
+    <mat-card-title>{{ 'analytics.financialLiability.title' | translate }}</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
     @if (loading()) {
       <div>Loading...</div>
     } @else if (allRows().length === 0) {
-      <div>No liability data for selected filters.</div>
+      <div>{{ 'analytics.financialLiability.noData' | translate }}</div>
     } @else {
       <!-- Total Liability -->
       <div class="total-liability">
-        <div class="label">Total Projected Liability</div>
+        <div class="label">{{ 'analytics.financialLiability.totalLabel' | translate }}</div>
         <div class="value">
           {{ data()!.totalLiability | number:'1.2-2' }}
         </div>
@@ -25,28 +25,28 @@
         class="liability-table"
       >
         <ng-container matColumnDef="programName">
-          <th mat-header-cell *matHeaderCellDef>Program</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'analytics.financialLiability.columns.program' | translate }}</th>
           <td mat-cell *matCellDef="let row">
             {{ row.programName }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="approvedCount">
-          <th mat-header-cell *matHeaderCellDef>Approved</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'analytics.financialLiability.columns.approved' | translate }}</th>
           <td mat-cell *matCellDef="let row">
             {{ row.approvedCount }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="payoutAmount">
-          <th mat-header-cell *matHeaderCellDef>Payout Amount</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'analytics.financialLiability.columns.payoutAmount' | translate }}</th>
           <td mat-cell *matCellDef="let row">
             {{ row.payoutAmount | number:'1.2-2' }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="projectedLiability">
-          <th mat-header-cell *matHeaderCellDef>Projected Liability</th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'analytics.financialLiability.columns.projectedLiability' | translate }}</th>
           <td mat-cell *matCellDef="let row">
             {{ row.projectedLiability | number:'1.2-2' }}
           </td>
@@ -59,7 +59,7 @@
       @if (hasMoreRows()) {
         <div class="show-more-container">
           <button mat-button color="primary" (click)="openDialog()">
-            Show more
+            {{ 'analytics.financialLiability.showMore' | translate }}
           </button>
         </div>
       }

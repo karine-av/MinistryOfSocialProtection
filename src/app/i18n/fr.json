@@ -158,6 +158,52 @@
     "appTitle": "Portail Travailleur Social",
     "sidenavTitle": "Plateforme du Ministère de la Protection Sociale",
     "sidenavSubtitle": "Portail Travailleur Social"
+  },
+
+  "analytics": {
+    "dashboard": {
+      "filters": {
+        "from": "Du",
+        "to": "Au",
+        "program": "Programme",
+        "allPrograms": "Tous les programmes",
+        "apply": "Appliquer",
+        "clear": "Réinitialiser"
+      }
+    },
+    "applicationFunnel": {
+      "title": "Entonnoir des Demandes",
+      "loading": "Chargement...",
+      "noData": "Aucune donnée pour les filtres sélectionnés.",
+      "total": "Total"
+    },
+    "beneficiariesByCity": {
+      "title": "Bénéficiaires par Ville",
+      "fullViewTitle": "Bénéficiaires par Ville – Vue Complète",
+      "beneficiaries": "Bénéficiaires",
+      "unknownCity": "Inconnu",
+      "showMore": "Afficher plus",
+      "loading": "Chargement...",
+      "noData": "Aucune donnée pour les filtres sélectionnés.",
+      "exportCsv": "Exporter CSV",
+      "close": "Fermer"
+    },
+    "financialLiability": {
+      "title": "Responsabilité Financière",
+      "fullViewTitle": "Responsabilité Financière – Détail Complet",
+      "totalLabel": "Responsabilité Totale Prévisionnelle",
+      "columns": {
+        "program": "Programme",
+        "approved": "Approuvé",
+        "payoutAmount": "Montant du Paiement",
+        "projectedLiability": "Responsabilité Prévisionnelle"
+      },
+      "showMore": "Afficher plus",
+      "loading": "Chargement...",
+      "noData": "Aucune donnée de responsabilité pour les filtres sélectionnés.",
+      "close": "Fermer"
+    }
   }
+
 }
 

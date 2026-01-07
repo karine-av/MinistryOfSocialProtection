@@ -21,6 +21,7 @@ import { BeneficiariesByCityDto } from '../models/metrics.model';
 import { ExportCsvButtonComponent } from '../export-csv-button.component/export-csv-button.component';
 import {BeneficiariesByCityDialogComponent}
   from '../beneficiaries-by-city-dialog.component/beneficiaries-by-city-dialog.component';
+import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-beneficiaries-by-city-chart',
@@ -30,7 +31,8 @@ import {BeneficiariesByCityDialogComponent}
     MatCardModule,
     MatButtonModule,
     BaseChartDirective,
-    ExportCsvButtonComponent
+    ExportCsvButtonComponent,
+    TranslatePipe
   ],
   templateUrl: './beneficiaries-by-city-chart.component.html',
   styleUrls: ['./beneficiaries-by-city-chart.component.scss'],

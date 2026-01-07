@@ -4,5 +4,5 @@
   (click)="exportCsv()"
   [disabled]="!data || !data.items?.length"
 >
-  Export CSV
+  {{ 'analytics.beneficiariesByCity.exportCsv' | translate }}
 </button>

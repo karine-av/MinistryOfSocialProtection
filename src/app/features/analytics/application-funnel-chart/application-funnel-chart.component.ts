@@ -14,11 +14,12 @@ import { switchMap, startWith } from 'rxjs';
 import { MetricsApiService } from '../services/metrics-api.service';
 import { FilterStateService } from '../services/filter-state.service';
 import { ApplicationFunnelDto } from '../models/metrics.model';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-application-funnel-chart',
   standalone: true,
-  imports: [CommonModule, MatCardModule, BaseChartDirective],
+  imports: [CommonModule, MatCardModule, BaseChartDirective, TranslatePipe ],
   templateUrl: './application-funnel-chart.component.html',
   styleUrls: ['./application-funnel-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

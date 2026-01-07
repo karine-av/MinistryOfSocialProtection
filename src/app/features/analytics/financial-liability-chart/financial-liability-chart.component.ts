@@ -18,6 +18,7 @@ import { FilterStateService } from '../services/filter-state.service';
 import { FinancialLiabilityDto } from '../models/metrics.model';
 import { FinancialLiabilityDialogComponent } from
     '../financial-liability-dialog.component/financial-liability-dialog.component';
+import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-financial-liability-chart',
@@ -27,7 +28,8 @@ import { FinancialLiabilityDialogComponent } from
     MatCardModule,
     MatDividerModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslatePipe
   ],
   templateUrl: './financial-liability-chart.component.html',
   styleUrls: ['./financial-liability-chart.component.scss'],
