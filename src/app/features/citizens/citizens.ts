@@ -88,9 +88,26 @@ export class Citizens implements OnInit {
     children_ids: [[]]
   });
 
-  get canManageCitizens(): boolean {
-    return this.permissionService.has('CITIZEN:MANAGE');
+  get canViewCitizens(): boolean {
+    return this.permissionService.has('CITIZEN:VIEW');
   }
+
+  get canViewSensitive(): boolean {
+    return this.permissionService.has('CITIZEN:VIEW_SENSITIVE');
+  }
+
+  get canCreateCitizen(): boolean {
+    return this.permissionService.has('CITIZEN:CREATE');
+  }
+
+  get canUpdateCitizen(): boolean {
+    return this.permissionService.has('CITIZEN:UPDATE');
+  }
+
+  get canDeleteCitizen(): boolean {
+    return this.permissionService.has('CITIZEN:DELETE');
+  }
+
 
   ngOnInit() {
     // Setup search debounce
@@ -176,7 +193,7 @@ export class Citizens implements OnInit {
     }
 
   openAddDialog() {
-    if (!this.canManageCitizens) {
+    if (!this.canCreateCitizen) {
       this.showError(this.translate('citizens.messages.noPermissionAdd'));
       return;
     }
@@ -188,7 +205,7 @@ export class Citizens implements OnInit {
   }
 
   openEditDialog(citizen: Citizen) {
-    if (!this.canManageCitizens) {
+    if (!this.canUpdateCitizen) {
       this.showError(this.translate('citizens.messages.noPermissionEdit'));
       return;
     }
@@ -260,7 +277,7 @@ export class Citizens implements OnInit {
   }
 
   deleteCitizen(citizen: Citizen) {
-    if (!this.canManageCitizens) {
+    if (!this.canDeleteCitizen) {
       this.showError(this.translate('citizens.messages.noPermissionDelete'));
       return;
     }

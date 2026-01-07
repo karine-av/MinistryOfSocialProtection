@@ -5,7 +5,9 @@
     <button mat-icon-button (click)="loadCitizens()" [matTooltip]="'common.refresh' | translate">
       <mat-icon>refresh</mat-icon>
     </button>
-    <button mat-raised-button color="accent" (click)="openAddDialog()" [disabled]="!canManageCitizens">
+    <button mat-raised-button color="accent"
+            (click)="openAddDialog()"
+            [disabled]="!canCreateCitizen">
       <mat-icon>add</mat-icon>
       {{ 'citizens.addCitizen' | translate }}
     </button>
@@ -16,7 +18,8 @@
       <mat-label>
         {{ 'citizens.searchPlaceholder' | translate }}
       </mat-label>
-      <input matInput [(ngModel)]="searchQuery" (input)="search()" [placeholder]="'citizens.searchPlaceholder' | translate">
+      <input matInput [(ngModel)]="searchQuery" (input)="search()"
+             [placeholder]="'citizens.searchPlaceholder' | translate">
       <button mat-icon-button matSuffix (click)="search()">
         <mat-icon>search</mat-icon>
       </button>
@@ -30,7 +33,11 @@
         <p>{{ 'common.loading' | translate }}</p>
       </div>
     }
-    <table mat-table [dataSource]="citizens" class="mat-elevation-z2" [class.hidden]="isLoading">
+
+    <table mat-table [dataSource]="citizens"
+           class="mat-elevation-z2"
+           [class.hidden]="isLoading">
+
       <ng-container matColumnDef="citizen_id">
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.id' | translate }}
@@ -56,7 +63,9 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.dateOfBirth' | translate }}
         </th>
-        <td mat-cell *matCellDef="let citizen">{{ citizen.date_of_birth | localeDate }}</td>
+        <td mat-cell *matCellDef="let citizen">
+          {{ citizen.date_of_birth | localeDate }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="address">
@@ -70,16 +79,16 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.annualIncome' | translate }}
         </th>
+
         <td mat-cell *matCellDef="let citizen">
-          @if ((citizen.annual_income | maskIncome) === '*****') {
-            *****
-          } @else {
+          @if (canViewSensitive) {
             {{ citizen.annual_income | localeCurrency }}
+          } @else {
+            {{ citizen.annual_income | maskIncome }}
           }
         </td>
       </ng-container>
 
-      Lus, [1/6/2026 12:30 PM]
       <ng-container matColumnDef="family">
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.family' | translate }}
@@ -98,7 +107,9 @@
             </span>
           }
           @if (!citizen.parent_id && (!citizen.children_ids || citizen.children_ids.length === 0)) {
-            <span class="family-badge no-family">{{ 'citizens.family.noFamily' | translate }}</span>
+            <span class="family-badge no-family">
+              {{ 'citizens.family.noFamily' | translate }}
+            </span>
           }
         </td>
       </ng-container>
@@ -108,10 +119,16 @@
           {{ 'common.actions' | translate }}
         </th>
         <td mat-cell *matCellDef="let citizen">
-          <button mat-icon-button color="primary" (click)="openEditDialog(citizen)"  [matTooltip]="'common.edit' | translate" [disabled]="!canManageCitizens">
+          <button mat-icon-button color="primary"
+                  (click)="openEditDialog(citizen)"
+                  [matTooltip]="'common.edit' | translate"
+                  [disabled]="!canUpdateCitizen">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteCitizen(citizen)" [matTooltip]="'common.delete' | translate" [disabled]="!canManageCitizens">
+          <button mat-icon-button color="warn"
+                  (click)="deleteCitizen(citizen)"
+                  [matTooltip]="'common.delete' | translate"
+                  [disabled]="!canDeleteCitizen">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -130,6 +147,7 @@
         </button>
       </div>
     }
+
     @if (!isLoading && !loadError && citizens.length === 0) {
       <div class="no-data">
         <p>
@@ -255,7 +273,6 @@
               </mat-form-field>
             }
 
-            Lus, [1/6/2026 12:30 PM]
             @if (isEditMode && selectedCitizen) {
               @if (selectedCitizen.children_ids && selectedCitizen.children_ids.length > 0) {
                 <div class="family-info">
