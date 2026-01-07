@@ -3,4 +3,85 @@
     <span>{{ 'security.users.title' | translate}}</span>
     <span class="spacer"></span>
   </mat-toolbar>
+
+  <!-- Loading Spinner -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  }
+
+  <!-- Users Table -->
+  @if (!isLoading) {
+    <div class="table-container">
+      <table mat-table [dataSource]="users" class="mat-elevation-z2">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="id-column">
+            {{ 'security.users.id' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user" class="id-column">
+            {{ user.id }}
+          </td>
+        </ng-container>
+
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef class="username-column">
+            {{ 'security.users.username' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user" class="username-column">
+            {{ user.username }}
+          </td>
+        </ng-container>
+
+        <!-- Full Name Column -->
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef class="fullName-column">
+            {{ 'security.users.fullName' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user" class="fullName-column">
+            {{ user.fullName }}
+          </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef class="email-column">
+            {{ 'security.users.email' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user" class="email-column">
+            {{ user.email }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="status-column">
+            {{ 'security.users.status' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user" class="status-column">
+            {{ user.status }}
+          </td>
+        </ng-container>
+
+        <!-- Roles Column -->
+        <ng-container matColumnDef="roles">
+          <th mat-header-cell *matHeaderCellDef class="roles-column">
+            {{ 'security.users.roles' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let user" class="roles-column">
+            {{ user.roles }}
+          </td>
+        </ng-container>
+
+        <!-- Header and Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </div>
+  }
 </div>

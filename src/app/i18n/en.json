@@ -30,7 +30,9 @@
       "username": "Username",
       "password": "Password",
       "continue-with-google": "Continue with Google",
-      "login": "Login"
+      "login": "Login",
+      "wrong-credentials": "Wrong credentials",
+      "generic-error": "An unexpected error occurred. Please try again."
     },
 
     "setPassword": {
@@ -51,6 +53,8 @@
 
 
 
+
+
   "navigation": {
     "citizens": "Citizens",
     "programs": "Programs",
@@ -62,6 +66,8 @@
     "roles": "Roles",
     "users": "Users"
   },
+
+
 
 
 
@@ -282,8 +288,7 @@
       "title": "Role Management",
       "id": "ID",
       "roleName": "Role name",
-      "permissions": "Permissions",
-      "users": "Users"
+      "permissions": "Permissions"
     }
   }
 

@@ -24,7 +24,9 @@
       "username": "Օգտանուն",
       "password": "Գաղտնաբառ",
       "continue-with-google": "Շարունակել Google-ով",
-      "login": "Մուտք գործել"
+      "login": "Մուտք գործել",
+      "wrong-credentials": "Սխալ մուտքագրված տվյալներ",
+      "generic-error": "Անսպասելի սխալ տեղի ունեցավ։ Խնդրում ենք կրկին փորձել"
     },
 
     "setPassword": {
@@ -230,7 +232,6 @@
       "id": "ID",
       "roleName": "Դերի անուն",
       "permissions": "Թույլտվություններ",
-      "users": "Օգտատերեր"
     }
   }
 

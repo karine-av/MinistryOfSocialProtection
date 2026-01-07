@@ -1,3 +1,99 @@
 .users-container {
   padding: 20px;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-top: 4px solid #1976d2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+
+    thead.mat-header-row {
+      background-color: #f5f5f5; // optional header bg
+    }
+
+    th.mat-header-cell,
+    td.mat-cell {
+      padding: 12px 16px;
+      text-align: left;
+      overflow: hidden; // prevent content stretching
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-right: 1px solid #ddd; // vertical separator
+    }
+
+    th.mat-header-cell:last-child,
+    td.mat-cell:last-child {
+      border-right: none; // remove last column separator
+    }
+
+    // Fixed column widths: match the columns in your HTML
+    th.mat-header-cell.id-column,
+    td.mat-cell.id-column {
+      width: 50px;
+    }
+
+    th.mat-header-cell.username-column,
+    td.mat-cell.username-column {
+      width: 150px;
+    }
+
+    th.mat-header-cell.fullName-column,
+    td.mat-cell.fullName-column {
+      width: 200px;
+    }
+
+    th.mat-header-cell.email-column,
+    td.mat-cell.email-column {
+      width: 250px;
+    }
+
+    th.mat-header-cell.status-column,
+    td.mat-cell.status-column {
+      width: 100px;
+    }
+
+    th.mat-header-cell.roles-column,
+    td.mat-cell.roles-column {
+      width: 150px;
+    }
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error-container {
+  text-align: center;
+  padding: 20px;
+
+  p {
+    color: #f44336;
+    margin-bottom: 16px;
+  }
+
+  button {
+    margin-top: 8px;
+  }
+}

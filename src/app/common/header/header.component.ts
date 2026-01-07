@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { AuthService} from '../../core/services/auth.service';
 
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { HeaderDropdownComponent } from '../header-dropdown/header-dropdown.component';
@@ -36,7 +37,7 @@ export class HeaderComponent {
   @Output() selectedLocaleChange = new EventEmitter<string>();
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   onLocaleChange(locale: string) {
     this.selectedLocaleChange.emit(locale);
@@ -47,6 +48,8 @@ export class HeaderComponent {
   }
 
   onLogout() {
+    this.authService.logout();
+
     this.router.navigate(['/login']);
   }
 }

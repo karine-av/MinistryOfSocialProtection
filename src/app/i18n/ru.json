@@ -24,7 +24,9 @@
       "username": "Имя пользователя",
       "password": "Пароль",
       "continue-with-google": "Продолжить через Google",
-      "login": "Войти"
+      "login": "Войти",
+      "wrong-credentials": "Неверные учетные данные",
+      "generic-error": "Произошла непредвиденная ошибка. Пожалуйста, попробуйте ещё раз"
     },
 
     "setPassword": {
@@ -230,7 +232,6 @@
       "id": "ID",
       "roleName": "Название роли",
       "permissions": "Разрешения",
-      "users": "Пользователи"
     }
   }
 

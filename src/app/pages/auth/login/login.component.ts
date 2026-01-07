@@ -33,6 +33,7 @@ import { LocaleSelectorComponent } from '../../../common/locale-selector/locale-
 export class LoginComponent {
   loginForm: FormGroup;
   hidePassword = true;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -55,8 +56,29 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.invalid) return;
 
-    this.authService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigate(['/analytics'])
+    const data = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    };
+
+    this.errorMessage = null;
+
+    this.authService.login(data).subscribe({
+      next: (res) => {
+        if (res.isFirstLogin) {
+          this.router.navigate(['/set-password']);
+        } else {
+          this.router.navigate(['/analytics']);
+        }
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.errorMessage = this.translationService.translate('wrong-credentials');
+        } else {
+          this.errorMessage = this.translationService.translate('generic-error');
+        }
+      }
     });
   }
+
 }
