@@ -19,25 +19,24 @@
     border-radius: 4px;
 
     thead.mat-header-row {
-      background-color: #f5f5f5; // optional header bg
+      background-color: #f5f5f5;
     }
 
     th.mat-header-cell,
     td.mat-cell {
       padding: 12px 16px;
       text-align: left;
-      overflow: hidden; // prevent content stretching
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      border-right: 1px solid #ddd; // vertical separator
+      border-right: 1px solid #ddd;
     }
 
     th.mat-header-cell:last-child,
     td.mat-cell:last-child {
-      border-right: none; // remove last column separator
+      border-right: none;
     }
 
-    // Fixed column widths: match the columns in your HTML
     th.mat-header-cell.id-column,
     td.mat-cell.id-column {
       width: 50px;
