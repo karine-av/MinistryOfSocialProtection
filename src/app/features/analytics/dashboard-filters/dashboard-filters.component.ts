@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {ProgramDto} from '../models/metrics.model';
 import { FilterStateService } from '../services/filter-state.service';
 import {ProgramsApiService} from '../services/program.service';
+import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-dashboard-filters',
@@ -29,7 +30,8 @@ import {ProgramsApiService} from '../services/program.service';
     MatNativeDateModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    TranslatePipe
   ],
   templateUrl: './dashboard-filters.component.html',
   styleUrls: ['./dashboard-filters.component.scss'],

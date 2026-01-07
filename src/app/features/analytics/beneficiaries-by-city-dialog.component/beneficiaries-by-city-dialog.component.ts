@@ -17,6 +17,7 @@ import { ChartConfiguration } from 'chart.js';
 
 import { BeneficiariesByCityDto } from '../models/metrics.model';
 import { ExportCsvButtonComponent } from '../export-csv-button.component/export-csv-button.component';
+import {TranslatePipe} from '../../../shared/pipes/translate.pipe';
 
 @Component({
   standalone: true,
@@ -27,7 +28,8 @@ import { ExportCsvButtonComponent } from '../export-csv-button.component/export-
     MatButtonModule,
     MatIconModule,
     BaseChartDirective,
-    ExportCsvButtonComponent
+    ExportCsvButtonComponent,
+    TranslatePipe
   ],
   templateUrl: './beneficiaries-by-city-dialog.component.html',
   styleUrls: ['./beneficiaries-by-city-dialog.component.scss'],

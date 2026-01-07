@@ -231,8 +231,53 @@
       "title": "Управление ролями",
       "id": "ID",
       "roleName": "Название роли",
-      "permissions": "Разрешения",
+      "permissions": "Разрешения"
+    }
+  },
+  "analytics": {
+    "dashboard": {
+      "filters": {
+        "from": "С",
+        "to": "По",
+        "program": "Программа",
+        "allPrograms": "Все программы",
+        "apply": "Применить",
+        "clear": "Очистить"
+      }
+    },
+    "applicationFunnel": {
+      "title": "Воронка заявок",
+      "loading": "Загрузка...",
+      "noData": "Нет данных для выбранных фильтров.",
+      "total": "Всего"
+    },
+    "beneficiariesByCity": {
+      "title": "Получатели по городам",
+      "fullViewTitle": "Получатели по городам – полный обзор",
+      "beneficiaries": "Получатели",
+      "unknownCity": "Неизвестно",
+      "showMore": "Показать больше",
+      "loading": "Загрузка...",
+      "noData": "Нет данных для выбранных фильтров.",
+      "exportCsv": "Экспорт CSV",
+      "close": "Закрыть"
+    },
+    "financialLiability": {
+      "title": "Финансовые обязательства",
+      "fullViewTitle": "Финансовые обязательства – полный анализ",
+      "totalLabel": "Общая прогнозируемая сумма обязательств",
+      "columns": {
+        "program": "Программа",
+        "approved": "Одобрено",
+        "payoutAmount": "Сумма выплат",
+        "projectedLiability": "Прогнозируемые обязательства"
+      },
+      "showMore": "Показать больше",
+      "loading": "Загрузка...",
+      "noData": "Нет данных по обязательствам для выбранных фильтров.",
+      "close": "Закрыть"
     }
   }
+
 
 }

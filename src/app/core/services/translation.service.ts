@@ -8,6 +8,9 @@ export interface TranslationDictionary {
 export class TranslationService {
   private translations: Map<string, TranslationDictionary> = new Map();
   private currentLocale = signal<string>('en');
+  private translationsLoaded = signal(false);
+  public readonly translationsLoaded$ = this.translationsLoaded.asReadonly();
+
 
   public readonly currentLocale$ = this.currentLocale.asReadonly();
 
@@ -58,6 +61,8 @@ export class TranslationService {
       }
     } catch (error) {
       console.error('Failed to load translations:', error);
+    }  finally {
+      this.translationsLoaded.set(true);
     }
   }
 
