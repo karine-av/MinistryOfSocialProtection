@@ -11,6 +11,7 @@ import { Role } from '../../../shared/models/role';
 import { RoleService } from '../../../core/services/role.service';
 import {MatButton} from '@angular/material/button';
 import { Router } from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @Component({
@@ -25,7 +26,8 @@ import { Router } from '@angular/router';
     MatSnackBarModule,
     MatIconModule,
     TranslatePipe,
-    MatButton
+    MatButton,
+    MatTooltipModule
   ],
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss'],
@@ -35,7 +37,7 @@ export class RolesComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   roles: Role[] = [];
-  displayedColumns: string[] = ['id', 'roleName'];
+  displayedColumns: string[] = ['id', 'roleName', 'actions'];
   isLoading = false;
   loadError: string | null = null;
 
@@ -73,5 +75,29 @@ export class RolesComponent implements OnInit {
   openAddRole() {
     this.router.navigate(['/security/roles/create']);
   }
+
+  editRole(role: Role) {
+    this.router.navigate(['/security/roles', role.id, 'edit']);
+  }
+
+  removeRole(role: Role) {
+    const confirmed = confirm(
+      `Are you sure you want to delete role "${role.roleName}"?`
+    );
+
+    if (!confirmed) return;
+
+    this.roleService.delete(role.id).subscribe({
+      next: () => {
+        this.snackBar.open('Role deleted', 'Close', { duration: 3000 });
+        this.loadRoles();
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Failed to delete role', 'Close', { duration: 5000 });
+      },
+    });
+  }
+
 
 }

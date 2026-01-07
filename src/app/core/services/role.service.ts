@@ -20,5 +20,9 @@ export class RoleService {
     return this.http.post('http://localhost:8080/api/roles', payload);
   }
 
+  delete(id: number) {
+    return this.http.delete(`http://localhost:8080/api/roles/${id}`);
+  }
+
 
 }
