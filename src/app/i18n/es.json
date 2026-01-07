@@ -161,7 +161,9 @@
     "applications": "Solicitudes",
     "appTitle": "Portal de Trabajador Social",
     "sidenavTitle": "Plataforma del Ministerio de Protección Social",
-    "sidenavSubtitle": "Portal de Trabajador Social"
+    "sidenavSubtitle": "Portal de Trabajador Social",
+    "analytics": "Analítica"
+
   },
 
   "analytics": {
