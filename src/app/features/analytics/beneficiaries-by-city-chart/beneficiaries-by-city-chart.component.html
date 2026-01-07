@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Beneficiaries by City</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (loading()) {
+      <div>Loading...</div>
+    } @else if (data() === null) {
+      <div>No data for selected filters.</div>
+    } @else {
+      <!-- CSV EXPORT (FULL DATA) -->
+      <app-export-csv-button [data]="data()" />
+
+      <div class="bar-chart">
+        <canvas
+          baseChart
+          [type]="'bar'"
+          [data]="chartData()"
+          [options]="chartOptions"
+        ></canvas>
+      </div>
+
+      @if (hasMoreCities()) {
+        <div class="show-more-container">
+          <button mat-button color="primary" (click)="openDialog()">
+            Show more
+          </button>
+        </div>
+      }
+    }
+  </mat-card-content>
+</mat-card>

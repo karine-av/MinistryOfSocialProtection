@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Application Funnel</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="application-funnel-container">
+      @if (loading()) {
+        <div>Loading...</div>
+      } @else if (data() === null) {
+        <div>No data for selected filters.</div>
+      } @else {
+        <div class="pie-chart">
+          <canvas
+            baseChart
+            [type]="'pie'"
+            [data]="chartData()"
+            [options]="chartOptions"
+          ></canvas>
+        </div>
+
+
+        <div class="legend">
+          @for (item of data()!.items; track item.status) {
+            <div>
+              <strong>{{ item.status }}</strong>:
+              {{ item.count }} ({{ item.percentage | number:'1.0-1' }}%)
+            </div>
+          }
+          <div>Total: {{ data()!.total }}</div>
+        </div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>
