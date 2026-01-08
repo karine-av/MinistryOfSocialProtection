@@ -2,7 +2,7 @@
   <mat-toolbar color="primary">
     <span>{{ 'security.roles.title' | translate}}</span>
     <span class="spacer"></span>
-    <button mat-raised-button color="accent" (click)="openAddRole()">
+    <button mat-raised-button color="accent" (click)="openAddRole()" [disabled]="!canCreateRole">
       <mat-icon>add</mat-icon>
       {{ 'security.roles.title' | translate }}
     </button>
@@ -53,6 +53,7 @@
               mat-icon-button
               color="primary"
               (click)="editRole(role)"
+              [disabled]="!canUpdateRole"
               [matTooltip]="'common.edit' | translate">
               <mat-icon>edit</mat-icon>
             </button>
@@ -62,6 +63,7 @@
               mat-icon-button
               color="warn"
               (click)="removeRole(role)"
+              [disabled]="!canDeleteRole"
               [matTooltip]="'common.delete' | translate">
               <mat-icon>delete</mat-icon>
             </button>

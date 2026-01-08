@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user';
-import {Citizen} from '../../shared/models/citizen';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -14,10 +13,14 @@ export class UserService {
   }
 
   getByUsername(username: string): Observable<User>{
-    return this.http.get<User>(`${this.apiUrl}/users/${username}`);
+    return this.http.get<User>(`${this.apiUrl}/${username}`);
   }
 
   create(user: any): Observable<User> {
     return this.http.post<User>(this.apiUrl, user);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

@@ -12,6 +12,7 @@ import { RoleService } from '../../../core/services/role.service';
 import {MatButton} from '@angular/material/button';
 import { Router } from '@angular/router';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {PermissionService} from '../../../core/permission.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 export class RolesComponent implements OnInit {
   private roleService = inject(RoleService);
   private snackBar = inject(MatSnackBar);
+  private permissionService = inject(PermissionService);
 
   roles: Role[] = [];
   displayedColumns: string[] = ['id', 'roleName', 'actions'];
@@ -44,6 +46,11 @@ export class RolesComponent implements OnInit {
   ngOnInit() {
     this.loadRoles();
   }
+
+  get canCreateRole(): boolean { return this.permissionService.has('ROLE:CREATE'); }
+  get canUpdateRole(): boolean { return this.permissionService.has('ROLE:UPDATE'); }
+  get canDeleteRole(): boolean { return this.permissionService.has('ROLE:DELETE'); }
+
 
   loadRoles() {
     this.isLoading = true;

@@ -31,16 +31,18 @@ export class AuthService {
     return this.http.post<void>(`${this.apiBaseUrl}/set-password`, data);
   }
 
+
   logout(token: string): Observable<any> {
     localStorage.removeItem(this.TOKEN_KEY);
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     })
 
     this.currentUser$ = null;
-
-    return this.http.delete<void>(`${this.apiBaseUrl}/users`, {headers});
+    console.log("call sent")
+    return this.http.post<void>(`${this.apiBaseUrl}/logout`, {}, {headers, observe: 'response'});
 
   }
 

@@ -19,6 +19,8 @@ import { MatSelectModule } from '@angular/material/select';
 import {RoleService} from '../../../core/services/role.service';
 import {Role} from '../../../shared/models/role';
 import {SidenavService} from '../../../common/side-nav/sidenav.service';
+import {Router} from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-users',
@@ -38,7 +40,8 @@ import {SidenavService} from '../../../common/side-nav/sidenav.service';
     MatSelectModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
@@ -50,9 +53,10 @@ export class UsersComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private permissionService = inject(PermissionService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   users: User[] = [];
-  displayedColumns: string[] = ['id', 'username', 'fullName', 'email', 'status', 'roles'];
+  displayedColumns: string[] = ['id', 'username', 'fullName', 'email', 'status', 'roles', 'actions'];
   isLoading = false;
   loadError: string | null = null;
 
@@ -64,10 +68,10 @@ export class UsersComponent implements OnInit {
 
   userForm = this.fb.group({
     username: ['', Validators.required],
-    full_name: ['', Validators.required],
+    fullName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
-    roles: [[] as number[]]
+    roleIds: [[] as number[]]
   });
 
   get canCreateUser(): boolean { return this.permissionService.has('USER:CREATE'); }
@@ -100,6 +104,27 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  removeUser(user: User) {
+    const confirmed = confirm(
+      `Are you sure you want to delete user "${user.username}"?`
+    );
+
+    if (!confirmed) return;
+
+    this.userService.delete(user.id).subscribe({
+      next: () => {
+        this.snackBar.open('User deleted', 'Close', { duration: 3000 });
+        this.loadUsers();
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Failed to delete user', 'Close', { duration: 5000 });
+      },
+    });
+
+    this.loadUsers();
+  }
+
   openAddDialog() {
     this.sidenavService.close();
     this.userForm.reset();
@@ -121,9 +146,8 @@ export class UsersComponent implements OnInit {
 
     const payload = {
       ...this.userForm.value,
-      roleIds: this.userForm.value.roles
+      roleIds: this.userForm.value.roleIds
     };
-    delete payload.roles;
 
     this.userService.create(payload).subscribe({
       next: () => {
@@ -131,12 +155,14 @@ export class UsersComponent implements OnInit {
         this.closeDialog();
         this.loadUsers();
         this.isSubmitting = false;
+        this.router.navigate(['/users']);
       },
       error: () => {
         this.showError('Failed to create user');
         this.isSubmitting = false;
       }
     });
+    delete payload.roleIds;
   }
 
   private showError(message: string) {

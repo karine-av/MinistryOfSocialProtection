@@ -85,6 +85,35 @@
           </td>
         </ng-container>
 
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'common.actions' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let user">
+            <!-- Edit -->
+<!--            <button-->
+<!--              mat-icon-button-->
+<!--              color="primary"-->
+<!--              (click)="editRole(role)"-->
+<!--              [matTooltip]="'common.edit' | translate">-->
+<!--              <mat-icon>edit</mat-icon>-->
+<!--            </button>-->
+
+            <!-- Remove -->
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="removeUser(user)"
+              [disabled]="!canDeleteUser"
+              [matTooltip]="'common.delete' | translate">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
         <!-- Header and Row Definitions -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -134,7 +163,7 @@
               <mat-label>{{ 'security.users.one-time-password' | translate }}</mat-label>
               <input matInput
                      [type]="hidePassword ? 'password' : 'text'"
-                     formControlName="oneTimePassword" required>
+                     formControlName="password" required>
               <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
                 <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
               </button>
@@ -143,7 +172,7 @@
             <!-- Roles -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>{{ 'security.users.roles' | translate }}</mat-label>
-              <mat-select formControlName="roles" multiple>
+              <mat-select formControlName="roleIds" multiple>
                 @for (role of roles; track role.id) {
                   <mat-option [value]="role.id">
                     {{ role.roleName }}

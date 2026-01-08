@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,7 +37,9 @@ export class HeaderComponent {
   @Output() selectedLocaleChange = new EventEmitter<string>();
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  constructor(private router: Router, private authService: AuthService) {}
+  private authService = inject(AuthService);
+
+  constructor(private router: Router) {}
 
   onLocaleChange(locale: string) {
     this.selectedLocaleChange.emit(locale);
@@ -48,7 +50,7 @@ export class HeaderComponent {
   }
 
   onLogout() {
-    const token = localStorage.getItem('jwt');
+    const token = this.authService.getToken();
 
     if (token) {
       this.authService.logout(token).subscribe({
@@ -58,7 +60,7 @@ export class HeaderComponent {
           this.router.navigate(['/login']);
         },
         error: (err) => {
-          // console.error('Logout failed', err);
+          console.error('Logout failed', err);
           localStorage.removeItem('jwt');
           this.router.navigate(['/login']);
         }
