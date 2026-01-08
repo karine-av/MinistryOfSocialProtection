@@ -15,15 +15,18 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { ApplicationService } from '../../core/services/application.service';
 import { CitizenService } from '../../core/services/citizen.service';
 import { AssistanceProgramService } from '../../core/services/assistance-program.service';
 import { PermissionService } from '../../core/permission.service';
 import { SidenavService } from '../../common/side-nav/sidenav.service';
 import { TranslationService } from '../../core/services/translation.service';
+
 import { Application, ApplicationStatus } from '../../shared/models/application';
 import { Citizen } from '../../shared/models/citizen';
 import { AssistanceProgram } from '../../shared/models/assistance-program.model';
+
 import { TranslatePipe } from '../../shared/pipes/translate.pipe';
 import { LocaleDatePipe } from '../../shared/pipes/locale-date.pipe';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.component';
@@ -92,9 +95,26 @@ export class Applications implements OnInit {
   });
 
   ngOnInit() {
+    this.updateDisplayedColumns();
     this.loadApplications();
     this.loadCitizens();
     this.loadPrograms();
+  }
+  private updateDisplayedColumns(): void {
+    this.displayedColumns = [
+      'application_id',
+      'citizen_name',
+      'program_name',
+      'status',
+      'submission_date'
+    ];
+    if (
+      this.canUpdate ||
+      this.canDelete ||
+    this.canApproveReject()
+  ) {
+      this.displayedColumns.push('actions');
+    }
   }
   loadApplications() {
     this.isLoading = true;
@@ -131,6 +151,7 @@ export class Applications implements OnInit {
       this.showError(this.translate('applications.messages.noPermissionCreate'));
       return;
     }
+
     this.sidenavService.close();
     this.applicationForm.reset();
     this.validationError = null;
@@ -139,9 +160,9 @@ export class Applications implements OnInit {
   }
 
   openDraftDialog(draft?: Application) {
-    if (!this.canCreate) {
+    if(!this.canCreate){
       this.showError(this.translate('applications.messages.noPermissionCreate'));
-      return;
+      return
     }
     this.sidenavService.close();
     this.validationError = null;
@@ -169,11 +190,10 @@ export class Applications implements OnInit {
   }
 
   submitApplication() {
-    if (!this.canCreate) {
+    if(!this.canCreate){
       this.showError(this.translate('applications.messages.noPermissionCreate'));
-      return;
+      return
     }
-
     if (this.applicationForm.invalid) {
       this.applicationForm.markAllAsTouched();
       return;
@@ -198,11 +218,10 @@ export class Applications implements OnInit {
   }
 
   saveAsDraft() {
-    if (!this.canCreate) {
+    if(!this.canCreate){
       this.showError(this.translate('applications.messages.noPermissionCreate'));
-      return;
+      return
     }
-
     this.isSubmitting = true;
 
     const request = {
@@ -226,11 +245,10 @@ export class Applications implements OnInit {
   }
 
   updateStatus(application: Application, status: ApplicationStatus) {
-    if (!this.canUpdate) {
+    if(!this.canUpdate){
       this.showError(this.translate('applications.messages.noPermissionUpdate'));
-      return;
+      return
     }
-
     if ((status === 'APPROVED' || status === 'REJECTED') &&
       !this.permissionService.has('APPLICATION:APPROVE')) {
       this.showError(this.translate('applications.messages.noPermissionApprove'));
@@ -250,17 +268,17 @@ export class Applications implements OnInit {
   }
 
   deleteApplication(application: Application) {
-    if (!this.canDelete) {
+    if(!this.canDelete){
       this.showError(this.translate('applications.messages.noPermissionDelete'));
-      return;
+      return
     }
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: this.translate('applications.messages.deleteConfirm'),
         title: this.translate('common.delete')
       }
     });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.applicationService.delete(application.application_id).subscribe({
@@ -304,9 +322,9 @@ export class Applications implements OnInit {
 
 
   submitDraft(draft: Application) {
-    if (!this.canCreate) {
+    if(!this.canCreate){
       this.showError(this.translate('applications.messages.noPermissionCreate'));
-      return;
+      return
     }
     this.selectedDraft = draft;
     this.applicationForm.patchValue({
@@ -331,20 +349,15 @@ export class Applications implements OnInit {
     }
   }
 
-
-  // Permission getters
   get canView(): boolean {
     return this.permissionService.has('APPLICATION:VIEW');
   }
-
   get canCreate(): boolean {
     return this.permissionService.has('APPLICATION:CREATE');
   }
-
   get canUpdate(): boolean {
     return this.permissionService.has('APPLICATION:UPDATE');
   }
-
   get canDelete(): boolean {
     return this.permissionService.has('APPLICATION:DELETE');
   }
@@ -354,6 +367,8 @@ export class Applications implements OnInit {
   }
 
   canChangeToReview(): boolean {
-    return this.canUpdate;
+    return true;
   }
+
+
 }

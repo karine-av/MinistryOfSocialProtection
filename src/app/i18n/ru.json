@@ -79,6 +79,8 @@
     },
 
     "form": {
+      "householdMembers": "Члены семьи",
+      "householdHint": "Выберите этого гражданина, чтобы включить его в домохозяйство",
       "fullName": "ФИО",
       "fullNameRequired": "Имя обязательно",
       "fullNameMinLength": "Имя должно быть не короче 2 символов",

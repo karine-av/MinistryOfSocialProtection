@@ -90,6 +90,10 @@
     },
 
     "form": {
+      "household": "Household",
+      "noHousehold": "No household",
+      "householdMembers": "Household members",
+      "householdHint": "Select this citizen to include them in the household",
       "fullName": "Full Name",
       "fullNameRequired": "Name is required",
       "fullNameMinLength": "Name must be at least 2 characters",

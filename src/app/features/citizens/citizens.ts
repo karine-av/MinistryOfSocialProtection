@@ -16,6 +16,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CitizenService } from '../../core/services/citizen.service';
 import { Citizen } from '../../shared/models/citizen';
+import { HouseholdService } from '../../core/services/household.service';
 import { MaskIncomePipe } from '../../shared/pipes/mask-income.pipe';
 import { LocaleDatePipe } from '../../shared/pipes/locale-date.pipe';
 import { LocaleCurrencyPipe } from '../../shared/pipes/locale-currency.pipe';
@@ -48,7 +49,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.c
     MatChipsModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    MaskIncomePipe,
+    // MaskIncomePipe,
     LocaleDatePipe,
     LocaleCurrencyPipe,
     TranslatePipe
@@ -56,6 +57,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.c
   templateUrl: './citizens.html',
   styleUrl: './citizens.scss',
 })
+
 export class Citizens implements OnInit {
   private citizenService = inject(CitizenService);
   private permissionService = inject(PermissionService);
@@ -64,9 +66,11 @@ export class Citizens implements OnInit {
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
+  private householdService = inject(HouseholdService);
 
   citizens: Citizen[] = [];
-  displayedColumns: string[] = ['citizen_id', 'full_name', 'national_id', 'date_of_birth', 'address', 'annual_income', 'family', 'actions'];
+  households: { id: number; label: string }[] = [];
+  displayedColumns: string[] = [];
   searchQuery: string = '';
   isDialogOpen = false;
   isEditMode = false;
@@ -84,8 +88,7 @@ export class Citizens implements OnInit {
     date_of_birth: ['', Validators.required],
     address: ['', Validators.required],
     annual_income: ['', [Validators.required, Validators.min(0)]],
-    parent_id: [null],
-    children_ids: [[]]
+    household_id: [null]
   });
 
   get canViewCitizens(): boolean {
@@ -110,6 +113,7 @@ export class Citizens implements OnInit {
 
 
   ngOnInit() {
+    this.updateDisplayedColumns();
     // Setup search debounce
     this.searchSubject.pipe(
       debounceTime(300),
@@ -127,35 +131,77 @@ export class Citizens implements OnInit {
     this.loadCitizens();
   }
 
+  private updateDisplayedColumns(): void {
+    this.displayedColumns = [
+      'citizen_id',
+      'full_name',
+      'national_id',
+      'date_of_birth',
+      'address',
+      'annual_income',
+      'family'
+    ];
+    if (this.canUpdateCitizen || this.canDeleteCitizen) {
+      this.displayedColumns.push('actions');
+    }
+  }
+  private normalizeNationalId(value: string): string {
+    if (!value) {
+      return value;
+    }
+    return value.replace(/\D+/g, '');
+  }
+
+  get householdOptions() {
+    return [
+      ...this.households,
+      { id: -1, label: '➕ Create new household' }
+    ];
+  }
+
   loadCitizens() {
     this.isLoading = true;
     this.loadError = null;
+
     this.citizenService.getAll().subscribe({
       next: (data) => {
-        this.citizens = data;
+        // 1️⃣ Normalize citizens
+        this.citizens = data.map(citizen => ({
+          ...citizen,
+          national_id: this.normalizeNationalId(citizen.national_id)
+        }));
+
+        // 2️⃣ Build households safely (no undefined, no TS errors)
+        const map = new Map<number, string[]>();
+
+        this.citizens.forEach(citizen => {
+          if (citizen.household_id != null) {
+            if (!map.has(citizen.household_id)) {
+              map.set(citizen.household_id, []);
+            }
+            map.get(citizen.household_id)!.push(citizen.full_name);
+          }
+        });
+
+        this.households = Array.from(map.entries()).map(
+          ([id, names]) => ({
+            id,
+            label: names.join(', ')
+          })
+        );
+
         this.isLoading = false;
         this.isInitialLoad = false;
         this.loadError = null;
       },
-      error: (err) => {
-        // Log full error details for debugging
-        console.error('Failed to load citizens:', err);
-        console.error('Error details:', {
-          status: err?.status,
-          statusText: err?.statusText,
-          url: err?.url,
-          ok: err?.ok,
-          error: err?.error,
-          message: err?.message
-        });
 
-        // Check if response is HTML (backend not running)
+      error: (err) => {
+        console.error('Failed to load citizens:', err);
+
         if (err?.error && typeof err.error === 'string' && err.error.includes('<!DOCTYPE')) {
           this.showError(this.translate('errors.backendNotAvailable'));
         } else if (err?.status === 401 || err?.status === 403) {
           this.showError(this.translate('errors.missingPermission'));
-        } else if (err?.status === 200 && !err?.ok) {
-          this.showError(this.translate('errors.invalidResponse'));
         } else if (err?.status === 500) {
           this.showError(this.translate('errors.serverError'));
         } else if (err?.status === 0 || err?.status === 504) {
@@ -163,15 +209,20 @@ export class Citizens implements OnInit {
           this.loadError = errorMsg;
           this.showError(errorMsg);
         } else {
-          const errorMsg = this.translate('citizens.messages.loadFailed', { message: err?.error?.message || this.translate('errors.generic') });
+          const errorMsg = this.translate(
+            'citizens.messages.loadFailed',
+            { message: err?.error?.message || this.translate('errors.generic') }
+          );
           this.loadError = errorMsg;
           this.showError(errorMsg);
         }
+
         this.isLoading = false;
         this.isInitialLoad = false;
       }
     });
   }
+
 
   search() {
     this.searchSubject.next(this.searchQuery);
@@ -181,7 +232,10 @@ export class Citizens implements OnInit {
     this.isLoading = true;
     this.citizenService.search(query).subscribe({
       next: (data: Citizen[]) => {
-        this.citizens = data;
+        this.citizens = data.map(citizen => ({
+          ...citizen,
+          national_id: this.normalizeNationalId(citizen.national_id)
+        }));
         this.isLoading = false;
       },
       error: (err: any) => {
@@ -204,24 +258,47 @@ export class Citizens implements OnInit {
     this.isDialogOpen = true;
   }
 
+  // openEditDialog(citizen: Citizen) {
+  //   if (!this.canUpdateCitizen) {
+  //     this.showError(this.translate('citizens.messages.noPermissionEdit'));
+  //     return;
+  //   }
+  //   this.isEditMode = true;
+  //   this.selectedCitizen = citizen;
+  //   this.citizenForm.patchValue({
+  //     full_name: citizen.full_name,
+  //     national_id: citizen.national_id,
+  //     date_of_birth: citizen.date_of_birth.split('T')[0],
+  //     address: citizen.address,
+  //     annual_income: citizen.annual_income,
+  //     parent_id: citizen.parent_id || null,
+  //     children_ids: citizen.children_ids  || []
+  //   });
+  //   this.isDialogOpen = true;
+  // }
+
+
   openEditDialog(citizen: Citizen) {
     if (!this.canUpdateCitizen) {
       this.showError(this.translate('citizens.messages.noPermissionEdit'));
       return;
     }
+
     this.isEditMode = true;
     this.selectedCitizen = citizen;
+
     this.citizenForm.patchValue({
       full_name: citizen.full_name,
       national_id: citizen.national_id,
       date_of_birth: citizen.date_of_birth.split('T')[0],
       address: citizen.address,
       annual_income: citizen.annual_income,
-      parent_id: citizen.parent_id || null,
-      children_ids: citizen.children_ids  || []
+      household_id: citizen.household_id ?? null
     });
+
     this.isDialogOpen = true;
   }
+
 
   closeDialog() {
     this.isDialogOpen = false;
@@ -237,42 +314,56 @@ export class Citizens implements OnInit {
 
     this.isSubmitting = true;
     const formValue = this.citizenForm.value;
-    const citizenData = {
-      ...formValue,
-      date_of_birth: new Date(formValue.date_of_birth).toISOString(),
-      annual_income: Number(formValue.annual_income),
-      parent_id: formValue.parent_id  || null,
 
-    children_ids: formValue.children_ids || []
-  };
+    const isNewHousehold = formValue.household_id === -1;
 
-    if (this.isEditMode && this.selectedCitizen) {
-      this.citizenService.update(this.selectedCitizen.citizen_id, citizenData).subscribe({
+    const createOrUpdateCitizen = (householdId: number | null) => {
+      const citizenData = {
+        full_name: formValue.full_name,
+        national_id: formValue.national_id,
+        date_of_birth: new Date(formValue.date_of_birth).toISOString(),
+        address: formValue.address,
+        annual_income: Number(formValue.annual_income),
+        household_id: householdId
+      };
+
+      const request$ = this.isEditMode && this.selectedCitizen
+        ? this.citizenService.update(this.selectedCitizen.citizen_id, citizenData)
+        : this.citizenService.create(citizenData);
+
+      request$.subscribe({
         next: () => {
-          this.showSuccess(this.translate('citizens.messages.updateSuccess'));
+          this.showSuccess(
+            this.translate(
+              this.isEditMode
+                ? 'citizens.messages.updateSuccess'
+                : 'citizens.messages.createSuccess'
+            )
+          );
           this.closeDialog();
           this.loadCitizens();
           this.isSubmitting = false;
         },
-        error: (err) => {
-          this.handleFormError(err, 'update');
+        error: err => {
+          this.handleFormError(err, this.isEditMode ? 'update' : 'create');
+          this.isSubmitting = false;
+        }
+      });
+    };
+
+    // 🔹 Create new household if needed
+    if (isNewHousehold) {
+      this.householdService.create().subscribe({
+        next: household => {
+          createOrUpdateCitizen(household.id);
+        },
+        error: () => {
+          this.showError('Failed to create household');
           this.isSubmitting = false;
         }
       });
     } else {
-      this.citizenService.create(citizenData).subscribe({
-        next: () => {
-          this.showSuccess(this.translate('citizens.messages.createSuccess'));
-          this.closeDialog();
-          this.loadCitizens();
-          this.isSubmitting = false;
-        },
-        error: (err) => {
-          this.showError(this.translate('citizens.messages.createFailed'));
-          this.isSubmitting = false;
-          console.error(err);
-        }
-      });
+      createOrUpdateCitizen(formValue.household_id ?? null);
     }
   }
 
@@ -325,24 +416,33 @@ export class Citizens implements OnInit {
   }
 
   calculateHouseholdIncome(citizen: Citizen): number {
-    if (!citizen.parent_id) {
-      // If no parent, check if this citizen has children
-      const children = this.citizens.filter(c => c.parent_id === citizen.citizen_id);
-      if (children.length === 0) {
-        return citizen.annual_income;
-      }
-      // Sum this citizen's income with all children's income
-      return citizen.annual_income + children.reduce((sum, child) => sum + child.annual_income, 0);
-    } else {
-      // If has parent, calculate household income from parent's perspective
-      const parent = this.citizens.find(c => c.citizen_id === citizen.parent_id);
-      if (!parent) {
-        return citizen.annual_income;
-      }
-      const siblings = this.citizens.filter(c => c.parent_id === parent.citizen_id);
-      return parent.annual_income + siblings.reduce((sum, sibling) => sum + sibling.annual_income, 0);
+    if (!citizen.household_id) {
+      return citizen.annual_income;
     }
+
+    return this.citizens
+      .filter(c => c.household_id === citizen.household_id)
+      .reduce((sum, c) => sum + c.annual_income, 0);
   }
+  // calculateHouseholdIncome(citizen: Citizen): number {
+  //   if (!citizen.parent_id) {
+  //     // If no parent, check if this citizen has children
+  //     const children = this.citizens.filter(c => c.parent_id === citizen.citizen_id);
+  //     if (children.length === 0) {
+  //       return citizen.annual_income;
+  //     }
+  //     // Sum this citizen's income with all children's income
+  //     return citizen.annual_income + children.reduce((sum, child) => sum + child.annual_income, 0);
+  //   } else {
+  //     // If has parent, calculate household income from parent's perspective
+  //     const parent = this.citizens.find(c => c.citizen_id === citizen.parent_id);
+  //     if (!parent) {
+  //       return citizen.annual_income;
+  //     }
+  //     const siblings = this.citizens.filter(c => c.parent_id === parent.citizen_id);
+  //     return parent.annual_income + siblings.reduce((sum, sibling) => sum + sibling.annual_income, 0);
+  //   }
+  // }
 
   private handleFormError(err: any, operation: 'create' | 'update') {
     // Map backend errors to form fields
@@ -359,5 +459,25 @@ export class Citizens implements OnInit {
     }
     console.error(err);
   }
+
+  // private buildHouseholds() {
+  //   const map = new Map<number, number>();
+  //
+  //   this.citizens.forEach(c => {
+  //     if (c.household_id) {
+  //       map.set(
+  //         c.household_id,
+  //         (map.get(c.household_id) || 0) + 1
+  //       );
+  //     }
+  //   });
+  //
+  //   this.households = Array.from(map.entries()).map(
+  //     ([id, count]) => ({
+  //       id,
+  //       label: `Household #${id} (${count} members)`
+  //     })
+  //   );
+  // }
 }
 
