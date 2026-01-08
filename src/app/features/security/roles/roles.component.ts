@@ -9,6 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { Role } from '../../../shared/models/role';
 import { RoleService } from '../../../core/services/role.service';
+import {MatButton} from '@angular/material/button';
+import { Router } from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 @Component({
   selector: 'app-roles',
@@ -21,7 +25,9 @@ import { RoleService } from '../../../core/services/role.service';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatIconModule,
-    TranslatePipe
+    TranslatePipe,
+    MatButton,
+    MatTooltipModule
   ],
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss'],
@@ -31,7 +37,7 @@ export class RolesComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
 
   roles: Role[] = [];
-  displayedColumns: string[] = ['id', 'roleName'];
+  displayedColumns: string[] = ['id', 'roleName', 'actions'];
   isLoading = false;
   loadError: string | null = null;
 
@@ -61,7 +67,37 @@ export class RolesComponent implements OnInit {
     this.snackBar.open(message, 'Close', { duration: 5000 });
   }
 
-  formatPermissions(permissions: { name: string }[]): string {
-    return permissions.map(p => p.name).join(', ');
+  // formatPermissions(permissions: { name: string }[]): string {
+  //   return permissions.map(p => p.name).join(', ');
+  // }
+  private router = inject(Router);
+
+  openAddRole() {
+    this.router.navigate(['/security/roles/create']);
   }
+
+  editRole(role: Role) {
+    this.router.navigate(['/security/roles', role.id, 'edit']);
+  }
+
+  removeRole(role: Role) {
+    const confirmed = confirm(
+      `Are you sure you want to delete role "${role.roleName}"?`
+    );
+
+    if (!confirmed) return;
+
+    this.roleService.delete(role.id).subscribe({
+      next: () => {
+        this.snackBar.open('Role deleted', 'Close', { duration: 3000 });
+        this.loadRoles();
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open('Failed to delete role', 'Close', { duration: 5000 });
+      },
+    });
+  }
+
+
 }

@@ -1,0 +1,37 @@
+.spacer { flex: 1 1 auto; }
+.page { margin: 16px; }
+.full { width: 100%; }
+
+.loading { display: grid; place-items: center; padding: 24px; }
+
+.matrix-actions { display: flex; justify-content: flex-end; margin: 8px 0 12px; }
+.matrix-table { overflow: auto; max-height: 70vh; }
+
+.category-cell { min-width: 240px; }
+.action-cell { min-width: 120px; text-align: center; }
+.action-head { text-align: center; }
+
+.cat { display: flex; gap: 8px; align-items: center; }
+.cat-name { font-weight: 600; }
+
+
+.users-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 12px 0 16px;
+}
+
+.users-title {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.user-input {
+  width: min(420px, 100%);
+}
+
+.chips {
+  width: 100%;
+}

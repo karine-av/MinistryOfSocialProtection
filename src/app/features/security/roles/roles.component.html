@@ -2,6 +2,10 @@
   <mat-toolbar color="primary">
     <span>{{ 'security.roles.title' | translate}}</span>
     <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="openAddRole()">
+      <mat-icon>add</mat-icon>
+      {{ 'security.roles.title' | translate }}
+    </button>
   </mat-toolbar>
 
   <!-- Loading Spinner -->
@@ -37,7 +41,35 @@
           </td>
         </ng-container>
 
-<!--        &lt;!&ndash; Permissions Column &ndash;&gt;-->
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'common.actions' | translate }}
+          </th>
+
+          <td mat-cell *matCellDef="let role">
+            <!-- Edit -->
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editRole(role)"
+              [matTooltip]="'common.edit' | translate">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <!-- Remove -->
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="removeRole(role)"
+              [matTooltip]="'common.delete' | translate">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <!--        &lt;!&ndash; Permissions Column &ndash;&gt;-->
 <!--        <ng-container matColumnDef="permissions">-->
 <!--          <th mat-header-cell *matHeaderCellDef class="permissions-column">-->
 <!--            {{ 'security.roles.permissions' | translate }}-->

@@ -19,7 +19,8 @@
     "refresh": "Refresh",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "clearAll":  "Clear All"
   },
 
 
@@ -291,7 +292,9 @@
       "title": "Role Management",
       "id": "ID",
       "roleName": "Role name",
-      "permissions": "Permissions"
+      "permissions": "Permissions",
+      "addRole": "Add role",
+      "editRole": "Edit role"
     }
   },
 
