@@ -12,6 +12,7 @@ import { LocaleService } from '../../../core/services/locale.service';
 import { TranslationService } from '../../../core/services/translation.service';
 import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 import { LocaleSelectorComponent } from '../../../common/locale-selector/locale-selector.component';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -63,9 +64,11 @@ export class LoginComponent {
 
     this.errorMessage = null;
 
-    this.authService.login(data).subscribe({
-      next: (res) => {
-        if (res.isFirstLogin) {
+    this.authService.login(data).pipe(
+      switchMap(() => this.authService.isFirstLogin())
+    ).subscribe({
+      next: (firstLogin) => {
+        if (firstLogin) {
           this.router.navigate(['/set-password']);
         } else {
           this.router.navigate(['/analytics']);
@@ -80,5 +83,4 @@ export class LoginComponent {
       }
     });
   }
-
 }

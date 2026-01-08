@@ -48,8 +48,23 @@ export class HeaderComponent {
   }
 
   onLogout() {
-    this.authService.logout();
+    const token = localStorage.getItem('jwt');
 
-    this.router.navigate(['/login']);
+    if (token) {
+      this.authService.logout(token).subscribe({
+        next: () => {
+          console.log('Logged out successfully');
+          localStorage.removeItem('jwt');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          // console.error('Logout failed', err);
+          localStorage.removeItem('jwt');
+          this.router.navigate(['/login']);
+        }
+      });
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

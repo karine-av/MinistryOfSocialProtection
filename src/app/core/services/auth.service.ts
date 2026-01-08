@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Observable, of, map, tap, shareReplay } from 'rxjs';
+import { User} from '../../shared/models/user';
 
 export interface LoginResponse {
   token: string;
-  username: string;
-  permissions: string[];
-  isFirstLogin: boolean;
 }
 
 @Injectable({
@@ -15,38 +13,35 @@ export interface LoginResponse {
 export class AuthService {
 
   private readonly TOKEN_KEY = 'jwt';
-  private readonly FIRST_LOGIN_KEY = 'isFirstLogin';
-  private readonly PERMISSIONS_KEY = 'permissions';
-  private readonly USERNAME_KEY = 'username';
-
   private readonly apiBaseUrl = 'http://localhost:8080';
+
+  // cache for current user to avoid repeated HTTP calls
+  private currentUser$: Observable<User> | null = null;
 
   constructor(private http: HttpClient) {}
 
+  // LOGIN — only store JWT
   login(credentials: { username: string; password: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiBaseUrl}/login`, credentials).pipe(
-      tap(res => {
-        this.saveToken(res.token);
-        this.saveFirstLogin(res.isFirstLogin);
-        this.savePermissions(res.permissions);
-        this.saveUsername(res.username);
-      })
+      tap(res => this.saveToken(res.token))
     );
   }
 
   setPassword(data: { password: string }): Observable<void> {
-    return this.http.post<void>(`${this.apiBaseUrl}/set-password`, data).pipe(
-      tap(() => {
-        this.clearFirstLogin();
-      })
-    );
+    return this.http.post<void>(`${this.apiBaseUrl}/set-password`, data);
   }
 
-  logout(): void {
+  logout(token: string): Observable<any> {
     localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.FIRST_LOGIN_KEY);
-    localStorage.removeItem(this.PERMISSIONS_KEY);
-    localStorage.removeItem(this.USERNAME_KEY);
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+
+    this.currentUser$ = null;
+
+    return this.http.delete<void>(`${this.apiBaseUrl}/users`, {headers});
+
   }
 
   private saveToken(token: string): void {
@@ -61,37 +56,55 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  private saveFirstLogin(value: boolean): void {
-    localStorage.setItem(this.FIRST_LOGIN_KEY, String(value));
+  // Decode JWT payload
+  private decodePayload(): any {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payloadBase64 = token.split('.')[1];
+      if (!payloadBase64) return null;
+      const decodedJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
+      return JSON.parse(decodedJson);
+    } catch (err) {
+      console.error('Failed to decode JWT payload', err);
+      return null;
+    }
   }
 
-  isFirstLogin(): boolean {
-    return localStorage.getItem(this.FIRST_LOGIN_KEY) === 'true';
+  // Extract username from JWT
+  getUsername(): string | null {
+    const payload = this.decodePayload();
+    return payload?.sub ?? null;
   }
 
-  clearFirstLogin(): void {
-    localStorage.removeItem(this.FIRST_LOGIN_KEY);
-  }
-
-  private savePermissions(permissions: string[]): void {
-    localStorage.setItem(this.PERMISSIONS_KEY, JSON.stringify(permissions));
-  }
-
+  // Extract permissions from JWT
   getPermissions(): string[] {
-    const stored = localStorage.getItem(this.PERMISSIONS_KEY);
-    return stored ? JSON.parse(stored) : [];
+    const payload = this.decodePayload();
+    return payload?.authorities ?? [];
   }
 
+  // Check permission
   hasPermission(permission: string): boolean {
     return this.getPermissions().includes(permission);
   }
 
-  private saveUsername(username: string): void {
-    localStorage.setItem(this.USERNAME_KEY, username);
+  // Fetch current user from backend by username
+  getCurrentUser(): Observable<User | null> {
+    if (!this.getUsername()) return of(null);
+
+    if (!this.currentUser$) {
+      this.currentUser$ = this.http
+        .get<User>(`${this.apiBaseUrl}/users/${this.getUsername()}`)
+        .pipe(shareReplay(1)); // cache the response
+    }
+    return this.currentUser$;
   }
 
-  getUsername(): string | null {
-    return localStorage.getItem(this.USERNAME_KEY);
+  // Determine if first login (updated_at null)
+  isFirstLogin(): Observable<boolean> {
+    return this.getCurrentUser().pipe(
+      map(user => user ? !user.updatedAt : true)
+    );
   }
 }
-
