@@ -23,4 +23,9 @@ export class UserService {
   delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  update(id: number, payload: any) {
+    return this.http.put<User>(`${this.apiUrl}/${id}`, payload);
+  }
+
 }
