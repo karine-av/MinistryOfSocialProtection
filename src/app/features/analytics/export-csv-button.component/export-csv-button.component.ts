@@ -43,7 +43,6 @@ export class ExportCsvButtonComponent {
   private escape(value: string | null | undefined): string {
     if (value == null) return '';
 
-    // Basic CSV escaping
     if (value.includes(',') || value.includes('"')) {
       return `"${value.replace(/"/g, '""')}"`;
     }

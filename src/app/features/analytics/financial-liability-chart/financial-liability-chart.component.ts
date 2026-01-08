@@ -60,15 +60,12 @@ export class FinancialLiabilityChartComponent {
     'projectedLiability'
   ] as const;
 
-  /** All rows */
   readonly allRows = computed(() => this.data()?.byProgram ?? []);
 
-  /** Only first X rows */
   readonly visibleRows = computed(() =>
     this.allRows().slice(0, 3)
   );
 
-  /** Whether "Show more" button should appear */
   readonly hasMoreRows = computed(() =>
     this.allRows().length > 3
   );

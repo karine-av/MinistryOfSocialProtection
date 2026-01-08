@@ -12,12 +12,16 @@
   justify-content: center;
 }
 
-.clear-button{
-  height: 100%;
+.button-container{
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+button{
+  padding: 25px;
+  font-size: 18px;
 }
 
 mat-form-field {

@@ -49,27 +49,27 @@ export class BeneficiariesByCityDialogComponent {
       {
         data: this.data.items.map(i => i.beneficiaryCount),
         label: 'Beneficiaries',
-        barThickness: 18,          // 👈 prevents “hairline bars”
+        barThickness: 18,
         maxBarThickness: 24
       }
     ]
   }));
 
-  /** FIXED options for dense data */
+
   readonly chartOptions: ChartConfiguration<'bar'>['options'] = {
-    indexAxis: 'y',               // 👈 HORIZONTAL bars (CRITICAL)
+    indexAxis: 'y',
     responsive: true,
     maintainAspectRatio: false,
     scales: {
       x: {
         beginAtZero: true,
         ticks: {
-          precision: 0             // 👈 prevents weird decimals / single 0
+          precision: 0
         }
       },
       y: {
         ticks: {
-          autoSkip: false          // 👈 SHOW ALL CITY NAMES
+          autoSkip: false
         }
       }
     },
@@ -81,7 +81,6 @@ export class BeneficiariesByCityDialogComponent {
     }
   };
 
-  /** Dynamic height so bars never overlap */
   readonly chartHeightPx = computed(() =>
     Math.max(300, this.data.items.length * 32)
   );
