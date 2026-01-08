@@ -74,9 +74,6 @@ export class RolesComponent implements OnInit {
     this.snackBar.open(message, 'Close', { duration: 5000 });
   }
 
-  // formatPermissions(permissions: { name: string }[]): string {
-  //   return permissions.map(p => p.name).join(', ');
-  // }
   private router = inject(Router);
 
   openAddRole() {
@@ -105,6 +102,4 @@ export class RolesComponent implements OnInit {
       },
     });
   }
-
-
 }

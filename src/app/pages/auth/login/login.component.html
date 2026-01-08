@@ -58,9 +58,8 @@
         </mat-form-field>
 
 
-
         <!-- Continue with Google -->
-        <button mat-raised-button class="google-login-button" type="button">
+        <button mat-raised-button class="google-login-button" type="button" (click)="loginWithGoogle()">
           {{ 'authentication.login.continue-with-google' | translate}}
         </button>
 

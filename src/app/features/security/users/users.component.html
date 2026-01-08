@@ -80,9 +80,6 @@
           <th mat-header-cell *matHeaderCellDef class="roles-column">
             {{ 'security.users.roles' | translate }}
           </th>
-<!--          <td mat-cell *matCellDef="let user" class="roles-column">-->
-<!--            {{ user.roles }}-->
-<!--          </td> -->
           <td mat-cell *matCellDef="let user" class="roles-column">
             {{ formatRoles(user) }}
           </td>
@@ -95,27 +92,6 @@
           <th mat-header-cell *matHeaderCellDef>
             {{ 'common.actions' | translate }}
           </th>
-
-<!--          <td mat-cell *matCellDef="let user">-->
-<!--            &lt;!&ndash; Edit &ndash;&gt;-->
-<!--&lt;!&ndash;            <button&ndash;&gt;-->
-<!--&lt;!&ndash;              mat-icon-button&ndash;&gt;-->
-<!--&lt;!&ndash;              color="primary"&ndash;&gt;-->
-<!--&lt;!&ndash;              (click)="editRole(role)"&ndash;&gt;-->
-<!--&lt;!&ndash;              [matTooltip]="'common.edit' | translate">&ndash;&gt;-->
-<!--&lt;!&ndash;              <mat-icon>edit</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;            </button>&ndash;&gt;-->
-
-<!--            &lt;!&ndash; Remove &ndash;&gt;-->
-<!--            <button-->
-<!--              mat-icon-button-->
-<!--              color="warn"-->
-<!--              (click)="removeUser(user)"-->
-<!--              [disabled]="!canDeleteUser"-->
-<!--              [matTooltip]="'common.delete' | translate">-->
-<!--              <mat-icon>delete</mat-icon>-->
-<!--            </button>-->
-<!--          </td>-->
 
           <td mat-cell *matCellDef="let user">
 
@@ -155,9 +131,6 @@
     <div class="dialog-overlay" (click)="closeDialog()">
       <mat-card class="dialog-card" (click)="$event.stopPropagation()">
         <mat-card-header class="dialog-header">
-<!--          <mat-card-title>-->
-<!--            {{ 'security.users.add-user' | translate }}-->
-<!--          </mat-card-title>-->
           <mat-card-title>
             {{ editingUserId ? ('common.edit' | translate) : ('security.users.add-user' | translate) }}
           </mat-card-title>
@@ -191,16 +164,6 @@
               }
             </mat-form-field>
 
-<!--            &lt;!&ndash; One-Time Password with toggle &ndash;&gt;-->
-<!--            <mat-form-field appearance="outline" class="full-width">-->
-<!--              <mat-label>{{ 'security.users.one-time-password' | translate }}</mat-label>-->
-<!--              <input matInput-->
-<!--                     [type]="hidePassword ? 'password' : 'text'"-->
-<!--                     formControlName="password" required>-->
-<!--              <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">-->
-<!--                <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>-->
-<!--              </button>-->
-<!--            </mat-form-field>-->
 
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>{{ 'security.users.one-time-password' | translate }}</mat-label>
@@ -237,9 +200,6 @@
               <button mat-button type="button" (click)="closeDialog()" [disabled]="isSubmitting">
                 {{ 'common.cancel' | translate }}
               </button>
-<!--              <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting">-->
-<!--                {{ 'common.save' | translate }}-->
-<!--              </button>-->
               <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting">
                 {{ 'common.save' | translate }}
               </button>

@@ -52,7 +52,6 @@ export class Dashboard implements AfterViewInit, OnDestroy {
     this.localeService.setLocale(locale);
     this.translationService.setLocale(locale);
     this.selectedLocale = locale;
-    // Reload to apply locale changes
     window.location.reload();
   }
 

@@ -15,22 +15,15 @@ export class AuthService {
   private readonly TOKEN_KEY = 'jwt';
   private readonly apiBaseUrl = 'http://localhost:8080';
 
-  // cache for current user to avoid repeated HTTP calls
   private currentUser$: Observable<User> | null = null;
 
   constructor(private http: HttpClient) {}
 
-  // LOGIN — only store JWT
   login(credentials: { username: string; password: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiBaseUrl}/login`, credentials).pipe(
       tap(res => this.saveToken(res.token))
     );
   }
-
-  setPassword(data: { password: string }): Observable<void> {
-    return this.http.post<void>(`${this.apiBaseUrl}/set-password`, data);
-  }
-
 
   logout(token: string): Observable<any> {
     localStorage.removeItem(this.TOKEN_KEY);
@@ -58,7 +51,6 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  // Decode JWT payload
   private decodePayload(): any {
     const token = this.getToken();
     if (!token) return null;
@@ -74,25 +66,20 @@ export class AuthService {
     }
   }
 
-  // Extract username from JWT
   getUsername(): string | null {
     const payload = this.decodePayload();
     return payload?.sub ?? null;
   }
 
-
-  // Extract permissions from JWT
   // getPermissions(): string[] {
   //   const payload = this.decodePayload();
   //   return payload?.authorities ?? [];
   // }
-  //
-  // // Check permission
+
   // hasPermission(permission: string): boolean {
   //   return this.getPermissions().includes(permission);
   // }
 
-  // Fetch current user from backend by username
   getCurrentUser(): Observable<User | null> {
     if (!this.getUsername()) return of(null);
 

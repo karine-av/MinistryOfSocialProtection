@@ -21,14 +21,12 @@ export class LocaleService {
   ];
 
   constructor() {
-    // Register locale data
     registerLocaleData(localeEn);
     registerLocaleData(localeEs);
     registerLocaleData(localeFr);
     registerLocaleData(localeRu);
     registerLocaleData(localeHy);
 
-    // Load saved locale or default
     const saved = localStorage.getItem('appLocale') || 'en-US';
     this.setLocale(saved);
   }

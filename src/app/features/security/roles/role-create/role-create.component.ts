@@ -87,7 +87,6 @@ export class RoleCreateComponent implements OnInit {
   loadMatrix() {
     this.loadingMatrix = true;
 
-    // We'll assume your RoleService has: getPermissionMatrix()
     this.roleService.getPermissionMatrix().subscribe({
       next: (matrix: PermissionMatrixResponse) => {
         this.matrixActions = this.getAllActions(matrix);
@@ -116,7 +115,6 @@ export class RoleCreateComponent implements OnInit {
     return order.filter((a) => set.has(a));
   }
 
-  // --- checkbox helpers ---
   isChecked(p: PermissionDto | null): boolean {
     return !!p && this.selectedPermissionIds.has(p.id);
   }
@@ -134,7 +132,6 @@ export class RoleCreateComponent implements OnInit {
     this.selectedPermissionIds.clear();
   }
 
-  // --- actions ---
   cancel() {
     this.router.navigate(['/roles']);
   }
@@ -150,7 +147,6 @@ export class RoleCreateComponent implements OnInit {
       permissionIds: Array.from(this.selectedPermissionIds),
     };
 
-    // assume RoleService has createRole(payload)
     this.roleService.createRole(payload).subscribe({
       next: () => {
         this.snack.open('Role created', 'Close', { duration: 2500 });

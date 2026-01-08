@@ -129,7 +129,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // ===== Dialog handling =====
+
   openAddDialog(): void {
     this.sidenavService.close();
     this.editingUserId = null;
@@ -169,7 +169,7 @@ export class UsersComponent implements OnInit {
     this.userForm.reset();
   }
 
-  // ===== Save (Create / Update) =====
+
   saveUser(): void {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
@@ -187,12 +187,12 @@ export class UsersComponent implements OnInit {
       roleIds: formValue.roleIds ?? []
     };
 
-    // Only send password if it was provided
+
     if (formValue.password && formValue.password.trim()) {
       payload.password = formValue.password;
     }
 
-    // CREATE
+
     if (!this.editingUserId) {
       this.userService.create(payload).subscribe({
         next: () => {
@@ -209,7 +209,7 @@ export class UsersComponent implements OnInit {
       return;
     }
 
-    // UPDATE
+
     this.userService.update(this.editingUserId, payload).subscribe({
       next: () => {
         this.snackBar.open('User updated successfully', 'Close', { duration: 3000 });
@@ -224,7 +224,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // ===== Delete =====
+
   removeUser(user: User): void {
     const confirmed = confirm(`Are you sure you want to delete user "${user.username}"?`);
     if (!confirmed) return;
@@ -241,7 +241,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // ===== Validators helpers =====
+
   private setCreateValidators(): void {
     this.userForm.get('password')?.setValidators([Validators.required]);
     this.userForm.get('password')?.updateValueAndValidity();
@@ -252,7 +252,7 @@ export class UsersComponent implements OnInit {
     this.userForm.get('password')?.updateValueAndValidity();
   }
 
-  // ===== Utils =====
+
   private showError(message: string): void {
     this.snackBar.open(message, 'Close', { duration: 5000 });
   }

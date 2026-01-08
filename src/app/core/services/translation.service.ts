@@ -20,12 +20,10 @@ export class TranslationService {
 
   private async loadTranslations() {
     try {
-      // Load English (default)
       const enResponse = await fetch('/i18n/en.json');
       const en = await enResponse.json();
       this.translations.set('en', en);
 
-      // Load Spanish
       try {
         const esResponse = await fetch('/i18n/es.json');
         const es = await esResponse.json();
@@ -34,7 +32,6 @@ export class TranslationService {
         console.warn('Spanish translations not loaded');
       }
 
-      // Load French
       try {
         const frResponse = await fetch('/i18n/fr.json');
         const fr = await frResponse.json();
@@ -42,7 +39,7 @@ export class TranslationService {
       } catch (e) {
         console.warn('French translations not loaded');
       }
-      // Load Russian
+
       try {
         const ruResponse = await fetch('/i18n/ru.json');
         const ru = await ruResponse.json();
@@ -51,7 +48,6 @@ export class TranslationService {
         console.warn('Russian translations not loaded');
       }
 
-      // Load Armenian
       try {
         const hyResponse = await fetch('/i18n/hy.json');
         const hy = await hyResponse.json();
@@ -89,7 +85,6 @@ export class TranslationService {
     let value = this.getNestedValue(translations, key);
 
     if (!value && locale !== 'en') {
-      // Fallback to English
       const enTranslations = this.translations.get('en') || {};
       value = this.getNestedValue(enTranslations, key);
     }
@@ -98,7 +93,6 @@ export class TranslationService {
       return key;
     }
 
-    // Replace parameters
     if (params) {
       Object.keys(params).forEach(paramKey => {
         value = value.replace(`{{${paramKey}}}`, String(params[paramKey]));

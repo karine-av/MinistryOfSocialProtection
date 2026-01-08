@@ -70,17 +70,6 @@
           </td>
         </ng-container>
 
-
-        <!--        &lt;!&ndash; Permissions Column &ndash;&gt;-->
-<!--        <ng-container matColumnDef="permissions">-->
-<!--          <th mat-header-cell *matHeaderCellDef class="permissions-column">-->
-<!--            {{ 'security.roles.permissions' | translate }}-->
-<!--          </th>-->
-<!--          <td mat-cell *matCellDef="let role" class="permissions-column">-->
-<!--            {{ formatPermissions(role.permissions) }}-->
-<!--          </td>-->
-<!--        </ng-container>-->
-
         <!-- Header and Row Definitions -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
