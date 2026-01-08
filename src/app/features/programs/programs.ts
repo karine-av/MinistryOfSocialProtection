@@ -15,11 +15,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AssistanceProgramService } from '../../core/services/assistance-program.service';
 import { AssistanceProgram } from '../../shared/models/assistance-program.model';
 import { SidenavService } from '../../common/side-nav/sidenav.service';
-import { PermissionService } from '../../core/permission.service';
-import { TranslatePipe } from '../../shared/pipes/translate.pipe';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.component';
-import { TranslationService } from '../../core/services/translation.service';
+import {TranslatePipe} from '../../shared/pipes/translate.pipe';
+import {PermissionService} from '../../core/permission.service';
+import {TranslationService} from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-programs',
@@ -38,7 +36,6 @@ import { TranslationService } from '../../core/services/translation.service';
     MatTooltipModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatDialogModule,
     TranslatePipe
   ],
   templateUrl: './programs.html',
@@ -46,12 +43,11 @@ import { TranslationService } from '../../core/services/translation.service';
 })
 export class Programs implements OnInit {
   private programService = inject(AssistanceProgramService);
-  private permissionService = inject(PermissionService);
   private translationService = inject(TranslationService);
   private sidenavService = inject(SidenavService);
+  private permissionService = inject(PermissionService);
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
-  private dialog = inject(MatDialog);
 
   programs: AssistanceProgram[] = [];
   displayedColumns: string[] = [];
@@ -69,12 +65,9 @@ export class Programs implements OnInit {
 
   ngOnInit() {
     this.updateDisplayedColumns();
-    if (this.canView) {
-      this.loadPrograms();
-    }
+    this.loadPrograms();
   }
 
-  // Permission getters
   get canView(): boolean {
     return this.permissionService.has('PROGRAM:VIEW');
   }
@@ -124,153 +117,143 @@ export class Programs implements OnInit {
           this.showError('Cannot connect to backend server. Please ensure the backend is running on port 8080.');
         } else {
           this.showError(`Failed to load programs: ${err?.message || `Status ${err?.status || 'Unknown error'}`}`);
-          }
         }
-      });
+      }
+    });
   }
 
-    openAddDialog() {
-      if (!this.canCreate) {
-        this.showError(this.translate('programs.messages.noPermissionCreate'));
-        return;
-      }
-      this.sidenavService.close();
-      this.isEditMode = false;
-      this.selectedProgram = null;
-      this.programForm.reset({ is_active: true });
-      this.isDialogOpen = true;
+  openAddDialog() {
+    if(!this.canCreate) {
+      this.showError(this.translate('applications.messages.noPermissionCreate'));
+      return;
+    }
+    this.sidenavService.close();
+    this.isEditMode = false;
+    this.selectedProgram = null;
+    this.programForm.reset({ is_active: true });
+    this.isDialogOpen = true;
+  }
+
+  openEditDialog(program: AssistanceProgram) {
+    if(!this.canUpdate) {
+      this.showError(this.translate('applications.messages.noPermissionUpdate'));
+      return;
+    }
+    this.isEditMode = true;
+    this.selectedProgram = program;
+    this.programForm.patchValue({
+      program_name: program.program_name,
+      is_active: program.is_active,
+      min_age: program.min_age ?? null,
+      max_age: program.max_age ?? null,
+      max_income_threshold: program.max_income_threshold ?? null
+    });
+    this.isDialogOpen = true;
+  }
+
+  closeDialog() {
+    this.isDialogOpen = false;
+    this.programForm.reset();
+    this.selectedProgram = null;
+  }
+
+  saveProgram() {
+    if (this.isEditMode && !this.canUpdate) {
+      this.showError(this.translate('programs.messages.noPermissionUpdate'));
+      return;
+    }
+    if (!this.isEditMode && !this.canCreate) {
+      this.showError(this.translate('programs.messages.noPermissionCreate'));
+      return;
     }
 
-    openEditDialog(program: AssistanceProgram) {
-      if (!this.canUpdate) {
-        this.showError(this.translate('programs.messages.noPermissionUpdate'));
-        return;
-      }
-      this.isEditMode = true;
-      this.selectedProgram = program;
-      this.programForm.patchValue({
-        program_name: program.program_name,
-        is_active: program.is_active,
-        min_age: program.min_age ?? null,
-        max_age: program.max_age ?? null,
-        max_income_threshold: program.max_income_threshold ?? null
-      });
-      this.isDialogOpen = true;
+    if (this.programForm.invalid) {
+      this.programForm.markAllAsTouched();
+      return;
     }
 
-    closeDialog() {
-      this.isDialogOpen = false;
-      this.programForm.reset();
-      this.selectedProgram = null;
-    }
+    const formValue = this.programForm.value;
+    const programData = {
+      program_name: formValue.program_name,
+      is_active: formValue.is_active,
+      min_age: formValue.min_age ? Number(formValue.min_age) : undefined,
+      max_age: formValue.max_age ? Number(formValue.max_age) : undefined,
+      max_income_threshold: formValue.max_income_threshold ? Number(formValue.max_income_threshold) : undefined
+    };
 
-    saveProgram() {
-      if (this.isEditMode && !this.canUpdate) {
-        this.showError(this.translate('programs.messages.noPermissionUpdate'));
-        return;
-      }
-      if (!this.isEditMode && !this.canCreate) {
-        this.showError(this.translate('programs.messages.noPermissionCreate'));
-        return;
-      }
-
-      if (this.programForm.invalid) {
-        this.programForm.markAllAsTouched();
-        return;
-      }
-
-      const formValue = this.programForm.value;
-      const programData = {
-        program_name: formValue.program_name,
-        is_active: formValue.is_active,
-        min_age: formValue.min_age ? Number(formValue.min_age) : undefined,
-        max_age: formValue.max_age ? Number(formValue.max_age) : undefined,
-        max_income_threshold: formValue.max_income_threshold ? Number(formValue.max_income_threshold) : undefined
-      };
-
-      if (this.isEditMode && this.selectedProgram) {
-        this.programService.update(this.selectedProgram.program_id, programData).subscribe({
-          next: () => {
-            this.showSuccess('Program updated successfully');
-            this.closeDialog();
-            this.loadPrograms();
-          },
-          error: (err) => {
-            this.showError('Failed to update program');
-            console.error(err);
-          }
-        });
-      } else {
-        this.programService.create(programData).subscribe({
-          next: () => {
-            this.showSuccess('Program created successfully');
-            this.closeDialog();
-            this.loadPrograms();
-          },
-          error: (err) => {
-            this.showError('Failed to create program');
-            console.error(err);
-          }
-        });
-      }
-    }
-
-    deleteProgram(program: AssistanceProgram) {
-      if (!this.canDelete) {
-        this.showError(this.translate('programs.messages.noPermissionDelete'));
-        return;
-      }
-
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        data: {
-          message: this.translate('programs.messages.deleteConfirm', { name: program.program_name }),
-          title: this.translate('common.delete')
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.programService.delete(program.program_id).subscribe({
-            next: () => {
-              this.showSuccess(this.translate('programs.messages.deleteSuccess'));
-              this.loadPrograms();
-            },
-            error: (err) => {
-              this.showError(this.translate('programs.messages.deleteFailed'));
-              console.error(err);
-            }
-          });
-        }
-      });
-    }
-
-    toggleActive(program: AssistanceProgram) {
-      if (!this.canUpdate) {
-        this.showError(this.translate('programs.messages.noPermissionUpdate'));
-        return;
-      }
-      this.programService.toggleActive(program.program_id).subscribe({
+    if (this.isEditMode && this.selectedProgram) {
+      this.programService.update(this.selectedProgram.program_id, programData).subscribe({
         next: () => {
-          this.showSuccess(this.translate('programs.messages.toggleSuccess', {
-            status: !program.is_active ? 'activated' : 'deactivated'
-          }));
+          this.showSuccess('Program updated successfully');
+          this.closeDialog();
           this.loadPrograms();
         },
         error: (err) => {
-          this.showError(this.translate('programs.messages.toggleFailed'));
+          this.showError('Failed to update program');
+          console.error(err);
+        }
+      });
+    } else {
+      this.programService.create(programData).subscribe({
+        next: () => {
+          this.showSuccess('Program created successfully');
+          this.closeDialog();
+          this.loadPrograms();
+        },
+        error: (err) => {
+          this.showError('Failed to create program');
           console.error(err);
         }
       });
     }
+  }
 
-  private translate(key: string, params?: any): string {
-      return this.translationService.translate(key, params);
+  deleteProgram(program: AssistanceProgram) {
+    if(!this.canDelete) {
+      this.showError(this.translate('applications.messages.noPermissionDelete'));
+      return;
     }
-
-  private showSuccess(message: string) {
-      this.snackBar.open(message, 'Close', { duration: 3000 });
-    }
-
-  private showError(message: string) {
-      this.snackBar.open(message, 'Close', { duration: 5000 });
+    if (confirm(`Are you sure you want to delete ${program.program_name}?`)) {
+      this.programService.delete(program.program_id).subscribe({
+        next: () => {
+          this.showSuccess('Program deleted successfully');
+          this.loadPrograms();
+        },
+        error: (err) => {
+          this.showError('Failed to delete program');
+          console.error(err);
+        }
+      });
     }
   }
+
+  toggleActive(program: AssistanceProgram) {
+    if(!this.canUpdate) {
+      this.showError(this.translate('applications.messages.noPermissionUpdate'));
+      return;
+    }
+    this.programService.toggleActive(program.program_id).subscribe({
+      next: () => {
+        this.showSuccess(`Program ${!program.is_active ? 'activated' : 'deactivated'} successfully`);
+        this.loadPrograms();
+      },
+      error: (err) => {
+        this.showError('Failed to update program status');
+        console.error(err);
+      }
+    });
+  }
+
+  private translate(key: string, params?: any): string {
+    return this.translationService.translate(key, params);
+  }
+
+  private showSuccess(message: string) {
+    this.snackBar.open(message, 'Close', { duration: 3000 });
+  }
+
+  private showError(message: string) {
+    this.snackBar.open(message, 'Close', { duration: 5000 });
+  }
+}
+

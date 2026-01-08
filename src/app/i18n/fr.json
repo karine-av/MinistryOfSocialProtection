@@ -28,6 +28,8 @@
       "annualIncome": "Revenu Annuel"
     },
     "form": {
+      "householdMembers": "Membres du ménage",
+      "householdHint": "Sélectionnez ce citoyen pour l’inclure dans le ménage",
       "fullName": "Nom Complet",
       "fullNameRequired": "Le nom est requis",
       "fullNameMinLength": "Le nom doit contenir au moins 2 caractères",

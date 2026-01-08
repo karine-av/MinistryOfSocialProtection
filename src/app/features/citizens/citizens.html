@@ -5,12 +5,14 @@
     <button mat-icon-button (click)="loadCitizens()" [matTooltip]="'common.refresh' | translate">
       <mat-icon>refresh</mat-icon>
     </button>
-    <button mat-raised-button color="accent"
-            (click)="openAddDialog()"
-            [disabled]="!canCreateCitizen">
-      <mat-icon>add</mat-icon>
-      {{ 'citizens.addCitizen' | translate }}
-    </button>
+
+    @if (canCreateCitizen) {
+      <button mat-raised-button color="accent" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        {{ 'citizens.addCitizen' | translate }}
+      </button>
+
+    }
   </mat-toolbar>
 
   <div class="search-container">
@@ -18,8 +20,7 @@
       <mat-label>
         {{ 'citizens.searchPlaceholder' | translate }}
       </mat-label>
-      <input matInput [(ngModel)]="searchQuery" (input)="search()"
-             [placeholder]="'citizens.searchPlaceholder' | translate">
+      <input matInput [(ngModel)]="searchQuery" (input)="search()" [placeholder]="'citizens.searchPlaceholder' | translate">
       <button mat-icon-button matSuffix (click)="search()">
         <mat-icon>search</mat-icon>
       </button>
@@ -33,11 +34,7 @@
         <p>{{ 'common.loading' | translate }}</p>
       </div>
     }
-
-    <table mat-table [dataSource]="citizens"
-           class="mat-elevation-z2"
-           [class.hidden]="isLoading">
-
+    <table mat-table [dataSource]="citizens" class="mat-elevation-z2" [class.hidden]="isLoading">
       <ng-container matColumnDef="citizen_id">
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.id' | translate }}
@@ -63,9 +60,7 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.dateOfBirth' | translate }}
         </th>
-        <td mat-cell *matCellDef="let citizen">
-          {{ citizen.date_of_birth | localeDate }}
-        </td>
+        <td mat-cell *matCellDef="let citizen">{{ citizen.date_of_birth | localeDate }}</td>
       </ng-container>
 
       <ng-container matColumnDef="address">
@@ -79,12 +74,11 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ 'citizens.columns.annualIncome' | translate }}
         </th>
-
         <td mat-cell *matCellDef="let citizen">
-          @if (canViewSensitive) {
-            {{ citizen.annual_income | localeCurrency }}
+          @if (!canCreateCitizen) {
+            *****
           } @else {
-            {{ citizen.annual_income | maskIncome }}
+            {{ citizen.annual_income | localeCurrency }}
           }
         </td>
       </ng-container>
@@ -94,22 +88,15 @@
           {{ 'citizens.columns.family' | translate }}
         </th>
         <td mat-cell *matCellDef="let citizen">
-          @if (citizen.parent_id) {
+          @if (citizen.household_id) {
             <span class="family-badge">
-              <mat-icon>family_restroom</mat-icon>
-              {{ 'citizens.family.hasParent' | translate }}
-            </span>
-          }
-          @if (citizen.children_ids && citizen.children_ids.length > 0) {
-            <span class="family-badge">
-              <mat-icon>child_care</mat-icon>
-              {{ 'citizens.family.hasChildren' | translate: { count: citizen.children_ids.length } }}
-            </span>
-          }
-          @if (!citizen.parent_id && (!citizen.children_ids || citizen.children_ids.length === 0)) {
+    <mat-icon>groups</mat-icon>
+              {{ 'citizens.family.inHousehold' | translate }}
+  </span>
+          } @else {
             <span class="family-badge no-family">
-              {{ 'citizens.family.noFamily' | translate }}
-            </span>
+    {{ 'citizens.family.noHousehold' | translate }}
+  </span>
           }
         </td>
       </ng-container>
@@ -119,18 +106,28 @@
           {{ 'common.actions' | translate }}
         </th>
         <td mat-cell *matCellDef="let citizen">
-          <button mat-icon-button color="primary"
-                  (click)="openEditDialog(citizen)"
-                  [matTooltip]="'common.edit' | translate"
-                  [disabled]="!canUpdateCitizen">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn"
-                  (click)="deleteCitizen(citizen)"
-                  [matTooltip]="'common.delete' | translate"
-                  [disabled]="!canDeleteCitizen">
-            <mat-icon>delete</mat-icon>
-          </button>
+
+          @if (canUpdateCitizen) {
+            <button
+              mat-icon-button
+              color="primary"
+              matTooltip="{{ 'common.edit' | translate }}"
+              (click)="openEditDialog(citizen)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          }
+
+          @if (canDeleteCitizen) {
+            <button
+              mat-icon-button
+              color="warn"
+              matTooltip="{{ 'common.delete' | translate }}"
+              (click)="deleteCitizen(citizen)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
         </td>
       </ng-container>
 
@@ -147,7 +144,6 @@
         </button>
       </div>
     }
-
     @if (!isLoading && !loadError && citizens.length === 0) {
       <div class="no-data">
         <p>
@@ -242,57 +238,60 @@
               }
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>{{ 'citizens.form.parent' | translate }}</mat-label>
-              <mat-select formControlName="parent_id">
-                <mat-option [value]="null">{{ 'citizens.form.noParent' | translate }}</mat-option>
-                @for (citizen of citizens; track citizen.citizen_id) {
-                  @if (!isEditMode || citizen.citizen_id !== selectedCitizen?.citizen_id) {
-                    <mat-option [value]="citizen.citizen_id">
-                      {{ citizen.full_name }} ({{ citizen.national_id }})
-                    </mat-option>
-                  }
-                }
-              </mat-select>
-              <mat-hint>{{ 'citizens.form.parentHint' | translate }}</mat-hint>
-            </mat-form-field>
 
-            @if (isEditMode) {
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>{{ 'citizens.form.children' | translate }}</mat-label>
-                <mat-select formControlName="children_ids" multiple>
-                  @for (citizen of citizens; track citizen.citizen_id) {
-                    @if (citizen.citizen_id !== selectedCitizen?.citizen_id && citizen.parent_id !== selectedCitizen?.citizen_id) {
-                      <mat-option [value]="citizen.citizen_id">
-                        {{ citizen.full_name }} ({{ citizen.national_id }})
-                      </mat-option>
-                    }
-                  }
-                </mat-select>
-                <mat-hint>{{ 'citizens.form.childrenHint' | translate }}</mat-hint>
-              </mat-form-field>
-            }
 
             @if (isEditMode && selectedCitizen) {
-              @if (selectedCitizen.children_ids && selectedCitizen.children_ids.length > 0) {
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ 'citizens.form.household' | translate }}</mat-label>
+
+                <mat-select formControlName="household_id">
+
+                  <!-- No household -->
+                  <mat-option [value]="null">
+                    {{ 'citizens.form.noHousehold' | translate }}
+                  </mat-option>
+
+                  <!-- Existing households + create new -->
+                  @for (household of householdOptions; track household.id) {
+                    <mat-option [value]="household.id">
+                      {{ household.label }}
+                    </mat-option>
+                  }
+
+                </mat-select>
+              </mat-form-field>
+
+              @if (citizenForm.value.household_id && citizenForm.value.household_id !== -1) {
                 <div class="family-info">
-                  <h4>{{ 'citizens.form.children' | translate }}</h4>
+                  <h4>{{ 'citizens.form.householdMembers' | translate }}</h4>
                   <ul>
-                    @for (childId of selectedCitizen.children_ids; track childId) {
-                      @if (getCitizenById(childId)) {
-                        <li>{{ getCitizenById(childId)?.full_name }}</li>
+                    @for (member of citizens; track member.citizen_id) {
+                      @if (member.household_id === citizenForm.value.household_id) {
+                        <li>{{ member.full_name }}</li>
                       }
                     }
                   </ul>
                 </div>
               }
-              @if (selectedCitizen.parent_id) {
-                <div class="family-info">
-                  <h4>{{ 'citizens.form.householdIncome' | translate }}</h4>
-                  <p>{{ calculateHouseholdIncome(selectedCitizen) | localeCurrency }}</p>
-                </div>
-              }
             }
+
+            <ng-container matColumnDef="family">
+              <th mat-header-cell *matHeaderCellDef>
+                {{ 'citizens.columns.family' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let citizen">
+                @if (citizen.household_id) {
+                  <span class="family-badge">
+        <mat-icon>groups</mat-icon>
+                    {{ 'citizens.family.inHousehold' | translate }}
+      </span>
+                } @else {
+                  <span class="family-badge no-family">
+        {{ 'citizens.family.noHousehold' | translate }}
+      </span>
+                }
+              </td>
+            </ng-container>
 
             <div class="dialog-actions">
               <button mat-button type="button" (click)="closeDialog()" [disabled]="isSubmitting">

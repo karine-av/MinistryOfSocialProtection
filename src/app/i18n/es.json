@@ -27,6 +27,8 @@
       "annualIncome": "Ingreso Anual"
     },
     "form": {
+      "householdMembers": "Miembros del hogar",
+      "householdHint": "Seleccione a este ciudadano para incluirlo en el hogar",
       "fullName": "Nombre Completo",
       "fullNameRequired": "El nombre es obligatorio",
       "fullNameMinLength": "El nombre debe tener al menos 2 caracteres",
