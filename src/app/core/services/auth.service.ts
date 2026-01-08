@@ -42,7 +42,7 @@ export class AuthService {
 
     this.currentUser$ = null;
     console.log("call sent")
-    return this.http.post<void>(`${this.apiBaseUrl}/logout`, {}, {headers, observe: 'response'});
+    return this.http.post<void>(`${this.apiBaseUrl}/api/logout`, {}, {headers, observe: 'response'});
 
   }
 
