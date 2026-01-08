@@ -25,6 +25,36 @@
       </mat-form-field>
     }
 
+    <!-- USERS -->
+    <div class="users-block">
+      <div class="users-title">Users</div>
+
+      <mat-form-field appearance="outline" class="user-input">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          [formControl]="usernameInput"
+          (keydown.enter)="$event.preventDefault(); addUsername()"
+          placeholder="Type username and press Enter" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="button" (click)="addUsername()">
+        Add
+      </button>
+
+      <mat-chip-listbox class="chips">
+        @for (u of selectedUsersList; track u) {
+          <mat-chip-option [selectable]="false">
+            {{ u }}
+            <button matChipRemove type="button" (click)="removeUsername(u)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-option>
+        }
+      </mat-chip-listbox>
+    </div>
+
+
     <div class="matrix-actions">
       <button mat-stroked-button type="button" (click)="clearAll()">
         {{ 'common.clearAll' | translate }}

@@ -14,6 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
+
 
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { RoleService, RoleDetailsDto } from '../../../../core/services/role.service';
@@ -54,6 +56,7 @@ interface MatrixRow {
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatChipsModule,
 
     TranslatePipe,
   ],
@@ -84,6 +87,13 @@ export class RoleEditComponent implements OnInit {
   originalPermissionIds = new Set<number>();
   selectedPermissionIds = new Set<number>();
 
+  // users diff
+  originalUsers = new Set<string>();
+  selectedUsers = new Set<string>();
+
+  usernameInput = this.fb.control<string>('', { nonNullable: true });
+
+
   form = this.fb.group({
     roleName: ['', [Validators.required, Validators.minLength(2)]],
   });
@@ -109,7 +119,10 @@ export class RoleEditComponent implements OnInit {
         this.originalPermissionIds = new Set(role.permissionIds ?? []);
         this.selectedPermissionIds = new Set(role.permissionIds ?? []);
 
-        this.usernames = role.usernames ?? [];
+        const usernames = role.usernames ?? [];
+        this.originalUsers = new Set(usernames);
+        this.selectedUsers = new Set(usernames);
+
 
         this.loadingRole = false;
       },
@@ -199,11 +212,12 @@ export class RoleEditComponent implements OnInit {
 
     const payload = {
       roleName: this.form.value.roleName ?? '',
-      addUsers: [],
-      removeUsers: [],
+      addUsers: this.computeAddUsers(),
+      removeUsers: this.computeRemoveUsers(),
       addPermissionIds: this.computeAddPermissionIds(),
       removePermissionIds: this.computeRemovePermissionIds(),
     };
+
 
     this.roleService.patchRole(this.roleId, payload).subscribe({
       next: () => {
@@ -216,4 +230,33 @@ export class RoleEditComponent implements OnInit {
       },
     });
   }
+
+  get selectedUsersList(): string[] {
+    return Array.from(this.selectedUsers).sort((a, b) => a.localeCompare(b));
+  }
+
+  addUsername() {
+    const value = (this.usernameInput.value || '').trim();
+    if (!value) return;
+
+    this.selectedUsers.add(value);
+    this.usernameInput.setValue('');
+  }
+
+  removeUsername(username: string) {
+    this.selectedUsers.delete(username);
+  }
+
+  private computeAddUsers(): string[] {
+    const add: string[] = [];
+    for (const u of this.selectedUsers) if (!this.originalUsers.has(u)) add.push(u);
+    return add;
+  }
+
+  private computeRemoveUsers(): string[] {
+    const remove: string[] = [];
+    for (const u of this.originalUsers) if (!this.selectedUsers.has(u)) remove.push(u);
+    return remove;
+  }
+
 }
