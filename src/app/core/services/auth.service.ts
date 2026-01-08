@@ -81,15 +81,15 @@ export class AuthService {
   }
 
   // Extract permissions from JWT
-  getPermissions(): string[] {
-    const payload = this.decodePayload();
-    return payload?.authorities ?? [];
-  }
-
-  // Check permission
-  hasPermission(permission: string): boolean {
-    return this.getPermissions().includes(permission);
-  }
+  // getPermissions(): string[] {
+  //   const payload = this.decodePayload();
+  //   return payload?.authorities ?? [];
+  // }
+  //
+  // // Check permission
+  // hasPermission(permission: string): boolean {
+  //   return this.getPermissions().includes(permission);
+  // }
 
   // Fetch current user from backend by username
   getCurrentUser(): Observable<User | null> {
@@ -103,10 +103,18 @@ export class AuthService {
     return this.currentUser$;
   }
 
-  // Determine if first login (updated_at null)
   isFirstLogin(): Observable<boolean> {
     return this.getCurrentUser().pipe(
-      map(user => user ? !user.updatedAt : true)
+      map(user => {
+        if (!user) {
+          return false;
+        }
+        if (user.updatedAt === null) {
+          return true;
+        } else {
+          return false;
+        }
+      })
     );
   }
 }

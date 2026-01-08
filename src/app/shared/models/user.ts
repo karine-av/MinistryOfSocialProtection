@@ -6,6 +6,6 @@ export interface User {
   fullName: string;
   email: string;
   status: string;
-  updatedAt: Date;
+  updatedAt: Date | null;
   roles: Role[];
 }
