@@ -101,7 +101,7 @@ export class RoleEditComponent implements OnInit {
   ngOnInit(): void {
     this.roleId = Number(this.route.snapshot.paramMap.get('id'));
     if (!this.roleId || Number.isNaN(this.roleId)) {
-      this.router.navigate(['/security/roles']);
+      this.router.navigate(['/roles']);
       return;
     }
 
@@ -201,7 +201,7 @@ export class RoleEditComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/security/roles']);
+    this.router.navigate(['/roles']);
   }
 
   save() {
@@ -222,7 +222,7 @@ export class RoleEditComponent implements OnInit {
     this.roleService.patchRole(this.roleId, payload).subscribe({
       next: () => {
         this.snack.open('Role updated', 'Close', { duration: 2500 });
-        this.router.navigate(['/security/roles']);
+        this.router.navigate(['/roles']);
       },
       error: (err) => {
         console.error(err);

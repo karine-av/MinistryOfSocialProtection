@@ -87,7 +87,6 @@ export class RoleCreateComponent implements OnInit {
   loadMatrix() {
     this.loadingMatrix = true;
 
-    // ✅ Use your RoleService or call HTTP inside it.
     // We'll assume your RoleService has: getPermissionMatrix()
     this.roleService.getPermissionMatrix().subscribe({
       next: (matrix: PermissionMatrixResponse) => {
@@ -137,7 +136,7 @@ export class RoleCreateComponent implements OnInit {
 
   // --- actions ---
   cancel() {
-    this.router.navigate(['/security/roles']);
+    this.router.navigate(['/roles']);
   }
 
   save() {
@@ -155,7 +154,7 @@ export class RoleCreateComponent implements OnInit {
     this.roleService.createRole(payload).subscribe({
       next: () => {
         this.snack.open('Role created', 'Close', { duration: 2500 });
-        this.router.navigate(['/security/roles']);
+        this.router.navigate(['/roles']);
       },
       error: (err) => {
         console.error(err);
