@@ -80,6 +80,7 @@ export class AuthService {
     return payload?.sub ?? null;
   }
 
+
   // Extract permissions from JWT
   // getPermissions(): string[] {
   //   const payload = this.decodePayload();
@@ -98,9 +99,15 @@ export class AuthService {
     if (!this.currentUser$) {
       this.currentUser$ = this.http
         .get<User>(`${this.apiBaseUrl}/users/${this.getUsername()}`)
-        .pipe(shareReplay(1)); // cache the response
+        .pipe(shareReplay(1));
     }
     return this.currentUser$;
+  }
+
+  getUserId(): Observable<number | null> {
+    return this.getCurrentUser().pipe(
+      map(user => user?.id ?? null)
+    );
   }
 
   isFirstLogin(): Observable<boolean> {
